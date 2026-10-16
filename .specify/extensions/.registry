@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "spectra": {
+      "version": "1.22.0",
+      "source": {
+        "kind": "catalog",
+        "catalog": "spectra"
+      },
+      "manifest_hash": "sha256:835681db8499cb25f28143171dbcc30a6078dd69532b6204beb32507d01fc30e",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "claude": [
+          "speckit.spectra.adr",
+          "speckit.spectra.domain-analyzer",
+          "speckit.spectra.create-pr",
+          "speckit.spectra.brd",
+          "speckit.spectra.review-pr",
+          "speckit.spectra.flaky-test-detector",
+          "speckit.spectra.test-strategy",
+          "speckit.spectra.deployment-strategy",
+          "speckit.spectra.impact",
+          "speckit.spectra.test-plan",
+          "speckit.spectra.uat",
+          "speckit.spectra.defect-rca",
+          "speckit.spectra.kb-vault"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-10-16T19:26:44.540781+00:00"
+    }
+  }
+}

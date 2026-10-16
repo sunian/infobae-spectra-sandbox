@@ -1,0 +1,33 @@
+installed:
+- spectra
+settings:
+  auto_execute_hooks: true
+hooks:
+  after_specify:
+  - extension: spectra
+    command: speckit.spectra.test-plan
+    enabled: true
+    optional: true
+    priority: 10
+    prompt: Generate a test plan for this spec? Pass the spec file path this specify
+      run just wrote (its SPEC_FILE) as the argument.
+    description: Offer a stakeholder test plan right after the specification is written
+    condition: null
+  after_implement:
+  - extension: spectra
+    command: speckit.spectra.uat
+    enabled: true
+    optional: true
+    priority: 5
+    prompt: Run UAT now? The agent performs the scenarios it can drive and leaves
+      the rest for a human.
+    description: Offer agent-run UAT after implementation, before a PR is opened
+    condition: null
+  - extension: spectra
+    command: speckit.spectra.create-pr
+    enabled: true
+    optional: true
+    priority: 10
+    prompt: Open a pull request for this spec?
+    description: Offer to open a PR after implementation completes
+    condition: null

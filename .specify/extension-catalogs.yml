@@ -1,0 +1,6 @@
+catalogs:
+- name: spectra
+  url: https://raw.githubusercontent.com/telus-digital/spectra/main/catalog.json
+  priority: 5
+  install_allowed: true
+  description: ''
