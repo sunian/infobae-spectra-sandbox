@@ -1,13 +1,3 @@
-<!--
-Sync Impact Report
-Version change: (unratified template) → 1.0.0
-Modified principles: none (initial ratification; all principles are new)
-Added sections: Core Principles I-VI, Technology Stack & Constraints, Development Workflow &
-  Quality Gates, Governance
-Removed sections: none
-Follow-up TODOs: none
-Source: vision.md
--->
 # Infobae Constitution
 
 ## Core Principles
