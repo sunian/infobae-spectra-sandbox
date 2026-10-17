@@ -1,0 +1,10 @@
+node_modules
+.expo
+dist
+specs
+.specify
+.claude
+package-lock.json
+android
+ios
+vision.md

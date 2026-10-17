@@ -104,3 +104,12 @@ CLAUDE.local.md
 # Ignore only local temp output:
 .specify/tmp/
 .specify/cache/
+
+# --- From Expo blank-typescript template ---
+*.orig.*
+*.jks
+npm-debug.*
+.env*.local
+# generated native folders
+/ios
+/android

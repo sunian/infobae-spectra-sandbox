@@ -1,0 +1,20 @@
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: 'Chat'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: chat
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/chat.png
+          thresholdPercentage: 98

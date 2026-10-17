@@ -1,0 +1,20 @@
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: 'Menu'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: menu
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/menu.png
+          thresholdPercentage: 98

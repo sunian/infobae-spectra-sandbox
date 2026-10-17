@@ -1,0 +1,18 @@
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: home
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/home.png
+          thresholdPercentage: 98

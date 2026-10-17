@@ -1,0 +1,20 @@
+# Maestro workspace config for screenshot (visual regression) tests.
+#
+# Maestro 2.11.0. Visual check command: `assertScreenshot: <path>` (default match threshold 95%; flows use 98%).
+# `takeScreenshot: <path>` writes the image. Paths are relative to the flow file.
+# Baselines live in .maestro/baselines/ (one PNG per screen).
+#
+# FIXED DEVICE CONFIGURATION (baselines are only valid on this device):
+#   Android emulator: Pixel_3a_API_34_extension_level_7_arm64-v8a
+#   Portrait, 1080x2220, density 440.
+#   iOS: not recorded yet (no Xcode on the machine that wrote this scaffold).
+#
+# APP BUILD: Expo Go adds extra UI, so screenshots use a standalone release build:
+#   npx expo prebuild --platform android
+#   (cd android && env -u JDK_JAVA_OPTIONS ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a)
+#   adb install -r android/app/build/outputs/apk/release/app-release.apk
+#
+# RUN:    npm run test:e2e          (add --device <id> if more than one device is attached)
+# RECORD: .maestro/record-baselines.sh [--device <id>]   (rewrites the baselines)
+flows:
+  - flows/*.yaml
