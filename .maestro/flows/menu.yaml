@@ -4,6 +4,7 @@ appId: com.infobae.scaffold
     clearState: true
 - assertVisible: 'My Infobae'
 - waitForAnimationToEnd
+- runFlow: ../shared/assert-tabs.yaml
 - tapOn: 'Menu'
 - waitForAnimationToEnd
 - runFlow:

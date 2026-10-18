@@ -16,6 +16,12 @@ Product intent is in `vision.md`. Rules are in `.specify/memory/constitution.md`
 3. Press `a` for the Android emulator or `i` for the iOS simulator.
 4. Expect five tabs: Home, My Infobae, Media, Chat, Menu. Each shows its name.
 
+## Troubleshooting
+
+- **Debug app cannot reach Metro on a phone**: run `adb reverse tcp:8081 tcp:8081`.
+- **More than one device attached**: pass the device to the tool (`npx expo run:android --device`,
+  `maestro --device <id> test .maestro`, `adb -s <id> ...`).
+
 ## Folder layout
 
 | Path                 | What goes here                                                                       |
@@ -55,6 +61,10 @@ Product intent is in `vision.md`. Rules are in `.specify/memory/constitution.md`
 | ----------------- | ----------------------------------------------------------------------- |
 | Before a push     | `npm run verify` (runs `npm run lint`, `npm run typecheck`, `npm test`) |
 | Before a PR merge | `npm run test:e2e` (Maestro screenshot flows)                           |
+
+Build and install the release app for screenshot tests with `npm run build:android:release`, then
+`adb -s <device-id> install -r android/app/build/outputs/apk/release/app-release.apk`. The script
+forces a fresh JavaScript bundle. A plain Gradle build can reuse an old bundle and install stale text.
 
 Screenshot tests need the app installed on the fixed device from `.maestro/config.yaml` (Android
 emulator `Pixel_3a_API_34_extension_level_7_arm64-v8a`, portrait). Build and install steps are in

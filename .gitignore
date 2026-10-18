@@ -113,3 +113,6 @@ npm-debug.*
 # generated native folders
 /ios
 /android
+
+# Maestro generated diff images (only the baseline PNGs are committed)
+.maestro/baselines/*_diff.png

@@ -38,7 +38,8 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "verify": "npm run lint && npm run typecheck && npm test",
-    "test:e2e": "maestro test .maestro"
+    "test:e2e": "maestro test .maestro",
+    "build:android:release": "expo prebuild --platform android --no-install && cd android && env -u JDK_JAVA_OPTIONS ./gradlew :app:createBundleReleaseJsAndAssets --rerun :app:assembleRelease -PreactNativeArchitectures=arm64-v8a"
   },
   "private": true,
   "jest": {

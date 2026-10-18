@@ -1,0 +1,12 @@
+# Exact-text check of all five tab labels (anchored regexes: Maestro matches text as a substring otherwise).
+# The 98% screenshot threshold does not reliably catch a small text change, so this does.
+appId: com.infobae.scaffold
+---
+# The Android system nav bar has its own "Home" button, so tie the tab label to its position.
+- assertVisible:
+    text: '^Home$'
+    leftOf: '^My Infobae$'
+- assertVisible: '^My Infobae$'
+- assertVisible: '^Media$'
+- assertVisible: '^Chat$'
+- assertVisible: '^Menu$'

@@ -10,9 +10,11 @@
 #   iOS: not recorded yet (no Xcode on the machine that wrote this scaffold).
 #
 # APP BUILD: Expo Go adds extra UI, so screenshots use a standalone release build:
-#   npx expo prebuild --platform android
-#   (cd android && env -u JDK_JAVA_OPTIONS ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a)
-#   adb install -r android/app/build/outputs/apk/release/app-release.apk
+#   npm run build:android:release     (forces a fresh JS bundle; plain gradle can reuse an old one)
+#   adb -s <device-id> install -r android/app/build/outputs/apk/release/app-release.apk
+#
+# TEXT CHECKS: flows also run shared/assert-tabs.yaml. The 98% image threshold does not reliably
+# catch a small text change (for example "Home" to "Home TEST"), so tab labels are asserted exactly.
 #
 # RUN:    npm run test:e2e          (add --device <id> if more than one device is attached)
 # RECORD: .maestro/record-baselines.sh [--device <id>]   (rewrites the baselines)
