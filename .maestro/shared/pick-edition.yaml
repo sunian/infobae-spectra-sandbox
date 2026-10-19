@@ -1,0 +1,9 @@
+# Picks the edition "Colombia" on the first-launch edition list, then waits for the tab bar.
+# Every flow that starts with `launchApp` and `clearState: true` runs this next, because a clean
+# install shows the edition list before the tabs.
+appId: com.infobae.scaffold
+---
+- assertVisible: 'Choose your edition'
+- tapOn: '^Colombia$'
+- waitForAnimationToEnd
+- assertVisible: '^My Infobae$'

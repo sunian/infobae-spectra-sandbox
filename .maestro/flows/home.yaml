@@ -2,6 +2,7 @@ appId: com.infobae.scaffold
 ---
 - launchApp:
     clearState: true
+- runFlow: ../shared/pick-edition.yaml
 - assertVisible: 'My Infobae'
 - waitForAnimationToEnd
 - runFlow: ../shared/assert-tabs.yaml

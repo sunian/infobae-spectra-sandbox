@@ -1,0 +1,42 @@
+# Change the edition from the Menu: the Menu shows the current edition, the list opens, a pick updates
+# Home at once, and the new choice survives a full close and reopen.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+# Tap 1: the Menu tab.
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- assertVisible: '^Edition$'
+- assertVisible: '^Colombia$'
+# Tap 2: the current edition. The list opens.
+- tapOn: '^Edition$'
+- waitForAnimationToEnd
+- assertVisible: 'Change edition'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: edition-change
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/edition-change.png
+          thresholdPercentage: 98
+# Tap 3: the new edition. Home shows it with no restart.
+- tapOn: '^México$'
+- waitForAnimationToEnd
+- tapOn:
+    text: '^Home$'
+    leftOf: '^My Infobae$'
+- waitForAnimationToEnd
+- assertVisible: '^México$'
+- assertNotVisible: '^Colombia$'
+# The new choice survives a full close and reopen.
+- stopApp
+- launchApp
+- assertVisible: '^My Infobae$'
+- assertVisible: '^México$'

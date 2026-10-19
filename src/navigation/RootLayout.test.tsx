@@ -1,0 +1,180 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
+import { act, fireEvent, renderRouter, screen, waitFor } from 'expo-router/testing-library';
+import * as SplashScreen from 'expo-splash-screen';
+import path from 'path';
+
+import * as editionScreens from '@/screens/EditionScreen';
+
+const APP_DIR = path.join(__dirname, '..', '..', 'app');
+const LIST_TITLE = 'Choose your edition';
+const TAB_LABELS = ['My Infobae', 'Media', 'Chat', 'Menu'];
+
+async function launch() {
+  return renderRouter(APP_DIR);
+}
+
+beforeEach(async () => {
+  await AsyncStorage.clear();
+});
+
+describe('first launch (no saved edition)', () => {
+  it('shows the edition list and no tab bar', async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    for (const label of TAB_LABELS) {
+      expect(screen.queryByText(label)).toBeNull();
+    }
+  });
+
+  it('shows the five tabs with Home active after one tap on an edition', async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    await fireEvent.press(screen.getByText('Colombia'));
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    for (const label of TAB_LABELS) {
+      expect(screen.getByText(label)).toBeTruthy();
+    }
+    expect(screen.queryByText(LIST_TITLE)).toBeNull();
+  });
+
+  it('shows the chosen edition name on Home', async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    await fireEvent.press(screen.getByText('Perú'));
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    expect(screen.getByText('Perú')).toBeTruthy();
+  });
+
+  it('keeps the list when a tab route is opened before a choice', async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    await act(async () => router.navigate('/media'));
+    expect(screen.getByText(LIST_TITLE)).toBeTruthy();
+    expect(screen.queryByText('My Infobae')).toBeNull();
+  });
+
+  it('shows the tabs once, on the last edition, after several quick taps', async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    const rows = ['Colombia', 'Perú', 'México'].map((name) => screen.getByText(name));
+    await act(async () => {
+      rows.forEach((row) => fireEvent.press(row));
+    });
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    expect(screen.getAllByText('My Infobae')).toHaveLength(1);
+    expect(screen.getByText('México')).toBeTruthy();
+    expect(screen.queryByText(LIST_TITLE)).toBeNull();
+  });
+});
+
+describe('later launches (saved edition)', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('shows the tabs directly and never renders the edition list', async () => {
+    await AsyncStorage.setItem('preferences.edition', 'colombia');
+    const listScreen = jest.spyOn(editionScreens, 'EditionScreen');
+    await launch();
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    expect(screen.getByText('Colombia')).toBeTruthy();
+    expect(screen.queryByText(LIST_TITLE)).toBeNull();
+    expect(listScreen).not.toHaveBeenCalled();
+  });
+
+  it('makes no network call at launch', async () => {
+    await AsyncStorage.setItem('preferences.edition', 'peru');
+    const fetchSpy = jest.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('offline'));
+    await launch();
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    expect(screen.getByText('Perú')).toBeTruthy();
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ['an empty string', ''],
+    ['text that is not an id', 'not-an-edition'],
+    ['a stored number', '42'],
+    ['an unknown id', 'atlantis'],
+  ])('shows the edition list when the saved value is %s', async (_label, saved) => {
+    await AsyncStorage.setItem('preferences.edition', saved);
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    expect(screen.queryByText('My Infobae')).toBeNull();
+  });
+
+  it('shows the edition list when the read rejects', async () => {
+    jest.spyOn(AsyncStorage, 'getItem').mockRejectedValueOnce(new Error('disk error'));
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+  });
+});
+
+describe('splash screen', () => {
+  const prevent = SplashScreen.preventAutoHideAsync as jest.Mock;
+  const hide = SplashScreen.hideAsync as jest.Mock;
+
+  it('is held when the app starts and released once after the saved edition is read', async () => {
+    await AsyncStorage.setItem('preferences.edition', 'colombia');
+    const hidesBefore = hide.mock.calls.length;
+    await launch();
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    // The layout holds the splash once, when it loads. Each launch releases it once.
+    expect(prevent).toHaveBeenCalledTimes(1);
+    expect(hide.mock.calls.length).toBe(hidesBefore + 1);
+    expect(Math.min(...prevent.mock.invocationCallOrder)).toBeLessThan(
+      Math.max(...hide.mock.invocationCallOrder),
+    );
+  });
+
+  it('is released once even when the read fails', async () => {
+    jest.spyOn(AsyncStorage, 'getItem').mockRejectedValueOnce(new Error('disk error'));
+    const hidesBefore = hide.mock.calls.length;
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    expect(hide.mock.calls.length).toBe(hidesBefore + 1);
+    jest.restoreAllMocks();
+  });
+});
+
+describe('changing the edition from the Menu', () => {
+  async function openMenuEdition() {
+    await AsyncStorage.setItem('preferences.edition', 'colombia');
+    const app = await launch();
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    await act(async () => router.navigate('/menu'));
+    await waitFor(() => expect(screen.getByText('Edition')).toBeTruthy());
+    await fireEvent.press(screen.getByText('Edition'));
+    // The native header is not in the JS tree, so check the route and the list rows instead.
+    await waitFor(() => expect(app.getPathname()).toBe('/change-edition'));
+    expect(screen.getByText('Argentina')).toBeTruthy();
+    return app;
+  }
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('updates Home at once and saves the new edition', async () => {
+    const app = await openMenuEdition();
+    await fireEvent.press(screen.getByText('México'));
+    await waitFor(() => expect(app.getPathname()).toBe('/menu'));
+    expect(screen.getByText('México')).toBeTruthy();
+    await act(async () => router.navigate('/'));
+    await waitFor(() => expect(screen.getByText('México')).toBeTruthy());
+    expect(screen.queryByText('Colombia')).toBeNull();
+    expect(await AsyncStorage.getItem('preferences.edition')).toBe('mexico');
+  });
+
+  it('changes nothing and saves nothing when the list is left without a choice', async () => {
+    const app = await openMenuEdition();
+    const setItem = jest.spyOn(AsyncStorage, 'setItem');
+    setItem.mockClear(); // the mock keeps calls from earlier tests and from the seeding above
+    await act(async () => router.back());
+    await waitFor(() => expect(app.getPathname()).toBe('/menu'));
+    expect(screen.getByText('Colombia')).toBeTruthy();
+    expect(setItem).not.toHaveBeenCalled();
+    expect(await AsyncStorage.getItem('preferences.edition')).toBe('colombia');
+  });
+});

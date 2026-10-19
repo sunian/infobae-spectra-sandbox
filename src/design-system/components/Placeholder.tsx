@@ -6,13 +6,15 @@ import { Text } from './Text';
 
 type PlaceholderProps = {
   labelKey: string;
+  detail?: string;
 };
 
-export function Placeholder({ labelKey }: PlaceholderProps) {
+export function Placeholder({ labelKey, detail }: PlaceholderProps) {
   return (
     <Screen>
       <View style={styles.center}>
         <Text variant="title">{t(labelKey)}</Text>
+        {detail ? <Text>{detail}</Text> : null}
       </View>
     </Screen>
   );
