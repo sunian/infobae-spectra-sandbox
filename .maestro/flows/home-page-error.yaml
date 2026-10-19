@@ -1,0 +1,22 @@
+# In the fixture build Mexico page 2 fails once. The loaded articles stay and a retry shows at the
+# end of the list. The retry loads page 2. This flow checks by text, not by screenshot, because a
+# swipe does not stop at the same pixel on every run.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    file: ../shared/pick-edition-as.yaml
+    env:
+      EDITION: México
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- scrollUntilVisible:
+    element: 'We could not load more articles.'
+    direction: DOWN
+    timeout: 60000
+- tapOn: 'Try again'
+- scrollUntilVisible:
+    element: '.*Segunda página.*'
+    direction: DOWN
+    timeout: 60000
+- assertNotVisible: 'We could not load more articles.'

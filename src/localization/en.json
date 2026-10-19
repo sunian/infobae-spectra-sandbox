@@ -23,5 +23,26 @@
     "cuba": "Cuba",
     "centroamerica": "Centroamérica",
     "mundo": "Mundo"
+  },
+  "feed": {
+    "loading": "Loading articles",
+    "empty": "No articles right now.",
+    "error": "We could not load the articles.",
+    "retry": "Try again",
+    "pageError": "We could not load more articles.",
+    "refreshError": "We could not refresh. Showing earlier articles."
+  },
+  "article": {
+    "loading": "Loading article",
+    "error": "We could not load this article.",
+    "retry": "Try again",
+    "by": "By {{authors}}",
+    "imageAlt": "Article image"
+  },
+  "time": {
+    "now": "now",
+    "minutes": "{{count}} min",
+    "hours": "{{count}} h",
+    "days": "{{count}} d"
   }
 }

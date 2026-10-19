@@ -1,0 +1,48 @@
+# Change the edition in Menu, then open Home. Home shows the loading state (the fixture answers
+# slowly for Mundo), then the feed under the new edition name.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- tapOn: '^Edition$'
+- waitForAnimationToEnd
+- tapOn: '^Mundo$'
+- waitForAnimationToEnd
+- tapOn:
+    text: '^Home$'
+    leftOf: '^My Infobae$'
+- assertVisible: 'Loading articles'
+- assertNotVisible: '.*El Gobierno anunció nuevas medidas.*'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: home-loading
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/home-loading.png
+          thresholdPercentage: 98
+- extendedWaitUntil:
+    visible: '.*El Gobierno anunció nuevas medidas.*'
+    timeout: 20000
+- assertVisible: '^Mundo$'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: home-mundo
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/home-mundo.png
+          thresholdPercentage: 98

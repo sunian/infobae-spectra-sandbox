@@ -1,0 +1,14 @@
+# Scroll to the end of page 1. Page 2 loads and its items show. This flow checks behavior by text,
+# not by screenshot: a swipe does not stop at the same pixel on every run, so an image taken at an
+# arbitrary scroll offset would not match. The Home screen itself has a baseline in home.yaml.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- scrollUntilVisible:
+    element: '.*Segunda página.*'
+    direction: DOWN
+    timeout: 30000
+- assertVisible: '.*Segunda página.*'

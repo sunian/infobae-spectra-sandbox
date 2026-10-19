@@ -4,6 +4,7 @@ import { act, fireEvent, renderRouter, screen, waitFor } from 'expo-router/testi
 import * as SplashScreen from 'expo-splash-screen';
 import path from 'path';
 
+import { fixtureContentSource } from '@/domain/content/fixtureContentSource';
 import * as editionScreens from '@/screens/EditionScreen';
 
 const APP_DIR = path.join(__dirname, '..', '..', 'app');
@@ -83,12 +84,13 @@ describe('later launches (saved edition)', () => {
     expect(listScreen).not.toHaveBeenCalled();
   });
 
-  it('makes no network call at launch', async () => {
+  it('loads the feed for the saved edition at launch, with no call to the live APIs', async () => {
     await AsyncStorage.setItem('preferences.edition', 'peru');
     const fetchSpy = jest.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('offline'));
     await launch();
     await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
     expect(screen.getByText('Perú')).toBeTruthy();
+    await waitFor(() => expect(screen.getByText(/^El Gobierno anunció/)).toBeTruthy());
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
@@ -176,5 +178,33 @@ describe('changing the edition from the Menu', () => {
     expect(screen.getByText('Colombia')).toBeTruthy();
     expect(setItem).not.toHaveBeenCalled();
     expect(await AsyncStorage.getItem('preferences.edition')).toBe('colombia');
+  });
+});
+
+describe('opening an article from Home', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('keeps Home as it was after the back action, with no new request', async () => {
+    await AsyncStorage.setItem('preferences.edition', 'colombia');
+    const feedRequest = jest.spyOn(fixtureContentSource, 'fetchFeedPage');
+    const app = await launch();
+    await waitFor(() => expect(screen.getByText(/^El Gobierno anunció/)).toBeTruthy());
+    expect(feedRequest).toHaveBeenCalledTimes(1);
+
+    await act(async () =>
+      router.push({
+        pathname: '/article',
+        params: { path: '/colombia/2026/10/19/fixture-1/' },
+      }),
+    );
+    await waitFor(() => expect(screen.getByText(/^Nota con titulares/)).toBeTruthy());
+    expect(app.getPathname()).toBe('/article');
+
+    await act(async () => router.back());
+    await waitFor(() => expect(app.getPathname()).toBe('/'));
+    expect(screen.getByText(/^El Gobierno anunció/)).toBeTruthy();
+    expect(feedRequest).toHaveBeenCalledTimes(1);
   });
 });

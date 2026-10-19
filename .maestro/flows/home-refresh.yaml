@@ -1,0 +1,20 @@
+# Pull down on the feed. The first page loads again and Home looks the same as after a first load,
+# so this flow compares against the `home` baseline and records no image of its own.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- swipe:
+    start: 50%, 25%
+    end: 50%, 75%
+- waitForAnimationToEnd
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/home.png
+          thresholdPercentage: 98

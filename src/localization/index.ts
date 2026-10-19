@@ -10,8 +10,10 @@ i18n.defaultLocale = DEFAULT_LOCALE;
 i18n.locale = getLocales()[0]?.languageCode ?? DEFAULT_LOCALE;
 i18n.enableFallback = true;
 
-export function t(key: string): string {
-  const value = i18n.t(key, { defaultValue: '' });
+export type TranslateOptions = Record<string, string | number>;
+
+export function t(key: string, options?: TranslateOptions): string {
+  const value = i18n.t(key, { ...options, defaultValue: '' });
   if (value === '') {
     if (__DEV__) {
       console.warn(`Missing translation for key "${key}"`);

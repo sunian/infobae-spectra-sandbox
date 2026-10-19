@@ -1,10 +1,18 @@
 import { BASE_URL } from './urls';
 
 export type ArticleBlock =
-  | { type: 'text'; html: string }
-  | { type: 'header'; text: string; level: number }
-  | { type: 'image'; url: string; caption: string; altText: string; width: number; height: number }
-  | { type: 'video'; url: string; title: string; durationSeconds: number };
+  { type: 'text'; html: string } | { type: 'header'; text: string; level: number } | ImageBlock;
+
+export type ImageBlock = {
+  type: 'image';
+  url: string;
+  /** Signed path of the site's image resizer. See `resizedImageUrl`. */
+  resizeUrl?: string;
+  caption: string;
+  altText: string;
+  width: number;
+  height: number;
+};
 
 export type Article = {
   id: string;
@@ -14,7 +22,7 @@ export type Article = {
   authors: string[];
   publishedAt: string;
   sectionName: string;
-  heroImage: Extract<ArticleBlock, { type: 'image' }> | null;
+  heroImage: ImageBlock | null;
   blocks: ArticleBlock[];
 };
 
@@ -25,13 +33,13 @@ type ArcImage = {
   alt_text?: string;
   width?: number;
   height?: number;
+  additional_properties?: { resizeUrl?: string };
 };
 
 type ArcElement = {
   type?: string;
   content?: string;
   level?: number;
-  embed?: { config?: { contentUrl?: string; name?: string; duration?: string } };
 } & ArcImage;
 
 export type ArcStory = {
@@ -46,19 +54,12 @@ export type ArcStory = {
   content_elements?: ArcElement[];
 };
 
-/** Converts an ISO-8601 duration such as `P0Y0M0DT0H1M33S` to seconds. */
-export function parseIsoDuration(value: string | undefined): number {
-  const match = value?.match(/T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
-  if (!match) return 0;
-  const [, hours = '0', minutes = '0', seconds = '0'] = match;
-  return Number(hours) * 3600 + Number(minutes) * 60 + Number(seconds);
-}
-
-function toImage(element: ArcImage): Extract<ArticleBlock, { type: 'image' }> | null {
+function toImage(element: ArcImage): ImageBlock | null {
   if (!element.url) return null;
   return {
     type: 'image',
     url: element.url,
+    resizeUrl: element.additional_properties?.resizeUrl,
     caption: element.caption ?? '',
     altText: element.alt_text ?? '',
     width: element.width ?? 0,
@@ -76,18 +77,8 @@ function toBlock(element: ArcElement): ArticleBlock | null {
         : null;
     case 'image':
       return toImage(element);
-    case 'custom_embed': {
-      const config = element.embed?.config;
-      if (!config?.contentUrl) return null;
-      return {
-        type: 'video',
-        url: config.contentUrl,
-        title: config.name ?? '',
-        durationSeconds: parseIsoDuration(config.duration),
-      };
-    }
     default:
-      // Unknown embeds (tweets, polls, ads) are skipped until the app can render them.
+      // Video and other embeds (tweets, polls, ads) are skipped until the app can render them.
       return null;
   }
 }
