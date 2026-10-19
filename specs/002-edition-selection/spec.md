@@ -8,6 +8,14 @@
 
 **Input**: User description: "edition selection"
 
+## Clarifications
+
+### Session 2026-10-19
+
+- Q: On Android, what should happen when the reader presses the system back button while the first-launch edition list shows? → A: The app leaves to the phone's home screen (normal Android behavior). The tabs never show, and the next launch shows the list again.
+- Q: While the app reads the saved edition at launch, what should the reader see? → A: The splash screen stays up until the read ends. Then the tabs or the edition list show. No other screen flashes.
+- Q: In what order should the nine editions appear in the edition list? → A: The order of FR-002: Argentina, Estados Unidos, Colombia, España, México, Perú, Cuba, Centroamérica, Mundo.
+
 ## User Scenarios & Testing *(mandatory)*
 
 Infobae publishes one edition for each country or region. The app must know which edition the
@@ -37,8 +45,9 @@ know which content to load.
    edition.
 4. **Given** the edition list shows, **When** the reader has not chosen an edition, **Then** the
    reader cannot reach the tabs.
-5. **Given** the edition list shows, **When** the reader presses the system back action, **Then**
-   the app does not show the tabs and the list stays on screen.
+5. **Given** the edition list shows on Android, **When** the reader presses the system back action,
+   **Then** the app leaves to the phone's home screen and does not show the tabs. **And** when the
+   reader opens the app again, **Then** the edition list shows.
 
 ---
 
@@ -56,7 +65,7 @@ and Home shows "Perú".
 **Acceptance Scenarios**:
 
 1. **Given** the reader chose an edition earlier, **When** the app launches again, **Then** the
-   edition list does not show and the tabs show.
+   edition list does not show at any moment, and the tabs show once the splash screen ends.
 2. **Given** the reader chose an edition earlier, **When** the app launches with no network,
    **Then** the saved edition is still used.
 3. **Given** the reader chose an edition earlier, **When** Home shows after a relaunch, **Then** it
@@ -117,13 +126,15 @@ first choice, because the first choice already gives a working app.
 
 - **FR-001**: On first launch, with no saved edition, the app MUST show an edition selection screen
   before the tab bar.
-- **FR-002**: The app MUST offer these editions: Argentina, Estados Unidos, Colombia, España,
-  México, Perú, Cuba, Centroamérica, and Mundo.
+- **FR-002**: The app MUST offer these editions, and every edition list MUST show them in this
+  order: Argentina, Estados Unidos, Colombia, España, México, Perú, Cuba, Centroamérica, and Mundo.
 - **FR-003**: The reader MUST NOT be able to reach the tabs until an edition is chosen.
 - **FR-004**: When the reader chooses an edition on first launch, the app MUST save it in local user
   preferences and show the tab bar with Home active.
 - **FR-005**: On later launches, the app MUST read the saved edition and show the tab bar directly,
-  without asking again and without a network connection.
+  without asking again and without a network connection. While the saved edition is being read, the
+  splash screen MUST stay visible, and the app MUST NOT show the edition list or any other screen
+  until the read ends.
 - **FR-006**: If the saved edition is missing, unreadable, or not in the current list, the app MUST
   treat the launch as a first launch.
 - **FR-007**: The Menu tab MUST show the name of the current edition and MUST let the reader open the

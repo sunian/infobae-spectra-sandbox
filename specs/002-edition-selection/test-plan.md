@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Spec** | `specs/002-edition-selection/spec.md` |
-| **Build under test** | Working tree on branch `main`. Package `infobae`, version `1.0.0` (from `package.json`). No feature branch exists yet. |
+| **Build under test** | Working tree on branch `main`, with the clarified `spec.md` and a new `tasks.md` not yet committed. Package `infobae`, version `1.0.0` (from `package.json`). No feature branch exists yet. |
 | **Author / Date** | James Sun / 2026-10-19 |
 
 **Project state, stated once:**
@@ -22,6 +22,7 @@
 - Saving the choice and reading it back on later launches, including recovery from a bad saved value.
 - Showing and changing the edition from the Menu tab.
 - Showing the selected edition name on Home.
+- Showing nothing but the splash screen until the saved edition is read at launch.
 - Screenshot regression of the two new screens (edition selection screen, Menu edition list) on Android.
 - Effects on the five existing Maestro flows, which start from a clean install.
 
@@ -50,7 +51,7 @@ References like `US2-AC1` mean story 2, its first acceptance scenario. The spec 
 | All five existing Maestro flows start with a clean install and expect the tab bar at once. After this feature, a clean install shows the edition list, so the flows fail. The Home and Menu baselines also change. | High | Medium | Deeper coverage: regression scope names every flow, and a shared "pick an edition" step is a risk-driven addition (section 5) | The change is not additive: it adds a screen before the tabs. Flows use `launchApp` with `clearState: true` (`.maestro/flows/home.yaml`, `.maestro/flows/menu.yaml`). A failed Maestro run blocks a PR merge (constitution, Quality Gates). |
 | A missing, corrupt, or unknown saved value crashes the app at launch or leaves it on a blank edition. It would affect every launch. | Medium | High | Deeper coverage: T12, T13, T22 | No preference code or test exists yet (search in section "Sources"). Impact is High because a launch crash blocks all use of the app. |
 | Home and Menu show different editions, because they read the value separately. | Medium | Medium | Deeper coverage: T18 renders both from the same state | FR-016 asks for one value everywhere. The code is new, so there is no existing test. A wrong edition is noticed by the reader. |
-| The spec does not say what shows while the saved edition is being read. The list could flash before the tabs. | Medium | Medium | Extra scenario: UAT2 judges "the tabs show at once". No automated condition, because the spec gives no rule to test (see "Explicitly not covered") | The read is asynchronous on a device. The spec's US2 independent test says "the tabs show at once" but no requirement states it. |
+| The saved edition is read asynchronously. The list or another screen could flash before the tabs, or the native splash could fail to hold. | Medium | Medium | Deeper coverage: T30 and T9 at code level, plus UAT2 on a device | The spec now requires no flash (FR-005, clarified 2026-10-19). The read is asynchronous on a device. A mocked splash in Jest cannot catch a native setup failure, so the device check stays. |
 | iOS is never exercised, so an iOS-only defect ships unseen. | High | Medium | Accept | There is no iOS test run or baseline at all. The user deferred iOS on purpose on 2026-10-19. Revisit when Xcode is available. |
 
 ---
@@ -60,14 +61,14 @@ References like `US2-AC1` mean story 2, its first acceptance scenario. The spec 
 | ID | Condition | Verifies | Level | Priority | Already covered |
 |---|---|---|---|---|---|
 | T1 | With no saved edition, the app shows the edition list and does not show the tab bar. | FR-001, US1-AC1 | integration | P1 | — |
-| T2 | The list offers exactly the nine editions named in the spec: Argentina, Estados Unidos, Colombia, España, México, Perú, Cuba, Centroamérica, Mundo. | FR-002 | unit | P1 | Partly. Ids are unique and lookup works in `src/domain/infobae/infobae.test.ts`. The nine names are not asserted. |
+| T2 | The list offers exactly the nine editions named in the spec, in the order of FR-002: Argentina, Estados Unidos, Colombia, España, México, Perú, Cuba, Centroamérica, Mundo. | FR-002 | unit | P1 | Partly. Ids are unique and lookup works in `src/domain/infobae/infobae.test.ts`. The nine names and their order are not asserted. |
 | T3 | The first-launch list and the Menu list show the same editions in the same order. | FR-013 | integration | P2 | — |
 | T4 | Tapping an edition on first launch shows the five tabs with Home active. | FR-004, US1-AC2 | integration | P1 | — |
 | T5 | Choosing an edition saves that edition's id to local preferences, once. No save happens before the tap. | FR-004 | unit | P1 | — |
 | T6 | After a choice, Home shows the name of the chosen edition. | FR-011, US1-AC3 | integration | P1 | — |
 | T7 | While the list shows, the tab bar is absent and the tab routes cannot be reached. | FR-003, US1-AC4 | integration | P1 | — |
-| T8 | While the list shows, the Android system back action leaves the list on screen and does not show the tabs. | US1-AC5 | end-to-end | P1 | — |
-| T9 | With a valid saved edition, launch shows the tabs directly and never shows the list. | FR-005, US2-AC1 | integration | P1 | — |
+| T8 | On Android, the system back action from the first-launch list leaves the app and does not show the tabs. The next launch shows the list again. | US1-AC5 | end-to-end | P1 | — |
+| T9 | With a valid saved edition, launch shows the tabs directly. The edition list never renders, not even on the first frame. | FR-005, US2-AC1 | integration | P1 | — |
 | T10 | With a valid saved edition and no network, launch still shows the tabs on that edition, and no network call is made at launch. | FR-005, US2-AC2 | integration | P1 | — |
 | T11 | After a full close and reopen, Home shows the same edition name. | US2-AC3 | end-to-end | P1 | — |
 | T12 | A saved value that is missing, empty, not valid data, the wrong type, or an unknown edition id reads as "no edition". | FR-006, "The saved preference cannot be read" | unit | P1 | Partly. Unknown-id lookup returns nothing in `src/domain/infobae/infobae.test.ts` ("finds an edition by id"). |
@@ -88,6 +89,7 @@ References like `US2-AC1` mean story 2, its first acceptance scenario. The spec 
 | T27 | Every new string, including the nine edition names, exists in `src/localization/en.json` and resolves to a non-empty string. | FR-015, SC-005 | unit | P2 | Yes for resolution of every key. `src/localization/index.test.ts` ("resolves every key in en.json to a non-empty string") runs on all keys, so it covers new ones. |
 | T28 | No screen in this feature contains hard-coded user-facing text. | FR-015, SC-005 | manual | P2 | — |
 | T29 | A screenshot test passes for the edition selection screen and for the Menu edition list, on Android, against saved baselines. | SC-006 | end-to-end | P1 | — |
+| T30 | While the saved edition is being read, the splash screen is held and no screen renders. It is released once, after the read ends, whatever the read result. | FR-005, US2-AC1 | integration | P1 | — |
 
 **Notes on level choices and priorities**
 
@@ -95,7 +97,8 @@ References like `US2-AC1` mean story 2, its first acceptance scenario. The spec 
 - **Priority for T7, T12, T13, T14, T22:** these state a prohibition or a no-crash property. They are P1 whatever the story's own priority.
 - **T10:** the check is that launch makes no network call. It does not prove behaviour on a device with the radio off. The Android airplane-mode check is part of UAT2.
 - **T13 and SC-004:** the spec says "10 out of 10 test runs". The recovery code is deterministic, so one pass per kind of bad value in T12 is taken as meeting it.
-- **T8:** the Android system back action has no iOS equivalent.
+- **T8:** the spec limits US1-AC5 to Android. The Android system back action has no iOS equivalent.
+- **T30:** Jest cannot observe the native splash screen. The test checks the splash calls (held at start, released once) and that nothing renders before the read ends. Whether the native splash really holds is checked on a device in T24 of `tasks.md` and UAT2.
 
 **Lens set in use**: `unit`, `integration`, `end-to-end`, `manual` as condition levels, plus the UAT and Regression sections. These are the defaults, because no strategy document exists and the constitution names no lenses.
 
@@ -112,8 +115,6 @@ References like `US2-AC1` mean story 2, its first acceptance scenario. The spec 
 |---|---|---|
 | SC-006, iOS half (screenshot tests on iOS) | Deferred | Tasks T025 and T055 of `001-project-scaffold`. Needs Xcode and iOS baselines. |
 | Every end-to-end condition (T8, T11, T19, T23, T24, T29) on iOS | Deferred | Same remedy. T8 has no iOS equivalent at all. |
-| FR-002, the order of the list on screen | Untestable as written | The spec names nine editions but never states their display order. FR-013 only says the two lists match, which T3 checks. A decision on the order is needed first. |
-| What shows while the saved edition is being read at launch (FR-005, US2) | Untestable as written | The spec has no rule about a loading moment. A decision is needed, for example "show nothing until the read ends". Run `/speckit-clarify`. UAT2 observes it for now. |
 | SC-002, "100% of later launches" | Untestable as written (as a percentage) | A test cannot prove 100%. T9, T10, and T11 cover the defined cases: online, offline, and after a full close. |
 
 ---
@@ -176,14 +177,13 @@ The five flows and the Home and Menu baselines must be updated in the same PR (c
 
 | Criterion | Threshold | Confirmed by |
 |---|---|---|
-| All P1 conditions pass | 15 of 15 P1 conditions (T1, T2, T4 to T14, T22, T29) | Feature developer |
+| All P1 conditions pass | 16 of 16 P1 conditions (T1, T2, T4 to T14, T22, T29, T30) | Feature developer |
 | All P2 conditions pass, or each failure is listed with a decision | 14 of 14 P2 conditions pass, or a written waiver for each failure | Feature developer, reviewed by the PR reviewer |
 | Every acceptance scenario is reached | 14 of 14 acceptance scenarios appear in a condition or a UAT scenario | PR reviewer |
 | Lint, typecheck, and all unit tests pass before the feature branch is pushed | Zero errors, zero failures (`npm run verify`) | Feature developer |
 | All Maestro tests pass before merge, including the five updated existing flows and the new ones | Zero failures on the fixed Android emulator | PR reviewer |
 | Screenshot baselines for the two new screens exist and the Home and Menu baselines are re-recorded | One baseline per screen, all committed | PR reviewer |
 | All P1 UAT scenarios have evidence | UAT1 and UAT2 have evidence linked from their tasks | Project owner |
-| Open spec gaps are resolved or accepted in writing | The list order and the launch-moment rule are clarified, or the owner accepts the gap | Project owner |
 | iOS gap is recorded | The deferral of T025 and T055 stays on record, and this PR adds no new iOS claim | Project owner |
 
 No coverage floor is stated, because none is declared by the constitution or a strategy document.
@@ -196,6 +196,7 @@ No coverage floor is stated, because none is declared by the constitution or a s
   - `specs/002-edition-selection/spec.md`, in full.
   - `.specify/memory/constitution.md`, in full.
   - `.specify/extensions/spectra/templates/test-plan-template.md` (the template used; no override or preset layer exists).
+  - `specs/002-edition-selection/plan.md` and `tasks.md`, for the planned files and flows.
   - `package.json`, the only dependency manifest.
   - `.maestro/config.yaml`, `.maestro/flows/home.yaml`, `.maestro/flows/menu.yaml`, `.maestro/shared/assert-tabs.yaml`.
   - `src/navigation/tabs.test.ts`, `src/design-system/components/Placeholder.test.tsx`, `src/localization/index.test.ts`, `src/domain/infobae/infobae.test.ts` (opening section; the test names were checked).
@@ -213,7 +214,7 @@ No coverage floor is stated, because none is declared by the constitution or a s
 
 **Known limitations**
 
-- The conditions rest on the specification as written on 2026-10-19. They go stale when it changes. Re-run this command rather than hand-patch.
+- The conditions rest on the specification as written on 2026-10-19, after its clarification session. They go stale when it changes. Re-run this command rather than hand-patch.
 - No tool was checked against a package registry. No network request was made.
 - This document states what will be verified. The task and implement commands produce the tests.
 - The guard that keeps UAT tasks open is the project's constitution. It does not yet carry the clause that says the implement command never executes UAT tasks. `/speckit-spectra-test-strategy` drafts that amendment.
