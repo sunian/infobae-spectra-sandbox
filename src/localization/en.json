@@ -5,5 +5,23 @@
     "media": "Media",
     "chat": "Chat",
     "menu": "Menu"
+  },
+  "editionSelect": {
+    "title": "Choose your edition",
+    "changeTitle": "Change edition"
+  },
+  "menu": {
+    "edition": "Edition"
+  },
+  "editions": {
+    "argentina": "Argentina",
+    "estados-unidos": "Estados Unidos",
+    "colombia": "Colombia",
+    "espana": "España",
+    "mexico": "México",
+    "peru": "Perú",
+    "cuba": "Cuba",
+    "centroamerica": "Centroamérica",
+    "mundo": "Mundo"
   }
 }

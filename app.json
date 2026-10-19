@@ -23,7 +23,12 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-router", "expo-localization", "expo-status-bar"],
+    "plugins": [
+      "expo-router",
+      "expo-localization",
+      "expo-status-bar",
+      "expo-splash-screen"
+    ],
     "scheme": "infobae"
   }
 }

@@ -49,8 +49,10 @@ that Expo SDK 58 expects) and with `npm view`.
   small SDK package and no custom screen. The read of one small value is quick.
 - **Alternatives**: Render a custom loading screen (new screen, new baseline, flashes). Render the list
   first and swap later (the flash we want to avoid).
-- **Open item**: This is the plan's choice, not a spec rule. Run `/speckit-clarify` to confirm it, as
-  the test plan recommends. If the answer differs, only the root layout and `EditionContext` change.
+- **Confirmed**: The spec now requires this (clarified 2026-10-19, FR-005).
+- **Setup result (T001)**: `npx expo install` installed `expo-splash-screen` ~58.0.10 and added the
+  `expo-splash-screen` plugin to `app.json` on its own. `@react-native-async-storage/async-storage`
+  installed at 2.2.0, as expected. Whether the native splash really holds is checked on a device (UAT2).
 
 ## R5. Where the edition names come from (FR-002, FR-015)
 
