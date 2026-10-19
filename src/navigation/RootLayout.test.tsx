@@ -11,7 +11,7 @@ const LIST_TITLE = 'Choose your edition';
 const TAB_LABELS = ['My Infobae', 'Media', 'Chat', 'Menu'];
 
 async function launch() {
-  await renderRouter(APP_DIR);
+  return renderRouter(APP_DIR);
 }
 
 beforeEach(async () => {
@@ -135,5 +135,46 @@ describe('splash screen', () => {
     await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
     expect(hide.mock.calls.length).toBe(hidesBefore + 1);
     jest.restoreAllMocks();
+  });
+});
+
+describe('changing the edition from the Menu', () => {
+  async function openMenuEdition() {
+    await AsyncStorage.setItem('preferences.edition', 'colombia');
+    const app = await launch();
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    await act(async () => router.navigate('/menu'));
+    await waitFor(() => expect(screen.getByText('Edition')).toBeTruthy());
+    await fireEvent.press(screen.getByText('Edition'));
+    // The native header is not in the JS tree, so check the route and the list rows instead.
+    await waitFor(() => expect(app.getPathname()).toBe('/change-edition'));
+    expect(screen.getByText('Argentina')).toBeTruthy();
+    return app;
+  }
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('updates Home at once and saves the new edition', async () => {
+    const app = await openMenuEdition();
+    await fireEvent.press(screen.getByText('México'));
+    await waitFor(() => expect(app.getPathname()).toBe('/menu'));
+    expect(screen.getByText('México')).toBeTruthy();
+    await act(async () => router.navigate('/'));
+    await waitFor(() => expect(screen.getByText('México')).toBeTruthy());
+    expect(screen.queryByText('Colombia')).toBeNull();
+    expect(await AsyncStorage.getItem('preferences.edition')).toBe('mexico');
+  });
+
+  it('changes nothing and saves nothing when the list is left without a choice', async () => {
+    const app = await openMenuEdition();
+    const setItem = jest.spyOn(AsyncStorage, 'setItem');
+    setItem.mockClear(); // the mock keeps calls from earlier tests and from the seeding above
+    await act(async () => router.back());
+    await waitFor(() => expect(app.getPathname()).toBe('/menu'));
+    expect(screen.getByText('Colombia')).toBeTruthy();
+    expect(setItem).not.toHaveBeenCalled();
+    expect(await AsyncStorage.getItem('preferences.edition')).toBe('colombia');
   });
 });

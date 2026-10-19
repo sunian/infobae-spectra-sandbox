@@ -24,7 +24,7 @@ export function ListRow({ label, value, selected = false, onPress }: ListRowProp
         <Text>{label}</Text>
         {value ? <Text variant="label">{value}</Text> : null}
       </View>
-      {selected ? <Text variant="title">{SELECTED_MARK}</Text> : null}
+      {selected ? <Text>{SELECTED_MARK}</Text> : null}
     </Pressable>
   );
 }

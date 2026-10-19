@@ -6,9 +6,12 @@ import { EditionProvider } from '@/state/EditionContext';
 
 import { EditionScreen } from './EditionScreen';
 
-function fakeStorage() {
+const mockBack = jest.fn();
+jest.mock('expo-router', () => ({ useRouter: () => ({ back: mockBack, push: jest.fn() }) }));
+
+function fakeStorage(saved: string | null = null) {
   const storage: KeyValueStorage & { setItem: jest.Mock } = {
-    getItem: jest.fn(async () => null),
+    getItem: jest.fn(async () => saved),
     setItem: jest.fn(async () => {}),
   };
   return storage;
@@ -58,5 +61,64 @@ describe('EditionScreen, first-launch mode', () => {
     await fireEvent.press(screen.getByText('México'));
     await waitFor(() => expect(storage.setItem).toHaveBeenCalledTimes(3));
     expect(storage.setItem).toHaveBeenLastCalledWith('preferences.edition', 'mexico');
+  });
+});
+
+async function renderChange(saved = 'colombia') {
+  const storage = fakeStorage(saved);
+  await render(
+    <EditionProvider storage={storage}>
+      <EditionScreen mode="change" />
+    </EditionProvider>,
+  );
+  await waitFor(() => expect(screen.getAllByRole('button').length).toBeGreaterThan(0));
+  return storage;
+}
+
+describe('EditionScreen, change mode', () => {
+  beforeEach(() => {
+    mockBack.mockClear();
+  });
+
+  it('shows the same editions in the same order as first-launch mode', async () => {
+    const names = EDITIONS.map((edition) => edition.name);
+    const pattern = new RegExp(`^(${names.join('|')})$`);
+    await renderChange();
+    const changeOrder = screen.getAllByText(pattern).map((node) => node.props.children);
+    expect(changeOrder).toEqual(names);
+  });
+
+  it('leaves the title to the stack header, so it is not shown twice', async () => {
+    await renderChange();
+    expect(screen.queryByText('Change edition')).toBeNull();
+    expect(screen.queryByText('Choose your edition')).toBeNull();
+  });
+
+  it('marks only the current edition', async () => {
+    await renderChange('colombia');
+    expect(screen.getAllByRole('button', { selected: true })).toHaveLength(1);
+    expect(screen.getByRole('button', { name: /Colombia/, selected: true })).toBeTruthy();
+  });
+
+  it('saves a different edition and goes back', async () => {
+    const storage = await renderChange('colombia');
+    await fireEvent.press(screen.getByText('México'));
+    await waitFor(() =>
+      expect(storage.setItem).toHaveBeenCalledWith('preferences.edition', 'mexico'),
+    );
+    expect(mockBack).toHaveBeenCalledTimes(1);
+  });
+
+  it('changes nothing and saves nothing when the reader leaves without a choice', async () => {
+    const storage = await renderChange('colombia');
+    expect(storage.setItem).not.toHaveBeenCalled();
+    expect(mockBack).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: /Colombia/, selected: true })).toBeTruthy();
+  });
+
+  it('keeps the selection when the current edition is tapped again', async () => {
+    await renderChange('colombia');
+    await fireEvent.press(screen.getByText('Colombia'));
+    expect(screen.getByRole('button', { name: /Colombia/, selected: true })).toBeTruthy();
   });
 });
