@@ -148,12 +148,12 @@ description: "Task list for Edition Selection"
 
 **Purpose**: Docs, manual checks, and the full gates.
 
-- [ ] T033 [P] Update `docs/PROJECT_GUIDE.md`: add a `src/state/` row to the folder table ("Shared app state: React contexts and their hooks. Each has a test next to it."); change the "Run the app" expectation to "the first launch shows an edition list, then five tabs"; add a note that every Maestro flow runs `.maestro/shared/pick-edition.yaml` after a clean launch.
-- [ ] T034 [P] Update the header comment in `.maestro/config.yaml`: add one line that flows start with a clean install and then pick an edition through `shared/pick-edition.yaml`, so baselines show the `Colombia` edition.
-- [ ] T035 Do the manual checks from the test plan on the emulator (test-plan T25, T26, T28) and write the result in the PR notes: rotate the device on the edition list and scroll to `Mundo` (every row reachable, none cut off); read `app/` and `src/screens/` changes and confirm they use only design system components and no hard-coded text (also confirm lint passes with no rule disabled).
-- [ ] T036 Run `npm run verify` (lint, typecheck, all Jest tests). Fix every failure. Do not skip or weaken a test.
-- [ ] T037 On the emulator, run the full `npm run test:e2e` on a fresh release build and confirm all eight flows pass (five existing, plus `edition-select`, `edition-persist`, `edition-change`).
-- [ ] T038 Run the commands in `specs/002-edition-selection/quickstart.md` sections 1 to 3 and fix any command or expected result that drifted. Check that every spec requirement FR-001 to FR-016 maps to at least one passing test (use the test plan's Verifies column).
+- [X] T033 [P] Update `docs/PROJECT_GUIDE.md`: add a `src/state/` row to the folder table ("Shared app state: React contexts and their hooks. Each has a test next to it."); change the "Run the app" expectation to "the first launch shows an edition list, then five tabs"; add a note that every Maestro flow runs `.maestro/shared/pick-edition.yaml` after a clean launch.
+- [X] T034 [P] Update the header comment in `.maestro/config.yaml`: add one line that flows start with a clean install and then pick an edition through `shared/pick-edition.yaml`, so baselines show the `Colombia` edition.
+- [X] T035 Do the manual checks from the test plan on the emulator (test-plan T25, T26, T28) and write the result in the PR notes: rotate the device on the edition list and scroll to `Mundo` (every row reachable, none cut off); read `app/` and `src/screens/` changes and confirm they use only design system components and no hard-coded text (also confirm lint passes with no rule disabled). Result: T25 landscape rotation on emulator-5554, the list scrolls and `Mundo` is reachable; T26 and T28 by code review, lint passes with no rule disabled.
+- [X] T036 Run `npm run verify` (lint, typecheck, all Jest tests). Fix every failure. Do not skip or weaken a test. Result: 12 suites, 110 tests pass; lint and typecheck clean.
+- [X] T037 On the emulator, run the full `npm run test:e2e` on a fresh release build and confirm all eight flows pass (five existing, plus `edition-select`, `edition-persist`, `edition-change`). Result: 8/8 flows passed.
+- [X] T038 Run the commands in `specs/002-edition-selection/quickstart.md` sections 1 to 3 and fix any command or expected result that drifted. Check that every spec requirement FR-001 to FR-016 maps to at least one passing test (use the test plan's Verifies column). Result: quickstart commands match; no drift found.
 
 ---
 

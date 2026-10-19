@@ -13,6 +13,9 @@
 #   npm run build:android:release     (forces a fresh JS bundle; plain gradle can reuse an old one)
 #   adb -s <device-id> install -r android/app/build/outputs/apk/release/app-release.apk
 #
+# FIRST LAUNCH: a clean install shows the edition list before the tabs. Flows that start with
+# `clearState: true` then run shared/pick-edition.yaml, so baselines show the Colombia edition.
+#
 # TEXT CHECKS: flows also run shared/assert-tabs.yaml. The 98% image threshold does not reliably
 # catch a small text change (for example "Home" to "Home TEST"), so tab labels are asserted exactly.
 #

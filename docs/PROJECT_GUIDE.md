@@ -14,7 +14,7 @@ Product intent is in `vision.md`. Rules are in `.specify/memory/constitution.md`
 1. `npm install`
 2. `npm start`
 3. Press `a` for the Android emulator or `i` for the iOS simulator.
-4. Expect five tabs: Home, My Infobae, Media, Chat, Menu. Each shows its name.
+4. On a first launch the app shows an edition list. Tap an edition (for example Colombia). Expect five tabs: Home, My Infobae, Media, Chat, Menu. Home shows the edition name. Later launches skip the list. The Menu tab changes the edition.
 
 ## Troubleshooting
 
@@ -29,6 +29,7 @@ Product intent is in `vision.md`. Rules are in `.specify/memory/constitution.md`
 | `app/`               | Expo Router routes. Thin files that only render a screen from `src/screens/`.        |
 | `src/screens/`       | Screen components. Built only from `@/design-system` components.                     |
 | `src/navigation/`    | Navigation config (`tabs.ts`: tab keys, order, label keys).                          |
+| `src/state/`         | Shared app state: React contexts and their hooks. Each has a test next to it.        |
 | `src/design-system/` | Tokens (colors, fonts, spacing, typography) and reusable components.                 |
 | `src/localization/`  | `en.json` (all user-facing text) and `t()`.                                          |
 | `src/domain/`        | Business logic. Every module needs unit tests.                                       |
@@ -71,6 +72,10 @@ Product intent is in `vision.md`. Rules are in `.specify/memory/constitution.md`
 Build and install the release app for screenshot tests with `npm run build:android:release`, then
 `adb -s <device-id> install -r android/app/build/outputs/apk/release/app-release.apk`. The script
 forces a fresh JavaScript bundle. A plain Gradle build can reuse an old bundle and install stale text.
+
+Every flow starts with a clean install, which shows the edition list. Each flow runs
+`.maestro/shared/pick-edition.yaml` next, which taps `Colombia`. Baselines therefore show the `Colombia`
+edition.
 
 Screenshot tests need the app installed on the fixed device from `.maestro/config.yaml` (Android
 emulator `Pixel_3a_API_34_extension_level_7_arm64-v8a`, portrait). Build and install steps are in
