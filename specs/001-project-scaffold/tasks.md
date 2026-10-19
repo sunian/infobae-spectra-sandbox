@@ -149,7 +149,7 @@ description: "Task list for Project Scaffold"
 - [X] T044 [US4] In `docs/PROJECT_GUIDE.md` add a "Quality gates" section that lists each command from `contracts/project-commands.md`: `npm run lint`, `npm run typecheck`, `npm test`, `npm run verify` before a push, and `npm run test:e2e` before a PR merge. Add a note about the fixed screenshot device configuration from T039.
 - [X] T045 [US4] In `docs/PROJECT_GUIDE.md` add a "Starter template" section that records the template name and version used in T001 (`expo-template-blank-typescript`, with the actual version) and states that the base files came from it (FR-018).
 - [X] T046 [US4] Add a link to `docs/PROJECT_GUIDE.md` and the quick-start commands to a root `README.md` (create it if it does not exist; keep it to about 15 lines). Check that no `.gitkeep` remains in a folder that now holds real files.
-- [ ] T047 [US4] Check the guide with the placement test (SC-006): using only the guide, state where a new `SettingsScreen`, a new `Badge` component, a new string `settings.title`, a new `src/domain/` function, and its test would go. Fix any unclear step in the guide.
+- [X] T047 [US4] Check the guide with the placement test (SC-006): using only the guide, state where a new `SettingsScreen`, a new `Badge` component, a new string `settings.title`, a new `src/domain/` function, and its test would go. Fix any unclear step in the guide. Done 2026-10-19: the tester placed all five items correctly using only the guide. The tester gave file paths for the screen, component and string. The domain items had no file name, so the guide now has an example. The guide now also covers new tabs, screens outside the tab bar, and nested string keys.
 
 **Checkpoint**: All four user stories work.
 

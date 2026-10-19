@@ -39,11 +39,17 @@ Product intent is in `vision.md`. Rules are in `.specify/memory/constitution.md`
 
 - **New screen**: add `src/screens/XScreen.tsx` built from `@/design-system`. Add a route file in
   `app/` that renders it. Add a Maestro flow and baseline.
+  - Screen in the tab bar: put the route in `app/(tabs)/`. Add the tab to `src/navigation/tabs.ts`
+    (key, route, label key). The tab layout reads that list, so it needs no other edit. Add the
+    label to `en.json`.
+  - Screen outside the tab bar: put the route in `app/`, outside `app/(tabs)/`.
 - **New design system component**: add `src/design-system/components/X.tsx`. It reads only tokens.
   Export it from `src/design-system/index.ts`. Add a unit test next to it.
-- **New string**: add the key to `src/localization/en.json`. Use `t('key')` in code. Never write
+- **New string**: add the key to `src/localization/en.json`. Keys are nested by area:
+  `settings.title` goes under a `settings` object. Use `t('key')` in code. Never write
   text in JSX.
-- **New business logic**: add a module in `src/domain/` with a test file next to it.
+- **New business logic**: add a module in `src/domain/` with a test file next to it. Example:
+  `src/domain/formatDate.ts` and `src/domain/formatDate.test.ts`.
 - **New test**: unit test goes next to the code. Screenshot test goes in `.maestro/flows/` with its
   baseline in `.maestro/baselines/`.
 
