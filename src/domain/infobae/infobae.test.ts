@@ -156,6 +156,56 @@ describe('mapArticle', () => {
     });
   });
 
+  describe('hero image and a body that starts with an image', () => {
+    const base = { _id: 'x', canonical_url: '/x/', display_date: '2026-01-01T00:00:00.000Z' };
+    const hero = { url: 'https://x/hero.jpg', caption: 'Hero caption' };
+
+    it('drops the hero when the body starts with the same image', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [
+          { type: 'image', url: 'https://x/hero.jpg', caption: 'Other caption' },
+          { type: 'text', content: 'Body' },
+        ],
+      });
+      expect(mapped.heroImage).toBeNull();
+      expect(mapped.blocks.map((block) => block.type)).toEqual(['image', 'text']);
+    });
+
+    it('drops the hero when the body starts with another crop of the photo', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [{ type: 'image', url: 'https://x/other.jpg' }],
+      });
+      expect(mapped.heroImage).toBeNull();
+      expect(mapped.blocks).toHaveLength(1);
+    });
+
+    it('keeps the hero when the body starts with text', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [
+          { type: 'text', content: 'Body' },
+          { type: 'image', url: 'https://x/hero.jpg' },
+        ],
+      });
+      expect(mapped.heroImage?.caption).toBe('Hero caption');
+      expect(mapped.blocks.map((block) => block.type)).toEqual(['text', 'image']);
+    });
+
+    it('looks past unsupported blocks to the first block that shows', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [{ type: 'custom_embed' }, { type: 'image', url: 'https://x/o.jpg' }],
+      });
+      expect(mapped.heroImage).toBeNull();
+    });
+  });
+
   it('drops unknown and empty elements', () => {
     const mapped = mapArticle({
       _id: 'x',

@@ -84,6 +84,11 @@ function toBlock(element: ArcElement): ArticleBlock | null {
 }
 
 export function mapArticle(story: ArcStory): Article {
+  const blocks = (story.content_elements ?? []).flatMap((element) => {
+    const block = toBlock(element);
+    return block ? [block] : [];
+  });
+  const hero = story.promo_items?.basic ? toImage(story.promo_items.basic) : null;
   return {
     id: story._id,
     url: `${BASE_URL}${story.canonical_url}`,
@@ -92,10 +97,9 @@ export function mapArticle(story: ArcStory): Article {
     authors: (story.credits?.by ?? []).flatMap((author) => (author.name ? [author.name] : [])),
     publishedAt: story.display_date,
     sectionName: story.taxonomy?.primary_section?.name ?? '',
-    heroImage: story.promo_items?.basic ? toImage(story.promo_items.basic) : null,
-    blocks: (story.content_elements ?? []).flatMap((element) => {
-      const block = toBlock(element);
-      return block ? [block] : [];
-    }),
+    // The site often starts the body with the lead photo, as another crop with its own caption
+    // and a different id. The body image wins, so the photo shows once.
+    heroImage: blocks[0]?.type === 'image' ? null : hero,
+    blocks,
   };
 }

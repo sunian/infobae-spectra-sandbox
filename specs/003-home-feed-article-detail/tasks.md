@@ -244,3 +244,13 @@ description: "Task list for Home Feed and Article Detail"
 2. **Then** add US3, US4, US5 in order (Phases 5 to 7). Each one is a small, independent increment.
 3. **Finish** with Polish and the human UAT on the live APIs.
 4. Push the branch only after `npm run verify` passes. Merge only after `npm run test:e2e` passes.
+
+---
+
+## Phase 10: Convergence
+
+- [ ] T056 Add a fixture article that loads slowly (for example a fixed path that resolves after about 6 s, like Mundo) in `src/domain/content/fixtureContentSource.ts` with a unit test first. Add a Maestro flow in `.maestro/flows/` that opens it and asserts a new `article-loading` screenshot, then record and check the baseline by eye per SC-007 and Constitution IV (partial)
+- [ ] T057 Give the Home page-error state its own screenshot. In `.maestro/flows/home-page-error.yaml` assert a `home-page-error` baseline at the footer error. Make the position stable first (for example scroll to the end with a repeatable step), then record and check it by eye per SC-007 and FR-024 (partial)
+- [ ] T058 Cover SC-006 with at least 10 trimmed real article samples. Fetch them with `curl` using `articleUrl`, store them under `src/domain/content/__fixtures__/samples/`, and add a unit test in `src/domain/infobae/infobae.test.ts` that maps every sample, keeps the block order, leaves out unsupported blocks, and never throws per SC-006 and FR-016 (partial)
+- [ ] T059 View the article screen by eye on the emulator in landscape and at 1.6x system font, as T049 did only for Home. Fix any clipped text in the design system components, then record the result on this task line per the edge case "landscape or large font setting" (partial)
+- [ ] T060 Decide and record how the feed time works. The list orders by `first_publish_date` (FR-002), but each item shows `last_updated_date` (FR-003, FR-012). Add one line in `specs/003-home-feed-article-detail/research.md` R7 about the reader effect, and add a unit test in `src/domain/infobae/infobae.test.ts` that pins which field the feed time reads (partial)
