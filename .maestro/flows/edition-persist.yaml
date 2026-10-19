@@ -1,0 +1,20 @@
+# A chosen edition survives a full close and reopen. A list that was left without a choice shows again.
+appId: com.infobae.scaffold
+---
+# Part 1: pick an edition, close the app fully, reopen without clearing state.
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- stopApp
+- launchApp
+- assertVisible: '^My Infobae$'
+- assertVisible: '^Colombia$'
+- assertNotVisible: 'Choose your edition'
+# Part 2: leave the first-launch list without a choice. Nothing was saved, so the list shows again.
+- launchApp:
+    clearState: true
+- assertVisible: 'Choose your edition'
+- stopApp
+- launchApp
+- assertVisible: 'Choose your edition'
+- assertNotVisible: '^My Infobae$'

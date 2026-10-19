@@ -1,13 +1,22 @@
 import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 
 import { EditionProvider, useEdition } from '@/state/EditionContext';
 
+// Keep the native splash screen up until the saved edition is read, so no other screen flashes.
+SplashScreen.preventAutoHideAsync();
+
 function RootNavigator() {
   const { status, edition } = useEdition();
+  const ready = status === 'ready';
 
-  // The splash screen stays up while the saved edition is read (added in T022).
-  if (status === 'loading') return null;
+  useEffect(() => {
+    if (ready) SplashScreen.hideAsync();
+  }, [ready]);
+
+  if (!ready) return null;
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
