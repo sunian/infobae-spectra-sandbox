@@ -162,7 +162,7 @@ description: "Task list for Project Scaffold"
 - [X] T048 Run `npx prettier --check .` and fix formatting with `npx prettier --write .` where needed (excluding ignored folders).
 - [X] T049 Verify SC-008 and FR-018: `package.json`, `app.json`, and `tsconfig.json` came from the template. No `App.tsx`, `index.ts`, or demo assets remain. List any file in the repository root that is not part of the plan's structure and remove it.
 - [X] T050 Verify FR-016: grep `app` and `src` for any product feature (edition, feed, article, video, audio, chat service, login). The expected result is no hits other than tab names and placeholder labels.
-- [ ] T051 Run the full `specs/001-project-scaffold/quickstart.md` from a fresh clone (`git clone` into the scratchpad, then `npm install`). Confirm every step and the SC-001 time target (under 15 minutes). Fix the guide for any gap.
+- [X] T051 Run the full `specs/001-project-scaffold/quickstart.md` from a fresh clone (`git clone` into the scratchpad, then `npm install`). Confirm every step and the SC-001 time target (under 15 minutes). Fix the guide for any gap. Done on Android only: clone, install, lint, typecheck, 11 tests, release build and 5/5 e2e flows all pass in about 2.5 minutes of command time. iOS was not run (no Xcode). No guide gaps found.
 - [X] T052 Run `npm run verify` and `npm run test:e2e` one last time and confirm both exit 0 (SC-003).
 
 ---
