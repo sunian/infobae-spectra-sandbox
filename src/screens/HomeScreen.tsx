@@ -1,5 +1,10 @@
 import { Placeholder } from '@/design-system';
+import { t } from '@/localization';
+import { useEdition } from '@/state/EditionContext';
 
 export function HomeScreen() {
-  return <Placeholder labelKey="tabs.home" />;
+  const { edition } = useEdition();
+  return (
+    <Placeholder labelKey="tabs.home" detail={edition ? t(`editions.${edition}`) : undefined} />
+  );
 }

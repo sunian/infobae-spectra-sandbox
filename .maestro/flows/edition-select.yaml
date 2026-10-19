@@ -1,0 +1,31 @@
+# First launch: the edition list shows, the tabs do not, back leaves the app, and one tap on an
+# edition opens the tabs with Home showing that edition.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'Choose your edition'
+- assertNotVisible: '^My Infobae$'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: edition-select
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/edition-select.png
+          thresholdPercentage: 98
+# The Android back key leaves the app. The tabs never show, and the next launch shows the list.
+- back
+- launchApp
+- assertVisible: 'Choose your edition'
+- assertNotVisible: '^My Infobae$'
+# One tap opens the tabs, and Home shows the chosen edition.
+- tapOn: '^Colombia$'
+- waitForAnimationToEnd
+- assertVisible: '^My Infobae$'
+- assertVisible: '^Colombia$'
