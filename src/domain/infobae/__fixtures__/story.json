@@ -1,0 +1,174 @@
+{
+ "_id": "BJJ67JZBNZD5PHEGP453WCVTII",
+ "canonical_url": "/estados-unidos/2026/10/19/accidente-aereo-en-san-jose-una-avioneta-con-tres-pasajeros-se-estrello-en-una-calle-concurrida-y-todos-sobrevivieron/",
+ "display_date": "2026-10-19T13:47:56.352Z",
+ "headlines": {
+  "basic": "Accidente aéreo en San José: una avioneta con tres pasajeros se estrelló en una calle concurrida y todos sobrevivieron",
+  "meta_title": ""
+ },
+ "subheadlines": {
+  "basic": "El piloto había comunicado fallas en el motor antes de la caída sobre la intersección de Capitol Expressway y Excalibur Drive, donde los bomberos controlaron un derrame de combustible"
+ },
+ "credits": {
+  "by": [
+   {
+    "additional_properties": {
+     "original": {
+      "_id": "Joaquín-Bahamonde"
+     }
+    },
+    "description": "",
+    "image": {},
+    "name": "Joaquín Bahamonde",
+    "slug": "joaquin-bahamonde",
+    "type": "author"
+   }
+  ]
+ },
+ "promo_items": {
+  "basic": {
+   "_id": "VNK72BBYYFFJ3O5ZB3YPA2GSIY",
+   "additional_properties": {
+    "originalUrl": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/VNK72BBYYFFJ3O5ZB3YPA2GSIY.png",
+    "resizeUrl": "/resizer/v2/VNK72BBYYFFJ3O5ZB3YPA2GSIY.png?auth=0386ad44fab97143c0302d40b3348f02be16bfb0f48dd78a0396e047db216ec0"
+   },
+   "auth": {
+    "1": "0386ad44fab97143c0302d40b3348f02be16bfb0f48dd78a0396e047db216ec0"
+   },
+   "caption": "El accidente ocurrió durante la hora pico del sábado en una de las intersecciones con mayor flujo vehicular del este de la ciudad (ABC News)",
+   "height": 645,
+   "url": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/VNK72BBYYFFJ3O5ZB3YPA2GSIY.png",
+   "width": 1147
+  }
+ },
+ "taxonomy": {
+  "primary_section": {
+   "_id": "/estados-unidos",
+   "additional_properties": {
+    "original": {
+     "DFP": {
+      "dfp_path": "infobae/estados-unidos"
+     }
+    }
+   },
+   "name": "Estados Unidos",
+   "path": "/estados-unidos"
+  }
+ },
+ "content_elements": [
+  {
+   "_id": "ULA8NA7L8YMHTXTI1ZLCV72GBW",
+   "embed": {
+    "config": {
+     "contentUrl": "https://cdn.jwplayer.com/videos/U6d9rZT8-gTHcH4FX.mp4",
+     "description": "Las imágenes del accidente circularon en redes tras ser registradas por automovilistas que transitaban la zona (@Nadia Ballesteros)",
+     "duration": "P0Y0M0DT0H0M33S",
+     "mediaId": "U6d9rZT8",
+     "name": "Accidente aéreo en California: una avioneta con tres pasajeros se estrelló en una calle concurrida y todos sobrevivieron",
+     "playerId": "gTHcH4FX",
+     "thumbnailUrl": "https://cdn.jwplayer.com/v2/media/U6d9rZT8/poster.jpg?width=720"
+    },
+    "id": "U6d9rZT8",
+    "url": "https://dmogdnijql5p4.cloudfront.net/edit"
+   },
+   "subtype": "video",
+   "type": "custom_embed"
+  },
+  {
+   "_id": "S57RU2G6ZZEPBHGXTWJYGMAYNA",
+   "additional_properties": {},
+   "content": "El sábado por la tarde, en plena hora de tránsito, un <b>monomotor de hélice Cessna 177A Cardinal</b>, fabricado en 1968, <b>perdió potencia en su </b><a href=\"https://www.infobae.com/tag/motor/\"><b>motor</b></a> y se precipitó sobre la intersección de <i>Capitol Expressway</i> y <i>Excalibur Drive</i>, <b>una de las arterias más concurridas de</b> <b>San José</b>, <a href=\"https://www.infobae.com/tag/california/\"><b>California</b></a>.",
+   "type": "text"
+  },
+  {
+   "_id": "EW7R3P7HVVFFPGMGI5UPPFHZAM",
+   "additional_properties": {},
+   "content": "La <a href=\"https://www.infobae.com/tag/aeronave/\"><b>aeronave</b></a> <b>quedó clavada en el asfalto</b>, en medio de la calzada,<b> sin impactar contra ningún automóvil ni peatón</b>.",
+   "type": "text"
+  },
+  {
+   "_id": "35S4YA27J5FZLL2ZZ7ZHZRAV2A",
+   "additional_properties": {
+    "keywords": [
+     "avioneta",
+     "accidente aéreo",
+     "patrulla policial",
+     "semáforo"
+    ],
+    "resizeUrl": "/resizer/v2/35S4YA27J5FZLL2ZZ7ZHZRAV2A.png?auth=4a0cf70bb6a74093be80a71d49fc7a3095fe5b5bbd4c4fe81c0b60d343013274"
+   },
+   "alt_text": "Avioneta blanca y amarilla con el frente dañado junto a un poste con semáforo, un hombre cerca de la cabina y una patrulla al fondo",
+   "auth": {
+    "1": "4a0cf70bb6a74093be80a71d49fc7a3095fe5b5bbd4c4fe81c0b60d343013274"
+   },
+   "caption": "El accidente ocurrió durante la hora pico del sábado en una de las intersecciones con mayor flujo vehicular del este de la ciudad (KGO)",
+   "height": 642,
+   "type": "image",
+   "url": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/35S4YA27J5FZLL2ZZ7ZHZRAV2A.png",
+   "width": 1243
+  },
+  {
+   "_id": "6ZDZ3EGWPNBSRD3CBGGAFXANHQ",
+   "additional_properties": {},
+   "content": "Quién operaba la aeronave y qué se sabe del piloto",
+   "level": 2,
+   "type": "header"
+  },
+  {
+   "_id": "JEOCTGAMRVEZ5EUA4NA6BRHQY4",
+   "additional_properties": {
+    "keywords": [
+     "accidente aéreo",
+     "avioneta",
+     "bomberos",
+     "tránsito"
+    ],
+    "resizeUrl": "/resizer/v2/JEOCTGAMRVEZ5EUA4NA6BRHQY4.png?auth=7262b72afc16970e5196c1a6670707879f79e9da35ddb4a011e0589f715e82bf"
+   },
+   "alt_text": "Una avioneta destruida en posición vertical sobre el pavimento, junto a un bombero, semáforos y vehículos de emergencia",
+   "auth": {
+    "1": "7262b72afc16970e5196c1a6670707879f79e9da35ddb4a011e0589f715e82bf"
+   },
+   "caption": "La Cessna 177A Cardinal fue diseñada en los años 60 como una aeronave de turismo liviana, pensada para pilotos con poca experiencia (@SJFD)",
+   "height": 810,
+   "type": "image",
+   "url": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/JEOCTGAMRVEZ5EUA4NA6BRHQY4.png",
+   "width": 1085
+  },
+  {
+   "_id": "U6QYK43PNZAEHL7AP7UIE2XEP4",
+   "additional_properties": {},
+   "content": "Un historial de incidentes en la misma zona",
+   "level": 2,
+   "type": "header"
+  },
+  {
+   "_id": "ONU4VMS4HFD4NLDFKNG235BB3A",
+   "additional_properties": {
+    "keywords": [
+     "Cessna 172P",
+     "accidente de aviación",
+     "Evelyn Avenue",
+     "aviación civil"
+    ],
+    "resizeUrl": "/resizer/v2/ONU4VMS4HFD4NLDFKNG235BB3A.png?auth=9ccd73902b168798f99631e82f376b1b2550814897c58f41688d0c725c4918db"
+   },
+   "alt_text": "Una avioneta blanca dañada descansa sobre el techo y el garaje de una casa residencial de una planta con vegetación alrededor",
+   "auth": {
+    "1": "9ccd73902b168798f99631e82f376b1b2550814897c58f41688d0c725c4918db"
+   },
+   "caption": "En 2017, otra Cessna terminó incrustada en una vivienda residencial sobre Evelyn Avenue, a menos de 300 metros del aeropuerto Reid-Hillview (KGO)",
+   "height": 850,
+   "type": "image",
+   "url": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ONU4VMS4HFD4NLDFKNG235BB3A.png",
+   "width": 1530
+  },
+  {
+   "_id": "3JOJZLAEUNB6LGOCFUVCU6DPD4",
+   "additional_properties": {},
+   "content": "Las consecuencias en el tránsito y la investigación en curso",
+   "level": 2,
+   "type": "header"
+  }
+ ]
+}

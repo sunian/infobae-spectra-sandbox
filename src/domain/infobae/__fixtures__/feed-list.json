@@ -1,0 +1,101 @@
+{
+ "_id": "fixture",
+ "content_elements": [
+  {
+   "credits": {
+    "by": [
+     {
+      "name": "Jhoan Pardo"
+     }
+    ]
+   },
+   "description": {
+    "basic": "La colectividad oficialista expresó solidaridad con Elizabeth Jay-Pang Díaz y Girley Ordoñez Bowi, al considerar que las acusaciones presidenciales afectaron su honorabilidad durante la visita del mandatario a la isla"
+   },
+   "headlines": {
+    "basic": "Partido Liberal se enfrentó a Abelardo de la Espriella por señalamientos contra representante y gobernadora de San Andrés: “Comprometen el buen nombre”",
+    "meta_title": ""
+   },
+   "last_updated_date": "2026-10-19T14:19:02.977Z",
+   "promo_items": {
+    "basic": {
+     "_id": "SOE5754FVJGS5OYFNVXLELLSNU",
+     "additional_properties": {
+      "resizeUrl": "/resizer/v2/SOE5754FVJGS5OYFNVXLELLSNU.jpg?auth=450d4b985aaa000aae937a6de794e3bc963de70c0a639d5e63328b274563eaab"
+     },
+     "auth": {
+      "1": "450d4b985aaa000aae937a6de794e3bc963de70c0a639d5e63328b274563eaab"
+     },
+     "type": "image",
+     "url": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/SOE5754FVJGS5OYFNVXLELLSNU.jpg"
+    }
+   },
+   "website_url": "/colombia/2026/10/19/partido-liberal-se-enfrento-a-abelardo-de-la-espriella-por-senalamientos-contra-representante-y-gobernadora-de-san-andres-comprometen-el-buen-nombre/"
+  },
+  {
+   "credits": {
+    "by": [
+     {
+      "name": "Camilo Zabaleta"
+     }
+    ]
+   },
+   "description": {
+    "basic": "El colombiano tuvo su mejor presentación en la temporada 2026-2027 ante RB Leipzig en la Bundesliga, marcando triplete, y comienza a encontrar su mejor versión"
+   },
+   "headlines": {
+    "basic": "Luis Díaz debería reemplazar a Michael Olise en el Bayern Múnich ante Arsenal en la Champions League: esto es lo que dice la prensa alemana",
+    "meta_title": ""
+   },
+   "last_updated_date": "2026-10-19T14:11:38.562Z",
+   "promo_items": {
+    "basic": {
+     "_id": "LRTAL7LRJFBP7IIGKLPDY3WJ4Y",
+     "additional_properties": {
+      "resizeUrl": "/resizer/v2/LRTAL7LRJFBP7IIGKLPDY3WJ4Y.JPG?auth=8fdbda64d4ead91b6793637e573be68b1c20225b49131f93eb17b47fcab587cd"
+     },
+     "auth": {
+      "1": "8fdbda64d4ead91b6793637e573be68b1c20225b49131f93eb17b47fcab587cd"
+     },
+     "type": "image",
+     "url": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/LRTAL7LRJFBP7IIGKLPDY3WJ4Y.JPG"
+    }
+   },
+   "website_url": "/colombia/deportes/2026/10/19/luis-diaz-deberia-reemplazar-a-michael-olise-en-el-bayern-munich-ante-arsenal-en-la-champions-league-esto-es-lo-que-dice-la-prensa-alemana/"
+  },
+  {
+   "credits": {
+    "by": [
+     {
+      "name": "Iván Gaitán"
+     }
+    ]
+   },
+   "description": {
+    "basic": "La cantante de champeta, exparticipante de La casa de los famosos Colombia, confirmó en La Kalle que lleva más de un año de relación con un bogotano y no esquivó ninguna pregunta sobre su carácter"
+   },
+   "headlines": {
+    "basic": "La Toxi Costeña habló sin filtros de su relación con un hombre de 46 años y reveló detalles de su vida íntima: “Eso es lo que pido”",
+    "meta_title": ""
+   },
+   "last_updated_date": "2026-10-19T14:10:20.431Z",
+   "promo_items": {
+    "basic": {
+     "_id": "RBY3PUEO7BHFLGI7FP63AV6DCY",
+     "additional_properties": {
+      "resizeUrl": "/resizer/v2/RBY3PUEO7BHFLGI7FP63AV6DCY.jpg?auth=2c26a056d52890c76448715dcd401bd18845320a3d7068ef66bba12d9d84191b"
+     },
+     "auth": {
+      "1": "2c26a056d52890c76448715dcd401bd18845320a3d7068ef66bba12d9d84191b"
+     },
+     "type": "image",
+     "url": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/RBY3PUEO7BHFLGI7FP63AV6DCY.jpg"
+    }
+   },
+   "website_url": "/colombia/2026/10/19/la-toxi-costena-hablo-sin-filtros-de-su-relacion-con-un-hombre-de-46-anos-y-revelo-detalles-de-su-vida-intima-eso-es-lo-que-pido/"
+  },
+  {
+   "website_url": "/x/"
+  }
+ ]
+}
