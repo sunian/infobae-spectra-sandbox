@@ -1,3 +1,12 @@
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0 (MINOR: new principle added)
+Modified principles: none renamed. Workflow item 3 now says "Principles I to VII".
+Added sections: VII. Every Document Opens with a Verifiable TL;DR
+Removed sections: none
+Follow-up TODOs: none. Templates carry the TL;DR block through .specify/templates/overrides/.
+-->
+
 # Infobae Constitution
 
 ## Core Principles
@@ -37,6 +46,21 @@ content for the selected edition. For now, the app MUST get content only from th
 the infobae.com website uses. The app MUST NOT depend on private or authenticated back ends until
 this principle is amended.
 
+### VII. Every Document Opens with a Verifiable TL;DR
+Every Markdown deliverable that an agent writes MUST open with a TL;DR block. The block is the
+first content after the title and any front matter. It has five bullets or fewer. Each bullet is
+one plain sentence. It states what the document decides or builds, why, the scope or approach, and
+the biggest risk or open question. It ends with a "Check this" line that names the one to three
+decisions a human reviewer must confirm.
+
+Every statement in the TL;DR MUST come from the body of the same document. It MUST NOT add facts.
+When an agent updates a document, it MUST update the TL;DR in the same write. The body stays the
+source of truth for the next phase. A document under about 30 lines MAY use a one-sentence TL;DR.
+This applies to spec.md, plan.md, tasks.md, research.md, data-model.md, checklists, and every
+Spectra document.
+
+Rationale: A reviewer can confirm the key decisions fast, and the body stays the source of truth.
+
 ## Technology Stack & Constraints
 
 - **App**: Infobae, a mobile news reader for content from Infobae.
@@ -54,7 +78,7 @@ this principle is amended.
 
 1. Before a push of a feature branch: the linter and all unit tests MUST pass.
 2. Before a PR merge: all Maestro screenshot tests MUST pass.
-3. Each PR MUST show that it follows Principles I to VI. The reviewer MUST check this.
+3. Each PR MUST show that it follows Principles I to VII. The reviewer MUST check this.
 4. A PR that adds UI MUST show that it uses design system components.
 5. A PR that adds user-facing text MUST add the strings to the localization JSON file.
 
@@ -73,4 +97,4 @@ Compliance review: each PR review MUST check compliance with this constitution. 
 deviation MUST be justified in writing in the PR. `vision.md` is the source document for product
 intent.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-16 | **Last Amended**: 2026-10-16
+**Version**: 1.1.0 | **Ratified**: 2026-10-16 | **Last Amended**: 2026-10-19
