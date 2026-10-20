@@ -28,9 +28,9 @@
 
 ## R4. Hook design
 
-- **Decision**: One project skill, `speckit-portal-update`, with a mode argument (`specify` or `implement`). Register two hooks in `.specify/extensions.yml` under a new local extension `docs-portals`, both `optional: false` (automatic). The skill treats its own failure as a warning and never edits spec, plan, tasks, or app code.
-- **Rationale**: The issue says "auto-update". Automatic hooks need no extra prompt. One skill avoids two copies of the same rules. Non-blocking failure satisfies FR-016.
-- **Alternatives**: Optional hooks (a reviewer can skip them, so docs drift); a shell script (cannot write good prose); two skills (duplicate rules).
+- **Decision**: One local extension, `docs-portals`, with two commands: `update-specify` and `update-implement`. Each maps to a thin skill. Both skills follow one shared procedure file with a section for each mode. Register two hooks in `.specify/extensions.yml`, both `optional: false` (automatic). A failure is a warning. The procedure never edits spec, plan, tasks, or app code.
+- **Rationale**: The issue says "auto-update". The hook registry has no argument field, so the command name must carry the mode. Two commands plus one shared file avoid two copies of the rules. Non-blocking failure satisfies FR-016.
+- **Alternatives**: One command with a mode argument (the registry cannot pass it); the mode inside the hook `prompt` text (fragile for an automatic hook); optional hooks (a reviewer can skip them, so docs drift); a shell script (cannot write good prose).
 
 ## R5. Deploy
 

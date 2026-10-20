@@ -29,6 +29,21 @@
       },
       "registered_skills": [],
       "installed_at": "2026-10-16T19:26:44.540781+00:00"
+    },
+    "docs-portals": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:bebbe151abb53174bb6da2c2f42761c3a74ccf1df8b1a415d9b252538a9edf16",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "claude": [
+          "speckit.docs-portals.update-specify",
+          "speckit.docs-portals.update-implement"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-10-20T19:21:17.020035+00:00"
     }
   }
 }

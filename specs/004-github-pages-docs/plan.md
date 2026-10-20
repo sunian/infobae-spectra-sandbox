@@ -18,7 +18,7 @@ build ("Deploy from a branch", `main`, `/docs`). There is no workflow file and n
 site has a landing page and two portals: Developer (`/dev/`) and Product (`/product/`). Pages are
 Markdown with mermaid diagrams. The theme is `just-the-docs`, loaded as a remote theme.
 
-A new project skill, `speckit-portal-update`, reads the current feature's spec, plan, tasks, and
+Two thin project skills (one for `specify`, one for `implement`) follow one shared procedure file. The procedure reads the current feature's spec, plan, tasks, and
 code and edits the Markdown pages in `docs/`. Two entries in `.specify/extensions.yml` run it after
 `/speckit-specify` (mode `specify`) and after `/speckit-implement` (mode `implement`). A validator
 (`tools/portal/validate.ts`) checks front matter, TL;DR blocks, links, and mermaid syntax. The skill
@@ -104,7 +104,9 @@ tools/portal/                          # NEW. Own package.json and tsconfig. Not
 ├── pages.ts                           # Helpers: feature page path, status flip, index order
 └── *.test.ts
 
-.claude/skills/speckit-portal-update/SKILL.md   # NEW. The update skill both hooks call
+.claude/skills/speckit-docs-portals-update-specify/SKILL.md    # NEW. Thin skill, specify mode
+.claude/skills/speckit-docs-portals-update-implement/SKILL.md  # NEW. Thin skill, implement mode
+.specify/extensions/docs-portals/                              # NEW. extension.yml and procedure.md (shared rules)
 .specify/extensions.yml                         # EDIT. Add after_specify and after_implement hooks
 eslint.config.js, tsconfig.json                 # EDIT. Ignore/exclude tools/
 package.json                                    # EDIT. Add verify:docs script

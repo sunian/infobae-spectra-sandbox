@@ -1,3 +1,9 @@
+---
+title: Project guide
+parent: Developer Portal
+nav_order: 7
+---
+
 # Project Guide
 
 Infobae is a React Native (Expo, TypeScript) news reader. This guide covers the scaffold, edition selection, the Home feed, and Article Detail.
@@ -116,6 +122,11 @@ that file. Re-record baselines with `.maestro/record-baselines.sh --device <id>`
 Note: the status bar clock is part of each image. The 98% threshold absorbs it.
 
 **iOS baselines are not recorded yet.** The scaffold was built on a machine without Xcode.
+
+## Documentation site
+
+The Developer and Product portals are published with GitHub Pages from the `docs/` folder. Pages
+update after each specify and implement run. To preview and check them, see `docs/README-site.md`.
 
 ## Starter template
 

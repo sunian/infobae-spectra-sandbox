@@ -42,7 +42,8 @@
     "verify": "npm run lint && npm run typecheck && npm test",
     "test:e2e": "maestro test .maestro",
     "build:android:release": "expo prebuild --platform android --no-install && cd android && env -u JDK_JAVA_OPTIONS EXPO_PUBLIC_CONTENT_SOURCE=fixture ./gradlew :app:createBundleReleaseJsAndAssets --rerun :app:assembleRelease -PreactNativeArchitectures=arm64-v8a",
-    "build:android:release:live": "expo prebuild --platform android --no-install && cd android && env -u JDK_JAVA_OPTIONS ./gradlew :app:createBundleReleaseJsAndAssets --rerun :app:assembleRelease -PreactNativeArchitectures=arm64-v8a"
+    "build:android:release:live": "expo prebuild --platform android --no-install && cd android && env -u JDK_JAVA_OPTIONS ./gradlew :app:createBundleReleaseJsAndAssets --rerun :app:assembleRelease -PreactNativeArchitectures=arm64-v8a",
+    "verify:docs": "cd tools/portal && npm test && npm run lint && npm run validate"
   },
   "private": true,
   "jest": {
@@ -52,7 +53,8 @@
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/.maestro/"
+      "/.maestro/",
+      "/tools/"
     ]
   }
 }

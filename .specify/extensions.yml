@@ -1,4 +1,5 @@
 installed:
+- docs-portals
 - spectra
 settings:
   auto_execute_hooks: true
@@ -12,6 +13,14 @@ hooks:
     prompt: Generate a test plan for this spec? Pass the spec file path this specify
       run just wrote (its SPEC_FILE) as the argument.
     description: Offer a stakeholder test plan right after the specification is written
+    condition: null
+  - extension: docs-portals
+    command: speckit.docs-portals.update-specify
+    enabled: true
+    optional: false
+    priority: 10
+    prompt: Execute speckit.docs-portals.update-specify?
+    description: Update the documentation portals with the new specification
     condition: null
   after_implement:
   - extension: spectra
@@ -30,4 +39,12 @@ hooks:
     priority: 10
     prompt: Open a pull request for this spec?
     description: Offer to open a PR after implementation completes
+    condition: null
+  - extension: docs-portals
+    command: speckit.docs-portals.update-implement
+    enabled: true
+    optional: false
+    priority: 8
+    prompt: Execute speckit.docs-portals.update-implement?
+    description: Update the documentation portals with what was built
     condition: null

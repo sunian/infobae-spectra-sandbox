@@ -1,3 +1,9 @@
+---
+title: API spike
+parent: Developer Portal
+nav_order: 8
+---
+
 # Infobae API Spike
 
 Date: 2026-10-19. Method: `curl` against www.infobae.com. No login, no API key.

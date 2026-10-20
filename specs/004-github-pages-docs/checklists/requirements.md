@@ -40,3 +40,15 @@
   removes it by hand. This is in Edge Cases.
 - Planning decisions left open on purpose: whether each hook asks before it runs, and which site
   tool builds the pages.
+
+## Implementation results (T041, 2026-10-20)
+
+Quickstart steps: 1 local preview passed (phone width and desktop). 2 `npm run verify:docs` passed (14 pages, 0 errors). 3 first-release content present. 4 specify mode passed (new page, rerun gave no change, no duplicate). 5 implement mode passed on spec 003 (no change, status kept); the run for this feature happens in the after-implement hook. 6 failure case passed (a broken diagram is reported with its line, the page is restored). 7 deploy not tested: Pages is turned on by hand after the merge (T038).
+
+| Criterion | Result |
+|---|---|
+| SC-001, SC-002, SC-006, SC-008 | Not yet testable. They need human readers. |
+| SC-003 | Met for the specify run on this feature. |
+| SC-004 | Met on spec 003 (no change). Check again after the hook runs on this feature. |
+| SC-005 | Met. Every diagram parses and renders in the local site. |
+| SC-007 | Not yet testable. Needs the merge and the Pages setting. |

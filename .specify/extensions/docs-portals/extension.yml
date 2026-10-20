@@ -1,0 +1,37 @@
+schema_version: "1.0"
+
+extension:
+  id: "docs-portals"
+  name: "Docs Portals"
+  version: "1.0.0"
+  description: "Keeps the GitHub Pages Developer and Product portals in docs/ current after specify and implement."
+  category: "docs"
+  effect: "read-write"
+  author: "Infobae app team"
+  license: "Apache-2.0"
+
+requires:
+  speckit_version: ">=0.11.0"
+
+provides:
+  commands:
+    - name: "speckit.docs-portals.update-specify"
+      file: "commands/update-specify.md"
+      description: "After specify: add or update the Product portal page for the feature as Planned (summary, user journey diagram, error and edge cases)."
+    - name: "speckit.docs-portals.update-implement"
+      file: "commands/update-implement.md"
+      description: "After implement: update decisions, architecture, dependencies, patterns, and design system pages, and mark the feature Available when all tasks are done."
+
+hooks:
+  after_specify:
+    command: speckit.docs-portals.update-specify
+    optional: false
+    description: "Update the documentation portals with the new specification"
+  after_implement:
+    command: speckit.docs-portals.update-implement
+    optional: false
+    priority: 8
+    description: "Update the documentation portals with what was built"
+
+tags:
+  - "documentation"

@@ -11,10 +11,10 @@
 
 | Hook key | Extension | Command | Optional |
 |---|---|---|---|
-| `after_specify` | `docs-portals` | `speckit.docs-portals.update` with argument `specify` | `false` |
-| `after_implement` | `docs-portals` | `speckit.docs-portals.update` with argument `implement` | `false` |
+| `after_specify` | `docs-portals` | `speckit.docs-portals.update-specify` | `false` |
+| `after_implement` | `docs-portals` | `speckit.docs-portals.update-implement` | `false` |
 
-The command maps to the skill `speckit-portal-update`.
+Each command maps to a thin skill (`speckit-docs-portals-update-specify`, `speckit-docs-portals-update-implement`). Both skills follow one shared file, `.specify/extensions/docs-portals/procedure.md`. The hook registry has no argument field, so the mode is set by the command, not by an argument.
 
 ## Inputs
 
