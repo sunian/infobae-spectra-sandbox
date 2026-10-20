@@ -24,6 +24,8 @@ type ArticleScreenProps = {
   path: string;
 };
 
+const ARTICLE_EDGES = ['left', 'right', 'bottom'] as const;
+
 function openLink(href: string) {
   if (!isSafeLink(href)) return;
   try {
@@ -79,7 +81,8 @@ export function ArticleScreen({ path }: ArticleScreenProps) {
   const { state, retry } = useArticle(path);
 
   return (
-    <Screen padded={false}>
+    // The native header already sits below the status bar, so the top edge gets no padding.
+    <Screen padded={false} edges={ARTICLE_EDGES}>
       {state.status === 'content' ? <ArticleContent article={state.article} /> : null}
       {state.status === 'loading' ? (
         <StateView kind="loading" message={t('article.loading')} />

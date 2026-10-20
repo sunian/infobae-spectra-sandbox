@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
 import { colors, spacing } from '../tokens';
 
@@ -8,11 +8,15 @@ type ScreenProps = {
   children: ReactNode;
   /** Set to false for a list that runs edge to edge and pads its own rows. */
   padded?: boolean;
+  /** Edges that get the safe-area padding. Leave out `top` under a native header. */
+  edges?: readonly Edge[];
 };
 
-export function Screen({ children, padded = true }: ScreenProps) {
+export function Screen({ children, padded = true, edges }: ScreenProps) {
   return (
-    <SafeAreaView style={[styles.container, padded && styles.padded]}>{children}</SafeAreaView>
+    <SafeAreaView edges={edges} style={[styles.container, padded && styles.padded]}>
+      {children}
+    </SafeAreaView>
   );
 }
 
