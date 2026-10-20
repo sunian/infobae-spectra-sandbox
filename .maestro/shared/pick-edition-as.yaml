@@ -1,0 +1,12 @@
+# Picks the edition named in the EDITION variable on the first-launch edition list, then waits for
+# the tab bar. Use it like this:
+#   - runFlow:
+#       file: ../shared/pick-edition-as.yaml
+#       env:
+#         EDITION: Cuba
+appId: com.infobae.scaffold
+---
+- assertVisible: 'Choose your edition'
+- tapOn: '^${EDITION}$'
+- waitForAnimationToEnd
+- assertVisible: '^My Infobae$'

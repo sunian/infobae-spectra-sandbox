@@ -1,0 +1,26 @@
+# The fixture article "Artículo sin contenido disponible" cannot load. The article screen shows the
+# error and "Try again", and the back action returns to Home.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: '.*Artículo sin contenido disponible.*'
+- tapOn: '.*Artículo sin contenido disponible.*'
+- assertVisible: 'We could not load this article.'
+- assertVisible: 'Try again'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: article-error
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/article-error.png
+          thresholdPercentage: 98
+- back
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'

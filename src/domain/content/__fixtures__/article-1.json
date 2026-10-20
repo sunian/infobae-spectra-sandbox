@@ -1,0 +1,70 @@
+{
+ "_id": "FIXTURE1",
+ "canonical_url": "/colombia/2026/10/19/fixture-1/",
+ "display_date": "2026-10-19T13:47:56.352Z",
+ "headlines": {
+  "basic": "Nota con titulares, texto en negrita y enlaces"
+ },
+ "subheadlines": {
+  "basic": "Una bajada que resume el contenido de la nota para el lector"
+ },
+ "credits": {
+  "by": [
+   {
+    "name": "Ana Pérez"
+   },
+   {
+    "name": "Luis Gómez"
+   }
+  ]
+ },
+ "promo_items": {
+  "basic": {
+   "url": "fixture:2",
+   "caption": "Imagen principal de la nota (Foto: Infobae)",
+   "width": 1147,
+   "height": 645
+  }
+ },
+ "taxonomy": {
+  "primary_section": {
+   "name": "Colombia"
+  }
+ },
+ "content_elements": [
+  {
+   "type": "text",
+   "content": "Primer párrafo con <b>texto en negrita</b>, un <a href=\"https://www.infobae.com/tag/colombia/\"><b>enlace</b></a> y <i>texto en cursiva</i> &amp; entidades."
+  },
+  {
+   "type": "text",
+   "content": "Segundo párrafo de la nota, con suficiente texto para ocupar varias líneas en la pantalla del teléfono y comprobar el salto de línea."
+  },
+  {
+   "type": "header",
+   "content": "Un subtítulo de nivel dos",
+   "level": 2
+  },
+  {
+   "type": "text",
+   "content": "Párrafo bajo el subtítulo. Incluye un <a href=\"javascript:alert(1)\">enlace inseguro</a> que no debe abrirse."
+  },
+  {
+   "type": "image",
+   "url": "fixture:2",
+   "caption": "Una imagen dentro del cuerpo con su epígrafe (Foto: Infobae)",
+   "alt_text": "Imagen",
+   "width": 1147,
+   "height": 645
+  },
+  {
+   "type": "header",
+   "content": "Otro subtítulo",
+   "level": 3
+  },
+  {
+   "type": "text",
+   "content": "Último párrafo de la nota."
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+# Cuba always fails in the fixture build. Home shows the error and "Try again". The retry also
+# fails, so the error stays.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    file: ../shared/pick-edition-as.yaml
+    env:
+      EDITION: Cuba
+- assertVisible: 'We could not load the articles.'
+- assertVisible: 'Try again'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: home-error
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/home-error.png
+          thresholdPercentage: 98
+- tapOn: 'Try again'
+- assertVisible: 'We could not load the articles.'

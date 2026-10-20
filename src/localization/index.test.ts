@@ -26,6 +26,12 @@ describe('t()', () => {
     expect(t('tabs.home')).toBe('Home');
   });
 
+  it('fills in placeholders from options', () => {
+    const { t } = loadWithDeviceLanguage('en');
+    expect(t('time.minutes', { count: 5 })).toBe('5 min');
+    expect(t('article.by', { authors: 'Ana Pérez' })).toBe('By Ana Pérez');
+  });
+
   it('resolves every key in en.json to a non-empty string', () => {
     const { t } = loadWithDeviceLanguage('en');
     for (const key of flatten(en)) {

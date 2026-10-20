@@ -1,6 +1,7 @@
-import { mapArticle, parseIsoDuration, type ArcStory } from './article';
+import { mapArticle, type ArcStory } from './article';
 import { EDITIONS, getEdition } from './editions';
 import { mapFeedList, type ArcFeedList } from './feed';
+import { resizedImageUrl } from './images';
 import { articleUrl, feedListUrl } from './urls';
 import feedList from './__fixtures__/feed-list.json';
 import story from './__fixtures__/story.json';
@@ -56,41 +57,46 @@ describe('urls', () => {
 });
 
 describe('mapFeedList', () => {
-  const items = mapFeedList(feedList as ArcFeedList);
+  const { items, rawCount } = mapFeedList(feedList as ArcFeedList);
 
   it('maps the summary fields', () => {
     expect(items).toHaveLength(3);
     expect(items[0].headline).toMatch(/^Partido Liberal/);
     expect(items[0].url).toMatch(/^https:\/\/www\.infobae\.com\/colombia\//);
     expect(items[0].authors).toEqual(['Jhoan Pardo']);
-    expect(items[0].imageUrl).toMatch(/^https:\/\//);
+    expect(items[0].image?.url).toMatch(/^https:\/\//);
+    expect(items[0].image?.resizeUrl).toMatch(/^\/resizer\/v2\//);
   });
 
   it('drops items with no headline', () => {
     expect(items.some((item) => item.websiteUrl === '/x/')).toBe(false);
   });
 
+  it('counts every response item, also the ones it drops', () => {
+    expect(rawCount).toBe(4);
+  });
+
   it('returns an empty list for an empty response', () => {
-    expect(mapFeedList({})).toEqual([]);
+    expect(mapFeedList({})).toEqual({ items: [], rawCount: 0 });
+  });
+
+  it('has no image when the item has none, and no resizeUrl when the API gives none', () => {
+    const mapped = mapFeedList({
+      content_elements: [
+        { website_url: '/a/', headlines: { basic: 'A' } },
+        {
+          website_url: '/b/',
+          headlines: { basic: 'B' },
+          promo_items: { basic: { url: 'https://x/y.jpg' } },
+        },
+      ],
+    }).items;
+    expect(mapped[0].image).toBeNull();
+    expect(mapped[1].image).toEqual({ url: 'https://x/y.jpg', resizeUrl: undefined });
   });
 
   it('does not carry an article body', () => {
     expect(Object.keys(items[0])).not.toContain('blocks');
-  });
-});
-
-describe('parseIsoDuration', () => {
-  it('parses minutes and seconds', () => {
-    expect(parseIsoDuration('P0Y0M0DT0H1M33S')).toBe(93);
-  });
-
-  it('parses hours', () => {
-    expect(parseIsoDuration('P0Y0M0DT1H0M0S')).toBe(3600);
-  });
-
-  it('returns 0 for missing or bad input', () => {
-    expect(parseIsoDuration(undefined)).toBe(0);
-    expect(parseIsoDuration('soon')).toBe(0);
   });
 });
 
@@ -112,7 +118,6 @@ describe('mapArticle', () => {
 
   it('keeps block order and maps each supported type', () => {
     expect(article.blocks.map((block) => block.type)).toEqual([
-      'video',
       'text',
       'text',
       'image',
@@ -122,6 +127,83 @@ describe('mapArticle', () => {
       'image',
       'header',
     ]);
+  });
+
+  it('leaves out video embeds', () => {
+    expect(article.blocks.some((block) => (block.type as string) === 'video')).toBe(false);
+  });
+
+  it('keeps width, height and resizeUrl on image blocks', () => {
+    const mapped = mapArticle({
+      _id: 'x',
+      canonical_url: '/x/',
+      display_date: '2026-01-01T00:00:00.000Z',
+      content_elements: [
+        {
+          type: 'image',
+          url: 'https://x/y.jpg',
+          width: 800,
+          height: 600,
+          additional_properties: { resizeUrl: '/resizer/v2/y.jpg?auth=t' },
+        },
+      ],
+    });
+    expect(mapped.blocks[0]).toMatchObject({
+      type: 'image',
+      width: 800,
+      height: 600,
+      resizeUrl: '/resizer/v2/y.jpg?auth=t',
+    });
+  });
+
+  describe('hero image and a body that starts with an image', () => {
+    const base = { _id: 'x', canonical_url: '/x/', display_date: '2026-01-01T00:00:00.000Z' };
+    const hero = { url: 'https://x/hero.jpg', caption: 'Hero caption' };
+
+    it('drops the hero when the body starts with the same image', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [
+          { type: 'image', url: 'https://x/hero.jpg', caption: 'Other caption' },
+          { type: 'text', content: 'Body' },
+        ],
+      });
+      expect(mapped.heroImage).toBeNull();
+      expect(mapped.blocks.map((block) => block.type)).toEqual(['image', 'text']);
+    });
+
+    it('drops the hero when the body starts with another crop of the photo', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [{ type: 'image', url: 'https://x/other.jpg' }],
+      });
+      expect(mapped.heroImage).toBeNull();
+      expect(mapped.blocks).toHaveLength(1);
+    });
+
+    it('keeps the hero when the body starts with text', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [
+          { type: 'text', content: 'Body' },
+          { type: 'image', url: 'https://x/hero.jpg' },
+        ],
+      });
+      expect(mapped.heroImage?.caption).toBe('Hero caption');
+      expect(mapped.blocks.map((block) => block.type)).toEqual(['text', 'image']);
+    });
+
+    it('looks past unsupported blocks to the first block that shows', () => {
+      const mapped = mapArticle({
+        ...base,
+        promo_items: { basic: hero },
+        content_elements: [{ type: 'custom_embed' }, { type: 'image', url: 'https://x/o.jpg' }],
+      });
+      expect(mapped.heroImage).toBeNull();
+    });
   });
 
   it('drops unknown and empty elements', () => {
@@ -134,5 +216,25 @@ describe('mapArticle', () => {
     expect(mapped.blocks).toEqual([]);
     expect(mapped.heroImage).toBeNull();
     expect(mapped.headline).toBe('');
+  });
+});
+
+describe('resizedImageUrl', () => {
+  it('adds the size to the signed resize path', () => {
+    expect(
+      resizedImageUrl(
+        { url: 'https://orig/a.jpg', resizeUrl: '/resizer/v2/a.jpg?auth=t' },
+        240,
+        160,
+      ),
+    ).toBe('https://www.infobae.com/resizer/v2/a.jpg?auth=t&width=240&height=160');
+  });
+
+  it('falls back to the original url', () => {
+    expect(resizedImageUrl({ url: 'https://orig/a.jpg' }, 240, 160)).toBe('https://orig/a.jpg');
+  });
+
+  it('returns null for no image', () => {
+    expect(resizedImageUrl(null, 240, 160)).toBeNull();
   });
 });

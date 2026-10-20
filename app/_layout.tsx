@@ -36,6 +36,15 @@ function RootNavigator() {
             headerTintColor: colors.textPrimary,
           }}
         />
+        <Stack.Screen
+          name="article"
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: colors.background },
+            headerTintColor: colors.textPrimary,
+          }}
+        />
       </Stack.Protected>
     </Stack>
   );

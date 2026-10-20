@@ -25,8 +25,8 @@ infobae.com runs on **Arc XP** (Arc Publishing). Every section below uses these 
 
 | Name | What it returns | Used by |
 | --- | --- | --- |
-| **Feed List API** | A page of article summaries. No body. | Home feed, and any other feed |
-| **Article API** | One full article as JSON | Article Detail screen |
+| **Feed List API** | A page of article summaries. No body. | Home feed (feature 003), and any other feed |
+| **Article API** | One full article as JSON | Article Detail screen (feature 003) |
 | **Sections JSON** | The list of editions and their menus | Not used yet |
 | **RSS Feed** | 100 articles with full bodies | Not used (too heavy for a feed) |
 
@@ -57,9 +57,9 @@ Each item in `content_elements[]` has:
 - **Paging:** `feedLimit` is the page size. `feedOffset` is the start. Page 2 of size 20 uses `feedOffset: 20`.
 - **Order:** `first_publish_date:desc` gives newest first.
 - **Edition filter:** `feedQuery` selects site sections. See "Editions" below.
-- **No first-publish date field.** The article path has the date (`/colombia/2026/10/19/...`). `last_updated_date` is also available.
+- **No first-publish date field.** Checked again on 2026-10-19: a live item has only `credits`, `description`, `headlines`, `last_updated_date`, `promo_items`, `website_url`. The Home feed shows `last_updated_date` as its time.
 - **No section name field.** The first path segment is the section.
-- Code: `feedListUrl(edition, offset, limit)` in `src/domain/infobae/urls.ts`. `mapFeedList()` in `src/domain/infobae/feed.ts` turns the JSON into `FeedItem[]`.
+- Code: `feedListUrl(edition, offset, limit)` in `src/domain/infobae/urls.ts`. `mapFeedList()` in `src/domain/infobae/feed.ts` turns the JSON into `{ items, rawCount }`.
 
 ## 2. Article API (use for Article Detail)
 
@@ -130,7 +130,7 @@ All editions were tested and returned current articles.
 
 - **Argentina is approximate.** Argentina has no section of its own. The query takes everything not in another edition. That includes global sections such as `/tecno` and `/salud`, which is also what the Argentina home page shows. It is not an exact copy of the curated Argentina home page.
 - **Home page order.** The real home page is curated by editors. The Feed List API gives newest-first, not editor order. This is a product choice for the Home feed feature.
-- **Image sizes.** Feed List API images are originals. We need to decide on resized URLs for list thumbnails. The `resizeUrl` field is in each item's `promo_items.basic.additional_properties`.
+- ~~**Image sizes.**~~ Closed 2026-10-19. The signed `resizeUrl` accepts `&width=&height=`: 240x160 and 1080x720 both answered HTTP 200 `image/jpeg` (13 KB and 126 KB). The app uses `resizedImageUrl()` in `src/domain/infobae/images.ts` (240x160 for list thumbnails, 1080 wide in articles). With no `resizeUrl` it falls back to the original.
 - **Media tab:** video, live stream, and audio sources were not investigated. We only saw the JW Player embed inside articles.
 - **Rate limits, caching headers, and terms of use** were not checked in depth. The site sits behind Akamai.
 - **Deploy number `d=4541`** is the site's current deploy. We did not test a stale value.
@@ -139,6 +139,8 @@ All editions were tested and returned current articles.
 
 - `src/domain/infobae/editions.ts`: the edition list and section paths.
 - `src/domain/infobae/urls.ts`: URL builders for the **Feed List API** and **Article API**.
-- `src/domain/infobae/feed.ts`: types, and a mapper from **Feed List API** JSON to `FeedItem[]`.
-- `src/domain/infobae/article.ts`: types, and a mapper from **Article API** JSON to an `Article`.
+- `src/domain/infobae/feed.ts`: types, and a mapper from **Feed List API** JSON to `{ items, rawCount }`. Paging uses `rawCount`, because the mapper drops items with no path or headline.
+- `src/domain/infobae/images.ts`: the resized image URL builder.
+- `src/domain/content/`: `liveContentSource` calls these APIs (15 s timeout, no credentials). Used by Home and Article Detail.
+- `src/domain/infobae/article.ts`: types, and a mapper from **Article API** JSON to an `Article`. The mapper leaves out video and unknown embeds. The app shows text, header, and image blocks.
 - `src/domain/infobae/infobae.test.ts`: unit tests. They use trimmed real responses in `__fixtures__/`.

@@ -1,0 +1,24 @@
+# Centroamerica is empty in the fixture build. Home shows the empty message and no retry button.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    file: ../shared/pick-edition-as.yaml
+    env:
+      EDITION: Centroamérica
+- assertVisible: 'No articles right now.'
+- assertNotVisible: 'Try again'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: home-empty
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/home-empty.png
+          thresholdPercentage: 98

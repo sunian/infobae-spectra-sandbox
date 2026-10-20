@@ -6,6 +6,17 @@ import { EditionProvider } from '@/state/EditionContext';
 
 import { EditionScreen } from './EditionScreen';
 
+const mockSafeAreaView = jest.fn();
+jest.mock('react-native-safe-area-context', () => {
+  const { View } = jest.requireActual<typeof import('react-native')>('react-native');
+  return {
+    SafeAreaView: (props: { children: unknown }) => {
+      mockSafeAreaView(props);
+      return <View>{props.children as never}</View>;
+    },
+  };
+});
+
 const mockBack = jest.fn();
 jest.mock('expo-router', () => ({ useRouter: () => ({ back: mockBack, push: jest.fn() }) }));
 
@@ -28,6 +39,12 @@ async function renderFirstLaunch(storage = fakeStorage()) {
 }
 
 describe('EditionScreen, first-launch mode', () => {
+  it('pads every edge, because there is no stack header', async () => {
+    mockSafeAreaView.mockClear();
+    await renderFirstLaunch();
+    expect(mockSafeAreaView.mock.calls[0][0].edges).toBeUndefined();
+  });
+
   it('shows the title', async () => {
     await renderFirstLaunch();
     expect(screen.getByText('Choose your edition')).toBeTruthy();
@@ -86,6 +103,12 @@ describe('EditionScreen, change mode', () => {
     await renderChange();
     const changeOrder = screen.getAllByText(pattern).map((node) => node.props.children);
     expect(changeOrder).toEqual(names);
+  });
+
+  it('does not pad the top edge, because the stack header already sits below the status bar', async () => {
+    mockSafeAreaView.mockClear();
+    await renderChange();
+    expect(mockSafeAreaView.mock.calls[0][0].edges).toEqual(['left', 'right', 'bottom']);
   });
 
   it('leaves the title to the stack header, so it is not shown twice', async () => {

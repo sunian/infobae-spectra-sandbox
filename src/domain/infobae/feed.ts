@@ -1,3 +1,4 @@
+import type { ImageRef } from './images';
 import { BASE_URL } from './urls';
 
 export type FeedItem = {
@@ -7,7 +8,7 @@ export type FeedItem = {
   headline: string;
   summary: string;
   authors: string[];
-  imageUrl: string | null;
+  image: ImageRef | null;
   updatedAt: string;
 };
 
@@ -17,7 +18,9 @@ export type ArcFeedItem = {
   headlines?: { basic?: string };
   description?: { basic?: string };
   credits?: { by?: { name?: string }[] };
-  promo_items?: { basic?: { url?: string } };
+  promo_items?: {
+    basic?: { url?: string; additional_properties?: { resizeUrl?: string } };
+  };
   last_updated_date?: string;
 };
 
@@ -25,9 +28,21 @@ export type ArcFeedList = {
   content_elements?: ArcFeedItem[];
 };
 
+export type MappedFeedList = {
+  items: FeedItem[];
+  /** Items in the response before any were dropped. Paging uses this, not `items.length`. */
+  rawCount: number;
+};
+
+function toImage(basic: NonNullable<ArcFeedItem['promo_items']>['basic']): ImageRef | null {
+  if (!basic?.url) return null;
+  return { url: basic.url, resizeUrl: basic.additional_properties?.resizeUrl };
+}
+
 /** Maps a feed-list-d23 response to feed items. Items with no path or headline are dropped. */
-export function mapFeedList(response: ArcFeedList): FeedItem[] {
-  return (response.content_elements ?? []).flatMap((item) => {
+export function mapFeedList(response: ArcFeedList): MappedFeedList {
+  const elements = response.content_elements ?? [];
+  const items = elements.flatMap((item) => {
     const websiteUrl = item.website_url;
     const headline = item.headlines?.basic;
     if (!websiteUrl || !headline) return [];
@@ -38,9 +53,10 @@ export function mapFeedList(response: ArcFeedList): FeedItem[] {
         headline,
         summary: item.description?.basic ?? '',
         authors: (item.credits?.by ?? []).flatMap((author) => (author.name ? [author.name] : [])),
-        imageUrl: item.promo_items?.basic?.url ?? null,
+        image: toImage(item.promo_items?.basic),
         updatedAt: item.last_updated_date ?? '',
       },
     ];
   });
+  return { items, rawCount: elements.length };
 }

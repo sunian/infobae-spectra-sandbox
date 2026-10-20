@@ -1,0 +1,59 @@
+{
+ "_id": "FIXTURE3",
+ "canonical_url": "/colombia/2026/10/19/fixture-3/",
+ "display_date": "2026-10-19T13:47:56.352Z",
+ "headlines": {
+  "basic": "Nota con video y bloques no soportados"
+ },
+ "subheadlines": {
+  "basic": "Una bajada que resume el contenido de la nota para el lector"
+ },
+ "credits": {
+  "by": [
+   {
+    "name": "Ana Pérez"
+   },
+   {
+    "name": "Luis Gómez"
+   }
+  ]
+ },
+ "promo_items": {},
+ "taxonomy": {
+  "primary_section": {
+   "name": "Colombia"
+  }
+ },
+ "content_elements": [
+  {
+   "type": "custom_embed",
+   "subtype": "video",
+   "embed": {
+    "config": {
+     "contentUrl": "https://example.com/video.mp4",
+     "name": "Un video",
+     "duration": "P0Y0M0DT0H0M33S"
+    }
+   }
+  },
+  {
+   "type": "text",
+   "content": "Texto después de un video que la app no muestra."
+  },
+  {
+   "type": "custom_embed",
+   "subtype": "twitter",
+   "embed": {
+    "config": {}
+   }
+  },
+  {
+   "type": "raw_html",
+   "content": "<div>ignorar</div>"
+  },
+  {
+   "type": "text",
+   "content": "Texto final, que debe verse completo."
+  }
+ ]
+}

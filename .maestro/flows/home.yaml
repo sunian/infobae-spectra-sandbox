@@ -1,9 +1,10 @@
+# Home shows the feed for the picked edition (fixture build: Colombia, page 1).
 appId: com.infobae.scaffold
 ---
 - launchApp:
     clearState: true
 - runFlow: ../shared/pick-edition.yaml
-- assertVisible: 'My Infobae'
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
 - waitForAnimationToEnd
 - runFlow: ../shared/assert-tabs.yaml
 - runFlow:

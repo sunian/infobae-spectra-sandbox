@@ -1,0 +1,429 @@
+{
+ "content_elements": [
+  {
+   "website_url": "/colombia/2026/10/19/fixture-20/",
+   "headlines": {
+    "basic": "Qué dicen los expertos sobre el clima de las próximas semanas"
+   },
+   "last_updated_date": "2026-10-19T14:02:00.000Z",
+   "description": {
+    "basic": "El dato oficial sorprendió al mercado."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Diego Salas"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:2",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-22/",
+   "headlines": {
+    "basic": "Segunda página: Una tormenta dejó miles de hogares sin luz en la capital"
+   },
+   "last_updated_date": "2026-10-19T13:56:00.000Z",
+   "description": {
+    "basic": "Los equipos de emergencia trabajaron durante toda la noche."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Luis Gómez"
+     },
+     {
+      "name": "María Torres"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:1",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-23/",
+   "headlines": {
+    "basic": "Segunda página: El equipo local ganó el clásico con un gol en el último minuto"
+   },
+   "last_updated_date": "2026-10-19T13:53:00.000Z",
+   "credits": {
+    "by": []
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:2",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-24/",
+   "last_updated_date": "2026-10-19T13:50:00.000Z",
+   "description": {
+    "basic": "La investigación se publicó en una revista científica internacional."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Carla Ruiz"
+     }
+    ]
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-25/",
+   "headlines": {
+    "basic": "Segunda página: La inflación de septiembre fue menor a la esperada por los analistas y el resto de la historia que explica por qué este titular es muy largo y debe acortarse en la lista"
+   },
+   "last_updated_date": "2026-10-19T12:47:00.000Z",
+   "description": {
+    "basic": "El dato oficial sorprendió al mercado."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Diego Salas"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:1",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-26/",
+   "headlines": {
+    "basic": "Segunda página: Inauguraron el nuevo hospital regional tras cinco años de obras"
+   },
+   "last_updated_date": "2026-10-19T12:44:00.000Z",
+   "description": {
+    "basic": "El anuncio se realizó en conferencia de prensa y generó reacciones divididas."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Ana Pérez"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:2",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-27/",
+   "headlines": {
+    "basic": "Segunda página: Un reconocido director estrenó su película más personal"
+   },
+   "last_updated_date": "2026-10-19T12:41:00.000Z",
+   "description": {
+    "basic": "Los equipos de emergencia trabajaron durante toda la noche."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Luis Gómez"
+     },
+     {
+      "name": "María Torres"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:3",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "headlines": {
+    "basic": "Segunda página: El dólar cerró la semana con una leve baja"
+   },
+   "last_updated_date": "2026-10-19T12:38:00.000Z",
+   "credits": {
+    "by": []
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:1",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-29/",
+   "headlines": {
+    "basic": "Segunda página: Cómo preparar el desayuno perfecto según los nutricionistas"
+   },
+   "last_updated_date": "2026-10-19T11:35:00.000Z",
+   "description": {
+    "basic": "La investigación se publicó en una revista científica internacional."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Carla Ruiz"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:2",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-30/",
+   "headlines": {
+    "basic": "Segunda página: La selección presentó la lista de convocados para los amistosos"
+   },
+   "last_updated_date": "2026-10-19T11:32:00.000Z",
+   "description": {
+    "basic": "El dato oficial sorprendió al mercado."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Diego Salas"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:3",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-31/",
+   "headlines": {
+    "basic": "Segunda página: Abrió la mayor feria del libro del año con más de 300 expositores"
+   },
+   "last_updated_date": "2026-10-19T11:29:00.000Z",
+   "description": {
+    "basic": "El anuncio se realizó en conferencia de prensa y generó reacciones divididas."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Ana Pérez"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:1",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-32/",
+   "last_updated_date": "2026-10-19T11:26:00.000Z",
+   "description": {
+    "basic": "Los equipos de emergencia trabajaron durante toda la noche."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Luis Gómez"
+     },
+     {
+      "name": "María Torres"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:2",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-33/",
+   "headlines": {
+    "basic": "Segunda página: Hallaron restos arqueológicos durante una obra en el centro histórico"
+   },
+   "last_updated_date": "2026-10-19T10:23:00.000Z",
+   "credits": {
+    "by": []
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-34/",
+   "headlines": {
+    "basic": "Segunda página: Un nuevo estudio relaciona el sueño con la memoria a largo plazo"
+   },
+   "last_updated_date": "2026-10-19T10:20:00.000Z",
+   "description": {
+    "basic": "La investigación se publicó en una revista científica internacional."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Carla Ruiz"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:1",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-35/",
+   "headlines": {
+    "basic": "Segunda página: Los precios de los alquileres subieron por encima de los salarios"
+   },
+   "last_updated_date": "2026-10-19T10:17:00.000Z",
+   "description": {
+    "basic": "El dato oficial sorprendió al mercado."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Diego Salas"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:2",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-36/",
+   "headlines": {
+    "basic": "Segunda página: Las claves del acuerdo comercial que se firmó esta mañana"
+   },
+   "last_updated_date": "2026-10-19T10:14:00.000Z",
+   "description": {
+    "basic": "El anuncio se realizó en conferencia de prensa y generó reacciones divididas."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Ana Pérez"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:3",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-37/",
+   "headlines": {
+    "basic": "Segunda página: Encontraron con vida a un excursionista tras tres días perdido"
+   },
+   "last_updated_date": "2026-10-19T09:11:00.000Z",
+   "description": {
+    "basic": "Los equipos de emergencia trabajaron durante toda la noche."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Luis Gómez"
+     },
+     {
+      "name": "María Torres"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:1",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-38/",
+   "headlines": {
+    "basic": "Segunda página: La ciudad estrenó un sistema de transporte con buses eléctricos"
+   },
+   "last_updated_date": "2026-10-19T09:08:00.000Z",
+   "credits": {
+    "by": []
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:2",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-39/",
+   "headlines": {
+    "basic": "Segunda página: El festival de jazz anunció su programación completa y el resto de la historia que explica por qué este titular es muy largo y debe acortarse en la lista"
+   },
+   "last_updated_date": "2026-10-19T09:05:00.000Z",
+   "description": {
+    "basic": "La investigación se publicó en una revista científica internacional."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Carla Ruiz"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:3",
+     "type": "image"
+    }
+   }
+  },
+  {
+   "website_url": "/colombia/2026/10/19/fixture-40/",
+   "headlines": {
+    "basic": "Segunda página: Qué dicen los expertos sobre el clima de las próximas semanas"
+   },
+   "last_updated_date": "2026-10-19T09:02:00.000Z",
+   "description": {
+    "basic": "El dato oficial sorprendió al mercado."
+   },
+   "credits": {
+    "by": [
+     {
+      "name": "Diego Salas"
+     }
+    ]
+   },
+   "promo_items": {
+    "basic": {
+     "url": "fixture:1",
+     "type": "image"
+    }
+   }
+  }
+ ]
+}

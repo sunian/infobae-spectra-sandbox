@@ -1,0 +1,72 @@
+{
+ "_id": "FIXTURE2",
+ "canonical_url": "/colombia/2026/10/19/fixture-2/",
+ "display_date": "2026-10-19T13:47:56.352Z",
+ "headlines": {
+  "basic": "Nota con varias imágenes y epígrafes"
+ },
+ "subheadlines": {
+  "basic": "Una bajada que resume el contenido de la nota para el lector"
+ },
+ "credits": {
+  "by": [
+   {
+    "name": "Ana Pérez"
+   },
+   {
+    "name": "Luis Gómez"
+   }
+  ]
+ },
+ "promo_items": {
+  "basic": {
+   "url": "fixture:3",
+   "caption": "Imagen principal de la nota (Foto: Infobae)",
+   "width": 1147,
+   "height": 645
+  }
+ },
+ "taxonomy": {
+  "primary_section": {
+   "name": "Colombia"
+  }
+ },
+ "content_elements": [
+  {
+   "type": "text",
+   "content": "Esta nota tiene varias imágenes con distintas proporciones."
+  },
+  {
+   "type": "image",
+   "url": "fixture:1",
+   "caption": "Imagen horizontal (Foto: Infobae)",
+   "alt_text": "Imagen",
+   "width": 1147,
+   "height": 645
+  },
+  {
+   "type": "text",
+   "content": "Texto entre imágenes."
+  },
+  {
+   "type": "image",
+   "url": "fixture:3",
+   "caption": "Imagen vertical con un epígrafe un poco más largo para comprobar el ajuste de línea",
+   "alt_text": "Imagen",
+   "width": 600,
+   "height": 800
+  },
+  {
+   "type": "image",
+   "url": "fixture:2",
+   "caption": "",
+   "alt_text": "Imagen",
+   "width": 1000,
+   "height": 1000
+  },
+  {
+   "type": "text",
+   "content": "Cierre de la nota."
+  }
+ ]
+}
