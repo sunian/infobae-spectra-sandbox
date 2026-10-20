@@ -10,13 +10,6 @@ nav_order: 2
 
 # Edition selection
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** On first launch the reader picks an edition (a country or region). The app saves it and uses it for all news.
-> - **Why:** Infobae has one edition for each country or region, and the feed must match the reader's choice.
-> - **Scope / Approach / Order:** First-launch choice, remembered choice, change from the Menu.
-> - **Biggest risk or open question:** If the saved choice cannot be read, the app asks again.
-> - **Check this:** The nine editions listed below are the full list.
-
 ## Summary
 
 The first time the reader opens the app, a list of editions shows. The reader taps one. The app

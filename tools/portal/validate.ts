@@ -15,7 +15,6 @@ export interface ValidationResult {
 }
 
 const REPO_URL = 'https://github.com/sunian/infobae-spectra-sandbox';
-const MAX_TLDR_BULLETS = 5;
 const MAX_SECTION_WORDS = 400;
 const STATUSES = ['planned', 'available'];
 
@@ -67,26 +66,16 @@ function bodyOffset(content: string, body: string): number {
   return total - bodyLines;
 }
 
-function checkTldr(lines: string[], offset: number, errors: Issue[]): void {
-  let i = 0;
-  while (i < lines.length && (lines[i].trim() === '' || /^# /.test(lines[i]))) i++;
-  if (i >= lines.length || !/^> \*\*TL;DR\*\*/.test(lines[i])) {
-    errors.push({
-      line: offset + Math.min(i, lines.length - 1) + 1,
-      message: 'TL;DR block must be the first content after the title',
-    });
-    return;
-  }
-  let bullets = 0;
-  for (let j = i + 1; j < lines.length && lines[j].startsWith('>'); j++) {
-    if (/^> - /.test(lines[j])) bullets++;
-  }
-  if (bullets > MAX_TLDR_BULLETS) {
-    errors.push({
-      line: offset + i + 1,
-      message: `TL;DR has ${bullets} bullets, the maximum is ${MAX_TLDR_BULLETS}`,
-    });
-  }
+/** Portal pages must not carry a TL;DR block. TL;DR is only for SpecKit artifacts. */
+function checkNoTldr(lines: string[], offset: number, errors: Issue[]): void {
+  lines.forEach((line, i) => {
+    if (/^> \*\*TL;DR\*\*/.test(line)) {
+      errors.push({
+        line: offset + i + 1,
+        message: 'TL;DR block is not allowed on portal pages (constitution principle VII)',
+      });
+    }
+  });
 }
 
 async function checkMermaid(lines: string[], offset: number, errors: Issue[]): Promise<void> {
@@ -184,7 +173,7 @@ export async function validatePage(
 
   const lines = parsed.content.split('\n');
   const offset = bodyOffset(content, parsed.content);
-  checkTldr(lines, offset, errors);
+  checkNoTldr(lines, offset, errors);
   await checkMermaid(lines, offset, errors);
   checkLinks(file, lines, offset, repoRoot, errors);
   checkSecrets(lines, offset, errors);

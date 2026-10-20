@@ -10,13 +10,6 @@ nav_order: 3
 
 # Home feed and Article Detail
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** Home shows the newest articles for the chosen edition. Tapping one opens the full article.
-> - **Why:** Reading news is the main reason a reader opens the app.
-> - **Scope / Approach / Order:** Feed with paging, pull to refresh, article screen, and clear messages when loading fails.
-> - **Biggest risk or open question:** Videos in an article are left out for now.
-> - **Check this:** The feed is ordered newest first, not in the editor order of the website.
-
 ## Summary
 
 The **Home** tab shows a vertical list of articles for the reader's edition. Each item has a

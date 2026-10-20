@@ -8,13 +8,6 @@ nav_order: 2
 
 # Patterns and best practices
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** The team rules from the constitution, and where to put a new screen, component, string, or logic.
-> - **Why:** New code looks like the old code and passes the checks the first time.
-> - **Scope / Approach / Order:** Rules first, then "where does new code go", then the quality gates.
-> - **Biggest risk or open question:** The lint rules catch raw views and text, but not every rule.
-> - **Check this:** Run `npm run verify` before each push.
-
 ## Rules
 
 | Rule | In short | Checked by |

@@ -5,13 +5,6 @@ nav_order: 1
 
 # Infobae App Docs
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** The entry page for two documentation sites about the Infobae mobile app.
-> - **Why:** Each reader can go straight to the guide that fits them.
-> - **Scope / Approach / Order:** Pick the Product Portal or the Developer Portal.
-> - **Biggest risk or open question:** The pages are updated by SpecKit hooks, so a failed update can leave a page behind the app.
-> - **Check this:** Pages marked "Planned" are not built yet.
-
 Infobae is a mobile news reader. Choose the guide that fits you.
 
 | Portal | Who it is for |

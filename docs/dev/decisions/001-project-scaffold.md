@@ -9,13 +9,6 @@ nav_order: 4
 
 # App shell decisions
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** Seven decisions that set up the Expo project, tabs, text, checks, and tests.
-> - **Why:** They explain the tools you see in the repo today.
-> - **Scope / Approach / Order:** Template, navigation, localization, lint, unit tests, screenshots, commands.
-> - **Biggest risk or open question:** The app was checked on Android only. iOS checks are open.
-> - **Check this:** Lint rules enforce the constitution, not review alone.
-
 Source: [`specs/001-project-scaffold/research.md`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/specs/001-project-scaffold/research.md).
 
 | Decision | Reason | Applies to |

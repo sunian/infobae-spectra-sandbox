@@ -8,13 +8,6 @@ nav_order: 1
 
 # Architecture
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** Two diagrams: the layers of the app, and the path of feed data from the API to the screen.
-> - **Why:** A new developer sees where each kind of code lives.
-> - **Scope / Approach / Order:** Layers first, then the feed data flow, then the navigation.
-> - **Biggest risk or open question:** The live APIs are not documented by Infobae and can change.
-> - **Check this:** Screens use only design system components, and logic lives in `src/domain/`.
-
 ## Layers
 
 ```mermaid

@@ -10,13 +10,6 @@ nav_order: 1
 
 # App shell
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** The app opens to a shell with five bottom tabs. Each tab shows a placeholder or its feature.
-> - **Why:** Every later feature needs a place to live and a common look.
-> - **Scope / Approach / Order:** Tabs, shared design system, one text file for all words on screen.
-> - **Biggest risk or open question:** The app was checked on Android only. iOS checks are still open.
-> - **Check this:** The tab names and order below match the product plan.
-
 ## Summary
 
 The app has five tabs at the bottom: **Home**, **My Infobae**, **Media**, **Chat**, and **Menu**.

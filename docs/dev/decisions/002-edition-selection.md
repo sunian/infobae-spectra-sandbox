@@ -9,13 +9,6 @@ nav_order: 5
 
 # Edition selection decisions
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** Eight decisions on saving, guarding, and showing the selected edition.
-> - **Why:** They explain how one edition value drives the whole app.
-> - **Scope / Approach / Order:** Storage, route guard, shared state, splash, names, screens, components, tests.
-> - **Biggest risk or open question:** The splash screen hold is checked on a device, not in unit tests.
-> - **Check this:** State updates before the save, so a failed save still works for the session.
-
 Source: [`specs/002-edition-selection/research.md`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/specs/002-edition-selection/research.md).
 
 | Decision | Reason | Applies to |

@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report
-Version change: 1.0.0 -> 1.1.0 (MINOR: new principle added)
-Modified principles: none renamed. Workflow item 3 now says "Principles I to VII".
-Added sections: VII. Every Document Opens with a Verifiable TL;DR
+Version change: 1.1.0 -> 1.1.1 (PATCH: clarification)
+Modified principles: VII scope clarified. TL;DR applies to SpecKit artifacts only, not to GitHub Pages docs under docs/.
+Added sections: none
 Removed sections: none
 Follow-up TODOs: none. Templates carry the TL;DR block through .specify/templates/overrides/.
 -->
@@ -46,8 +46,8 @@ content for the selected edition. For now, the app MUST get content only from th
 the infobae.com website uses. The app MUST NOT depend on private or authenticated back ends until
 this principle is amended.
 
-### VII. Every Document Opens with a Verifiable TL;DR
-Every Markdown deliverable that an agent writes MUST open with a TL;DR block. The block is the
+### VII. Every SpecKit Document Opens with a Verifiable TL;DR
+Every Markdown artifact that SpecKit generates during the software development lifecycle MUST open with a TL;DR block. The block is the
 first content after the title and any front matter. It has five bullets or fewer. Each bullet is
 one plain sentence. It states what the document decides or builds, why, the scope or approach, and
 the biggest risk or open question. It ends with a "Check this" line that names the one to three
@@ -58,6 +58,10 @@ When an agent updates a document, it MUST update the TL;DR in the same write. Th
 source of truth for the next phase. A document under about 30 lines MAY use a one-sentence TL;DR.
 This applies to spec.md, plan.md, tasks.md, research.md, data-model.md, checklists, and every
 Spectra document.
+
+This principle does NOT apply to the GitHub Pages docs under `docs/` (the Product and Developer
+portals, `docs/index.md`, and `docs/README-site.md`). Those pages MUST NOT have a TL;DR block. Their
+readers get the summary from the page title, the `purpose` front matter, and the opening content.
 
 Rationale: A reviewer can confirm the key decisions fast, and the body stays the source of truth.
 
@@ -97,4 +101,4 @@ Compliance review: each PR review MUST check compliance with this constitution. 
 deviation MUST be justified in writing in the PR. `vision.md` is the source document for product
 intent.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-16 | **Last Amended**: 2026-10-19
+**Version**: 1.1.1 | **Ratified**: 2026-10-16 | **Last Amended**: 2026-10-20

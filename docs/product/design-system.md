@@ -8,13 +8,6 @@ nav_order: 9
 
 # Design system
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** The shared colors, text styles, spacing, and building blocks that make every screen look the same.
-> - **Why:** One design system keeps the app coherent as features grow.
-> - **Scope / Approach / Order:** Colors, text styles, spacing, then the reusable components.
-> - **Biggest risk or open question:** The app uses the system font for now, so there is no brand font yet.
-> - **Check this:** A screen needing a new building block gets it added here first.
-
 Every screen is built from the pieces on this page. A screen does not draw its own one-off pieces.
 
 ## Colors

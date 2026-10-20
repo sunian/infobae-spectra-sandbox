@@ -9,13 +9,6 @@ nav_order: 7
 
 # Documentation portals decisions
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** Six decisions on the site tool, page layout, checks, hooks, and publishing.
-> - **Why:** They explain how the docs stay current with no custom GitHub Action.
-> - **Scope / Approach / Order:** Site tool, page layout, validation, hooks, deploy, first content.
-> - **Biggest risk or open question:** A Jekyll build error shows only after a merge to `main`.
-> - **Check this:** Pages publish from `main` and `/docs` with no workflow file.
-
 Source: [`specs/004-github-pages-docs/research.md`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/specs/004-github-pages-docs/research.md).
 
 | Decision | Reason | Applies to |

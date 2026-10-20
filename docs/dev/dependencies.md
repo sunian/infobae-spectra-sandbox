@@ -8,13 +8,6 @@ nav_order: 3
 
 # Dependencies
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** The main frameworks, libraries, and tools in [`package.json`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/package.json), each with its purpose.
-> - **Why:** A developer knows what each package is for before adding another.
-> - **Scope / Approach / Order:** App libraries first, then development tools. Transitive packages are not listed.
-> - **Biggest risk or open question:** Versions follow Expo SDK 58. Use `npx expo install` to add native packages.
-> - **Check this:** The feed uses plain `fetch`. No data-fetching library was added on purpose.
-
 ## App
 
 | Package | Purpose |

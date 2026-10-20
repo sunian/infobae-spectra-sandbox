@@ -24,10 +24,9 @@ Contract: `specs/004-github-pages-docs/contracts/hook-contract.md` and
 4. **Idempotent.** One file per feature in each portal. Find the file by its `feature:` front matter
    or its path. If it exists, update it in place. Never create a second page for the same feature.
    Never delete a page. Replace outdated statements. Do not stack contradictory ones.
-5. **TL;DR first.** Every page you create starts with a `# Title` line, then a TL;DR block (five
-   bullets or fewer, every statement taken from the page body). When you change a page, update its
-   TL;DR in the same write (constitution principle VII). Do not add a TL;DR to old pages you do not
-   otherwise change.
+5. **No TL;DR.** Do not put a TL;DR block on any page in `docs/`. Start each page with the
+   `# Title` line and go straight to the content. The TL;DR is only for the Markdown files that
+   SpecKit writes in the dev lifecycle (constitution principle VII).
 6. **Plain words on the Product portal.** No code, file names, or jargon. Write what the reader sees
    and does. Keep each section near 400 words or fewer.
 7. **Developer pages link to code.** Use `https://github.com/sunian/infobae-spectra-sandbox/tree/main/<path>`
