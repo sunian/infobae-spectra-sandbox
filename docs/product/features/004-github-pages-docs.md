@@ -10,13 +10,6 @@ nav_order: 4
 
 # Documentation portals
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** Two documentation sites, one for developers and one for the whole team, hosted as GitHub Pages in the app repository.
-> - **Why:** New teammates can learn the app quickly, and the docs stay current without manual work.
-> - **Scope / Approach / Order:** Product portal, Developer portal, an update after each specify run, an update after each implement run, then publishing.
-> - **Biggest risk or open question:** The docs can drift from the app if an update fails or if planned features look finished.
-> - **Check this:** Features that are not finished are marked "Planned". This one stays Planned until the live site is checked.
-
 **Status: Planned.** The sites and the automatic updates are built. The feature is not complete until GitHub Pages is turned on and the live site is checked after the merge.
 
 ## Summary

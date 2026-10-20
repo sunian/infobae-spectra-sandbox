@@ -1,12 +1,5 @@
 # Documentation site
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** How to preview, check, and publish the documentation site in this folder.
-> - **Why:** A team member can work on the docs without extra help.
-> - **Scope / Approach / Order:** Preview, validate, hooks, then the one-time Pages setting.
-> - **Biggest risk or open question:** A Jekyll build error shows only after a merge to `main`, so run the local build first.
-> - **Check this:** Pages publish from `main` and `/docs`, with no GitHub Actions workflow.
-
 This folder is the source of the site. GitHub builds it with Jekyll and the `just-the-docs` theme.
 
 ## Preview on your machine
@@ -28,7 +21,7 @@ npm run verify:docs
 ```
 
 It runs the tests of the checker, lints it, and checks every page in `docs/dev/`, `docs/product/`, and
-`docs/index.md`: front matter, the TL;DR block, repo links, secret-like text, and mermaid diagrams.
+`docs/index.md`: front matter, repo links, secret-like text, and mermaid diagrams.
 
 ## How the pages stay current
 
@@ -50,6 +43,6 @@ updates the site.
 
 ## Rules
 
-- Every new page starts with a TL;DR block (constitution principle VII).
+- Do not add a TL;DR block to a page. The validator reports one as an error (constitution principle VII).
 - Keep pages short. A reader should finish a page in under five minutes.
 - Put no secrets, keys, or private URLs in any page. The site is public.

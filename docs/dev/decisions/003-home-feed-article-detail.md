@@ -9,13 +9,6 @@ nav_order: 6
 
 # Home feed decisions
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** Ten decisions on fetching, paging, article text, links, images, tests, and errors.
-> - **Why:** They explain how the feed stays correct when the network, the API, or the edition changes.
-> - **Scope / Approach / Order:** Data and state, content handling, tests, navigation, errors.
-> - **Biggest risk or open question:** The feed shows `last_updated_date` because the list has no publish date.
-> - **Check this:** A request id makes late results from an old edition harmless.
-
 Source: [`specs/003-home-feed-article-detail/research.md`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/specs/003-home-feed-article-detail/research.md).
 
 | Decision | Reason | Applies to |

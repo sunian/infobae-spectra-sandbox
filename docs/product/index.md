@@ -8,13 +8,6 @@ has_children: true
 
 # Product Portal
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** A plain-language guide to the Infobae app: each feature, its user journey, its error and edge cases, and the design system.
-> - **Why:** Anyone on the team, technical or not, can learn how the app works without reading code.
-> - **Scope / Approach / Order:** One page per feature, then one design system page.
-> - **Biggest risk or open question:** A feature marked "Planned" is specified but not built yet.
-> - **Check this:** Look at the status column before you describe a feature as live.
-
 This portal is for designers, QA, product managers, and anyone who wants to understand the app.
 Infobae is a mobile news reader. A reader picks an edition (a country or region), reads a feed of
 articles for that edition, and opens an article to read it.

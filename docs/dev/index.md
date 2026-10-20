@@ -8,13 +8,6 @@ has_children: true
 
 # Developer Portal
 
-> **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** A short guide to the Infobae app code: architecture, decisions, patterns, and dependencies.
-> - **Why:** A new developer can find their way in the repo on the first day.
-> - **Scope / Approach / Order:** Start here, then Architecture, Patterns, Dependencies, and Decisions.
-> - **Biggest risk or open question:** This is a guide, not a full reference. Read the code for detail.
-> - **Check this:** The "Start here" list below matches how you would approach a first task.
-
 Infobae is a React Native news reader written in TypeScript with Expo. It runs on Android and iOS.
 It reads content from the public Infobae APIs.
 
