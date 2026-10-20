@@ -9,6 +9,10 @@ type EditionScreenProps = {
   mode: 'first-launch' | 'change';
 };
 
+// In `change` mode the native header already sits below the status bar, so the top edge gets no
+// padding. First launch has no header and keeps it.
+const CHANGE_EDGES = ['left', 'right', 'bottom'] as const;
+
 const OPTIONS = EDITIONS.map((edition) => ({
   key: edition.id,
   label: t(`editions.${edition.id}`),
@@ -27,7 +31,7 @@ export function EditionScreen({ mode }: EditionScreenProps) {
   };
 
   return (
-    <Screen>
+    <Screen edges={mode === 'change' ? CHANGE_EDGES : undefined}>
       {/* In `change` mode the stack header shows the title and the back arrow. */}
       {mode === 'first-launch' ? <Text variant="title">{t('editionSelect.title')}</Text> : null}
       <OptionList
