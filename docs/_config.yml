@@ -1,0 +1,16 @@
+title: Infobae App Docs
+description: Developer and Product documentation for the Infobae mobile app.
+url: "https://sunian.github.io"
+baseurl: "/infobae-spectra-sandbox"
+remote_theme: just-the-docs/just-the-docs
+plugins:
+  - jekyll-remote-theme
+search_enabled: true
+heading_anchors: true
+mermaid:
+  version: "10.9.1"
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - README-site.md
