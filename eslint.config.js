@@ -15,6 +15,8 @@ module.exports = defineConfig([
       '.specify/',
       '.claude/',
       '.maestro/',
+      'tools/',
+      'docs/',
     ],
   },
   {

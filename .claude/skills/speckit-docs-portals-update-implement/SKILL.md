@@ -1,0 +1,1 @@
+../../../.specify/extensions/docs-portals/.specify-dev/agent-commands/claude/speckit-docs-portals-update-implement/SKILL.md
