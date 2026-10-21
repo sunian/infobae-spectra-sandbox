@@ -6,7 +6,7 @@ description: "Task list for Dark Mode"
 # Tasks: Dark Mode
 
 > **TL;DR** (max 5 bullets, written for a human reviewer)
-> - **What:** 46 tasks that add a light and a dark palette, a theme provider, the System / Light / Dark choice, a Menu Theme row, and dark screenshot tests.
+> - **What:** 52 tasks that add a light and a dark palette, a theme provider, the System / Light / Dark choice, a Menu Theme row, and dark screenshot tests.
 > - **Why:** Readers want the app to match the phone and to override it (issue #3).
 > - **Scope / Approach / Order:** Setup, then palettes and component migration, then US1 (follow the phone), then US2 (Menu override and saved choice), then polish.
 > - **Biggest risk or open question:** Three facts need a check in T001 (splash dark option, router `ThemeProvider`, Maestro tag flags). The splash does not follow the in-app override (plan R6).
@@ -165,6 +165,15 @@ Each task below changes one component and its test. The component stops reading 
 - [X] T044 [P] Run `grep -rnE "#[0-9A-Fa-f]{6}|rgba?\(" app src --include=*.ts --include=*.tsx` and confirm every match is in `src/design-system/tokens.ts` or in a test file (FR-014). Fix any other match by moving the color into a palette key (add the key to both palettes and to `data-model.md`).
 - [X] T045 Run `npm run verify` (lint, typecheck, all Jest tests) and confirm it passes. Run `npm run verify:docs` and confirm 0 errors (the docs hook may have changed pages).
 - [X] T046 Run the manual steps in `quickstart.md` section 3 on a device or emulator in a release build. Record the result of each of the 7 steps under a "Manual check" heading at the end of `quickstart.md`. Step 1 (dark splash) and step 2 (live phone change) are the UAT scenarios that only a person can confirm. If a step cannot run, say which one and why.
+
+## Phase 6: Follow-up, Android navigation bar (research R10)
+
+- [X] T047 [P] Add tests in `src/navigation/RootLayout.test.tsx` that `NavigationBar` gets the style of the active scheme: phone light, phone dark, saved Dark with phone light, saved Light with phone dark.
+- [X] T048 Install `expo-navigation-bar` (`npx expo install expo-navigation-bar`) and add its mock to `jest.setup.ts`.
+- [X] T049 Add the `["expo-navigation-bar", { "enforceContrast": false }]` plugin to `app.json`.
+- [X] T050 Render `<NavigationBar style={scheme} />` beside the `StatusBar` in `app/_layout.tsx`.
+- [X] T051 Add the Maestro flow `.maestro/flows/theme-override-light-dark.yaml` (night mode, choose Light) and re-record the `theme-override-*` and `theme-persist-menu` baselines.
+- [X] T052 Update spec FR-012, plan, research R10, contracts, quickstart, and the `docs/` pages. Run `npm run verify` and `npm run verify:docs`.
 
 ---
 

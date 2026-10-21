@@ -16,8 +16,9 @@ nav_order: 3
 | `react-native`, `react` | The UI layer for Android and iOS. |
 | `expo-router` | File-based routes and the bottom tabs. `Stack.Protected` guards routes until an edition is chosen. |
 | `i18n-js`, `expo-localization` | Looks up text in `en.json` and reads the device language. |
-| `@react-native-async-storage/async-storage` | Saves the selected edition on the device. |
-| `expo-splash-screen` | Keeps the splash screen visible until the saved edition is read. |
+| `@react-native-async-storage/async-storage` | Saves the selected edition and the theme choice on the device. |
+| `expo-splash-screen` | Keeps the splash screen visible until the saved edition and theme are read. Its config sets a dark splash background. |
+| `expo-navigation-bar` | Colors the Android navigation bar buttons to match the app theme, even when the choice differs from the phone. Its plugin runs with `enforceContrast` set to `false`. |
 | `react-native-safe-area-context`, `react-native-screens` | Safe areas and native screens, needed by the router. |
 | `expo-constants`, `expo-linking`, `expo-status-bar` | Expo support packages used by the router and the app shell. |
 

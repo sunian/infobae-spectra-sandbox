@@ -125,7 +125,7 @@ and reopen the app. It still shows dark. Choose System. The app shows light agai
   session.
 - **FR-011**: Text and interactive elements MUST be readable in both themes. Body text and
   controls MUST meet at least the WCAG AA contrast ratio against their background.
-- **FR-012**: The status bar style MUST match the active theme.
+- **FR-012**: The status bar style MUST match the active theme. On Android with button navigation, the system navigation bar and its buttons MUST match the active theme too, including when the theme choice differs from the phone setting.
 - **FR-013**: All new user-facing text (setting title, the three choice names) MUST be in the
   localization JSON file.
 - **FR-014**: All theme colors and the Menu theme control MUST live in the design system module.

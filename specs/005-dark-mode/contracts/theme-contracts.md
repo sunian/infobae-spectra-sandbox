@@ -80,3 +80,6 @@ name (System, Light, or Dark) as the value. A tap opens `/change-theme`.
 - `app.json`: `expo.userInterfaceStyle` is `automatic`. The splash plugin has a dark background
   variant (name to verify, see research R6).
 - `StatusBar` style: `light` for the dark scheme, `dark` for the light scheme.
+- `app.json`: the `expo-navigation-bar` plugin with `enforceContrast: false`. The root layout renders
+  `<NavigationBar style={scheme} />` (`dark` or `light`), so the Android navigation bar follows the
+  choice, not the phone.

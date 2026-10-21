@@ -68,6 +68,6 @@ Run on 2026-10-21 on the Android emulator from `.maestro/config.yaml` (release b
 
 Known gaps found while checking:
 
-- With the phone light and the choice Dark, the Android system navigation bar at the bottom stays light, because the system draws it from the phone setting. FR-012 only asks for the status bar. A fix needs a native navigation bar setting and is not in this plan.
+- Fixed after this check (research R10): with the phone Light and the choice Dark, the Android navigation bar stayed light. It now follows the choice. Checked on the Android 14 emulator in both directions with `theme-override` and `theme-override-light-dark`. An Android 15 device is still worth a manual look.
 - The native splash screen follows the phone, not the in-app choice (plan R6).
 - `home-edition-switch` failed once in a full light pass (it asserts a short loading state, and that run was slow). It passed in 3 of 3 reruns.

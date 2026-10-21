@@ -36,18 +36,19 @@ The approach has seven parts:
 6. **Menu and screen.** A Theme row in the Menu opens a new `change-theme` route. It lists System,
    Light, and Dark with the existing `OptionList`. No new design system view is needed (R5).
 7. **Native chrome.** `app.json` sets `userInterfaceStyle` to `automatic` and gives the splash
-   screen a dark variant. The status bar style follows the active scheme. A navigation theme built
-   from the palette colors the stack and tab chrome (R1, R6, R7).
+   screen a dark variant. The status bar style and the Android navigation bar style follow the
+   active scheme. A navigation theme built from the palette colors the stack and tab chrome (R1, R6,
+   R7, R10).
 
-No new npm packages are needed.
+One new npm package is needed: `expo-navigation-bar`, for the Android navigation bar (R10).
 
 ## Technical Context
 
 **Language/Version**: TypeScript (strict), Node.js 20+
 
 **Primary Dependencies**: Expo SDK 58, React Native 0.88, React 19.3, Expo Router 58,
-`@react-native-async-storage/async-storage`, `expo-status-bar`, `expo-splash-screen`. All installed.
-Uses the built-in `useColorScheme` from `react-native`. No new packages.
+`@react-native-async-storage/async-storage`, `expo-status-bar`, `expo-splash-screen`, and the new
+`expo-navigation-bar` (R10). Uses the built-in `useColorScheme` from `react-native`.
 
 **Storage**: One new key in the existing AsyncStorage store: `preferences.theme`. Values: `system`,
 `light`, `dark`.
@@ -122,7 +123,8 @@ specs/005-dark-mode/
 ### Source Code (repository root)
 
 ```text
-app.json                          # CHANGED: userInterfaceStyle automatic, splash dark variant
+app.json                          # CHANGED: userInterfaceStyle automatic, splash dark variant,
+                                  #          expo-navigation-bar plugin (enforceContrast false)
 
 app/
 ├── _layout.tsx                   # CHANGED: ThemeProvider, navigation theme, status bar, splash gate,

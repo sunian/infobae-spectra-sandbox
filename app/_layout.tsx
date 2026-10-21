@@ -1,3 +1,4 @@
+import { NavigationBar } from 'expo-navigation-bar';
 import { Stack, ThemeProvider as NavigationThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -28,6 +29,8 @@ function RootNavigator() {
   return (
     <NavigationThemeProvider value={navigationTheme(scheme, colors)}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+      {/* `dark` is a dark bar with light buttons. It follows the choice, not the phone. */}
+      <NavigationBar style={scheme} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={edition === null}>
           <Stack.Screen name="select-edition" />

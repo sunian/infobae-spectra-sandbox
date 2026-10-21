@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { act, fireEvent, renderRouter, screen, waitFor } from 'expo-router/testing-library';
 import * as SplashScreen from 'expo-splash-screen';
+import { NavigationBar } from 'expo-navigation-bar';
 import { StatusBar } from 'expo-status-bar';
 import path from 'path';
 import { StyleSheet } from 'react-native';
@@ -189,6 +190,24 @@ describe('splash screen and the theme read', () => {
     const calls = (StatusBar as unknown as jest.Mock).mock.calls;
     expect(calls[calls.length - 1][0]).toMatchObject({ style: 'light' });
   });
+
+  it('sets a dark navigation bar for the saved dark choice when the phone is light', async () => {
+    await AsyncStorage.setItem('preferences.theme', 'dark');
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    const calls = (NavigationBar as unknown as jest.Mock).mock.calls;
+    expect(calls[calls.length - 1][0]).toMatchObject({ style: 'dark' });
+  });
+
+  it('sets a light navigation bar for the saved light choice when the phone is dark', async () => {
+    mockUseColorScheme.mockReturnValue('dark');
+    await AsyncStorage.setItem('preferences.theme', 'light');
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    const calls = (NavigationBar as unknown as jest.Mock).mock.calls;
+    expect(calls[calls.length - 1][0]).toMatchObject({ style: 'light' });
+    mockUseColorScheme.mockReturnValue('light');
+  });
 });
 
 describe('changing the edition from the Menu', () => {
@@ -279,6 +298,13 @@ describe.each([
     await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
     const calls = (StatusBar as unknown as jest.Mock).mock.calls;
     expect(calls[calls.length - 1][0]).toMatchObject({ style: statusBarStyle });
+  });
+
+  it(`sets the navigation bar style to ${phone}`, async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    const calls = (NavigationBar as unknown as jest.Mock).mock.calls;
+    expect(calls[calls.length - 1][0]).toMatchObject({ style: phone });
   });
 
   it(`shows the tabs in the ${phone} colors`, async () => {

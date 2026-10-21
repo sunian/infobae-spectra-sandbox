@@ -1,6 +1,6 @@
 # Research: Dark Mode
 
-> **TL;DR:** Nine decisions, no open clarification. Use two palettes behind one React context, read the phone scheme with `useColorScheme`, save a three-value choice, and show it from a Menu row that opens a list. The biggest risk is the native splash (R6). **Check this:** R1 (`app.json` to `automatic`), R5 (list screen, not an inline control), R6 (splash follows the phone).
+> **TL;DR:** Ten decisions, no open clarification. Use two palettes behind one React context, read the phone scheme with `useColorScheme`, save a three-value choice, and show it from a Menu row that opens a list. The biggest risk is the native splash (R6). **Check this:** R1 (`app.json` to `automatic`), R5 (list screen, not an inline control), R6 (splash follows the phone), R10 (one new package for the Android navigation bar).
 
 Facts about the code come from reading `src/design-system/tokens.ts`, `app/_layout.tsx`, and
 `app.json`. Items marked **verify** need a quick check when the code is written.
@@ -118,3 +118,19 @@ Facts about the code come from reading `src/design-system/tokens.ts`, `app/_layo
 - **Note**: `tabInactive` at `#8A8A8A` on white is below 4.5:1 today. It is an inactive control. The
   test uses 3:1 for it. The reviewer can raise it.
 - **Alternatives**: A manual contrast review only. It does not catch a later color change.
+
+## R10. Android navigation bar follows the choice (added after the first release build)
+
+- **Decision**: Add the package `expo-navigation-bar` (58.0.4, the SDK 58 version). Set its config
+  plugin option `enforceContrast` to `false` in `app.json`. Render `<NavigationBar style={scheme} />`
+  in the root layout beside the status bar. The style `dark` gives a dark bar with light buttons.
+- **Rationale**: Testing on the emulator showed that, with the phone Light and the choice Dark, the
+  system navigation bar stayed light, because Android draws it from the phone setting. The package
+  docs say the style takes effect with button navigation when `enforceContrast` is `false`. Checked
+  on the Android 14 emulator in both directions (phone Light with Dark chosen, and phone Dark with
+  Light chosen). This supersedes the "known gap" note in `quickstart.md`.
+- **Alternatives**: `Appearance.setColorScheme` from React Native. Tried first. It did not change the
+  bar on the emulator, so it was removed. A custom native config plugin. More code to maintain for
+  the same result.
+- **Limits**: Gesture navigation has no bar to color. The package docs warn about an Android 15
+  emulator bug, so an Android 15 device is worth a manual check.

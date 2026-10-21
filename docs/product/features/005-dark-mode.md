@@ -51,4 +51,4 @@ flowchart TD
 | First launch, before any theme choice | The edition list uses the phone's light or dark setting. |
 | App opens in dark mode | The app waits for the saved choice, so no bright flash of the light look shows after the splash screen. |
 | Choice differs from the phone (for example, phone light and app Dark) | The very first splash screen follows the phone, so it can be light for a moment. |
-| Choice differs from the phone | On Android, the phone's own button bar at the bottom keeps the phone's color. |
+| Choice differs from the phone (Android with buttons at the bottom) | The button bar at the bottom of the screen follows the app choice, dark or light. |
