@@ -1,6 +1,7 @@
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
-import { colors, spacing } from '../tokens';
+import { useColors } from '../theme';
+import { spacing } from '../tokens';
 import { Text } from './Text';
 
 type ListFooterProps = {
@@ -11,6 +12,7 @@ type ListFooterProps = {
 };
 
 export function ListFooter({ state, errorLabel, retryLabel, onRetry }: ListFooterProps) {
+  const colors = useColors();
   if (state === 'idle') return null;
   return (
     <View style={styles.footer}>

@@ -1,0 +1,43 @@
+# Day mode: choose Dark in the Menu. The Menu and Home turn dark at once.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- tapOn: '^Theme$'
+- waitForAnimationToEnd
+- tapOn: '^Dark$'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: theme-override-menu
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/theme-override-menu.png
+          thresholdPercentage: 98
+- tapOn:
+    text: '^Home$'
+    leftOf: '^My Infobae$'
+- waitForAnimationToEnd
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: theme-override-home
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/theme-override-home.png
+          thresholdPercentage: 98

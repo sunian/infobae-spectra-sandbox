@@ -2,7 +2,7 @@ import { useImperativeHandle, useRef } from 'react';
 import type { ReactElement, ReactNode, Ref } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 
-import { colors } from '../tokens';
+import { useColors } from '../theme';
 
 export type FeedListHandle = {
   scrollToTop: () => void;
@@ -33,6 +33,7 @@ export function FeedList<T>({
   footer,
   ref,
 }: FeedListProps<T>) {
+  const colors = useColors();
   const list = useRef<FlatList<T>>(null);
   useImperativeHandle(ref, () => ({
     scrollToTop: () => list.current?.scrollToOffset({ offset: 0, animated: false }),

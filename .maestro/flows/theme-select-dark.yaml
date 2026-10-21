@@ -1,0 +1,29 @@
+# Dark pass: the Theme list opened from the Menu, emulator in night mode, choice System.
+appId: com.infobae.scaffold
+tags:
+  - dark
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- tapOn: '^Theme$'
+- waitForAnimationToEnd
+- assertVisible: '^System$'
+- assertVisible: '^Light$'
+- assertVisible: '^Dark$'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: theme-select-dark
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/theme-select-dark.png
+          thresholdPercentage: 98

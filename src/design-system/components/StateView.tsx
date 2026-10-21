@@ -1,6 +1,7 @@
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
-import { colors, radius, spacing } from '../tokens';
+import { useColors, useThemedStyles } from '../theme';
+import { radius, spacing, type ColorPalette } from '../tokens';
 import { Text } from './Text';
 
 type StateViewProps = {
@@ -12,6 +13,8 @@ type StateViewProps = {
 };
 
 export function StateView({ kind, message, actionLabel, onAction }: StateViewProps) {
+  const colors = useColors();
+  const styles = useThemedStyles(createStyles);
   return (
     <View style={styles.center}>
       {kind === 'loading' ? (
@@ -39,22 +42,23 @@ export function StateView({ kind, message, actionLabel, onAction }: StateViewPro
   );
 }
 
-const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.md,
-    padding: spacing.lg,
-  },
-  button: {
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.lg,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  pressed: {
-    backgroundColor: colors.surface,
-  },
-});
+const createStyles = (colors: ColorPalette) =>
+  StyleSheet.create({
+    center: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.md,
+      padding: spacing.lg,
+    },
+    button: {
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.lg,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    pressed: {
+      backgroundColor: colors.surface,
+    },
+  });

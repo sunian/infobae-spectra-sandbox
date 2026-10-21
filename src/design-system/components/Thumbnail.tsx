@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { colors, radius } from '../tokens';
+import { useThemedStyles } from '../theme';
+import { radius, type ColorPalette } from '../tokens';
 
 type ThumbnailProps = {
   uri?: string | null;
@@ -12,6 +13,7 @@ type ThumbnailProps = {
 
 /** A picture in a fixed-shape box. A missing or broken picture shows a neutral block. */
 export function Thumbnail({ uri, aspectRatio = 3 / 2, accessibilityLabel }: ThumbnailProps) {
+  const styles = useThemedStyles(createStyles);
   const [failedUri, setFailedUri] = useState<string | null>(null);
   // Remember which uri failed, so a new uri gets a fresh try with no effect.
   const showImage = Boolean(uri) && failedUri !== uri;
@@ -35,18 +37,19 @@ export function Thumbnail({ uri, aspectRatio = 3 / 2, accessibilityLabel }: Thum
   );
 }
 
-const styles = StyleSheet.create({
-  box: {
-    width: '100%',
-    overflow: 'hidden',
-    borderRadius: radius.sm,
-    backgroundColor: colors.placeholder,
-  },
-  fill: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-});
+const createStyles = (colors: ColorPalette) =>
+  StyleSheet.create({
+    box: {
+      width: '100%',
+      overflow: 'hidden',
+      borderRadius: radius.sm,
+      backgroundColor: colors.placeholder,
+    },
+    fill: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+  });

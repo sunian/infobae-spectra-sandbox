@@ -1,6 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import { ListFooter } from './ListFooter';
+import { ThemeProvider } from '../theme';
+import { darkColors, lightColors } from '../tokens';
+
+const SCHEMES = [
+  ['light', lightColors],
+  ['dark', darkColors],
+] as const;
 
 const labels = { errorLabel: 'Could not load more.', retryLabel: 'Try again' };
 
@@ -24,5 +31,16 @@ describe('ListFooter', () => {
     expect(screen.getByText(labels.errorLabel)).toBeTruthy();
     await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
     expect(onRetry).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe.each(SCHEMES)('ListFooter in the %s scheme', (scheme, palette) => {
+  it('colors the indicator with the active tab color', async () => {
+    await render(
+      <ThemeProvider scheme={scheme}>
+        <ListFooter state="loading" {...labels} onRetry={() => {}} />
+      </ThemeProvider>,
+    );
+    expect(screen.getByTestId('list-footer-loading').props.color).toBe(palette.tabActive);
   });
 });

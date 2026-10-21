@@ -1,4 +1,4 @@
-export const colors = {
+export const lightColors = {
   background: '#FFFFFF',
   surface: '#F5F5F5',
   textPrimary: '#111111',
@@ -9,6 +9,20 @@ export const colors = {
   placeholder: '#E6E6E6',
   link: '#0A5CFF',
 } as const;
+
+export type ColorPalette = Record<keyof typeof lightColors, string>;
+
+export const darkColors: ColorPalette = {
+  background: '#121212',
+  surface: '#1E1E1E',
+  textPrimary: '#F2F2F2',
+  textSecondary: '#A8A8A8',
+  tabActive: '#6EA2FF',
+  tabInactive: '#8A8A8A',
+  border: '#2E2E2E',
+  placeholder: '#2A2A2A',
+  link: '#6EA2FF',
+};
 
 export const fonts = {
   regular: 'System',

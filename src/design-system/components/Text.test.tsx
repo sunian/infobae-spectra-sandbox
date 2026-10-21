@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
 
-import { colors, typography } from '../tokens';
 import { Text } from './Text';
+import { ThemeProvider } from '../theme';
+import { darkColors, lightColors, typography } from '../tokens';
+
+const SCHEMES = [
+  ['light', lightColors],
+  ['dark', darkColors],
+] as const;
 
 const styleOf = (text: string) => StyleSheet.flatten(screen.getByText(text).props.style);
 
@@ -23,9 +29,9 @@ describe('Text', () => {
         <Text tone="link">Three</Text>
       </>,
     );
-    expect(styleOf('One').color).toBe(colors.textPrimary);
-    expect(styleOf('Two').color).toBe(colors.textSecondary);
-    expect(styleOf('Three').color).toBe(colors.link);
+    expect(styleOf('One').color).toBe(lightColors.textPrimary);
+    expect(styleOf('Two').color).toBe(lightColors.textSecondary);
+    expect(styleOf('Three').color).toBe(lightColors.link);
   });
 
   it('applies bold and italic', async () => {
@@ -45,5 +51,20 @@ describe('Text', () => {
   it('can be a header for screen readers', async () => {
     await render(<Text accessibilityRole="header">Top</Text>);
     expect(screen.getByRole('header', { name: 'Top' })).toBeTruthy();
+  });
+});
+
+describe.each(SCHEMES)('Text in the %s scheme', (scheme, palette) => {
+  it('colors each tone from the palette', async () => {
+    await render(
+      <ThemeProvider scheme={scheme}>
+        <Text>One</Text>
+        <Text tone="secondary">Two</Text>
+        <Text tone="link">Three</Text>
+      </ThemeProvider>,
+    );
+    expect(styleOf('One').color).toBe(palette.textPrimary);
+    expect(styleOf('Two').color).toBe(palette.textSecondary);
+    expect(styleOf('Three').color).toBe(palette.link);
   });
 });

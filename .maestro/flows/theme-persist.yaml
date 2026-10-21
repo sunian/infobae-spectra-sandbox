@@ -1,0 +1,50 @@
+# Day mode: the Dark choice survives a relaunch (no clearState). Then System follows the phone
+# (light) again.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- tapOn: '^Theme$'
+- waitForAnimationToEnd
+- tapOn: '^Dark$'
+- waitForAnimationToEnd
+- launchApp
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- assertVisible: '^Dark$'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: theme-persist-menu
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/theme-persist-menu.png
+          thresholdPercentage: 98
+- tapOn: '^Theme$'
+- waitForAnimationToEnd
+- tapOn: '^System$'
+- waitForAnimationToEnd
+- assertVisible: '^System$'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: theme-system-menu
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/theme-system-menu.png
+          thresholdPercentage: 98

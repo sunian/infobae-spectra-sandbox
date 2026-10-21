@@ -19,7 +19,16 @@
 # TEXT CHECKS: flows also run shared/assert-tabs.yaml. The 98% image threshold does not reliably
 # catch a small text change (for example "Home" to "Home TEST"), so tab labels are asserted exactly.
 #
+# DARK PASS: flows tagged `dark` check the dark theme with the choice System. The default run skips
+# them (`npm run test:e2e` passes --exclude-tags=dark; a config-level excludeTags would block
+# --include-tags, so it is not set here). Run the dark pass with the emulator in night mode:
+#   adb shell cmd uimode night yes
+#   npm run test:e2e:dark
+#   adb shell cmd uimode night no
+# Flows without the tag run in day mode. Their baselines (light) must not change when dark mode
+# changes, so a changed light baseline is a regression.
+#
 # RUN:    npm run test:e2e          (add --device <id> if more than one device is attached)
-# RECORD: .maestro/record-baselines.sh [--device <id>]   (rewrites the baselines)
+# RECORD: .maestro/record-baselines.sh [--device <id>]   (rewrites the baselines, both passes)
 flows:
   - flows/*.yaml

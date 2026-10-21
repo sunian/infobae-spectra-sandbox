@@ -1,0 +1,24 @@
+# Dark pass: runs only with the emulator in night mode (see config.yaml). The app follows the phone.
+# Home shows the feed for the picked edition (fixture build: Colombia, page 1).
+appId: com.infobae.scaffold
+tags:
+  - dark
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- waitForAnimationToEnd
+- runFlow: ../shared/assert-tabs.yaml
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: home-dark
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/home-dark.png
+          thresholdPercentage: 98

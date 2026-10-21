@@ -1,0 +1,28 @@
+# Dark pass: runs only with the emulator in night mode (see config.yaml). The app follows the phone.
+# First launch: the edition list shows, the tabs do not, back leaves the app, and one tap on an
+# edition opens the tabs with Home showing that edition.
+appId: com.infobae.scaffold
+tags:
+  - dark
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'Choose your edition'
+- assertNotVisible: '^My Infobae$'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: edition-select-dark
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/edition-select-dark.png
+          thresholdPercentage: 98
+# One tap opens the tabs, and Home shows the chosen edition.
+- tapOn: '^Colombia$'
+- waitForAnimationToEnd
+- assertVisible: '^My Infobae$'

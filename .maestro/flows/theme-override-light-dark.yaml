@@ -1,0 +1,30 @@
+# Dark pass (emulator in night mode): choose Light in the Menu. The app turns light, and so does
+# the Android navigation bar, even though the phone is dark.
+appId: com.infobae.scaffold
+tags:
+  - dark
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- tapOn: '^Theme$'
+- waitForAnimationToEnd
+- tapOn: '^Light$'
+- waitForAnimationToEnd
+- assertVisible: '^Light$'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: theme-override-light-menu
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/theme-override-light-menu.png
+          thresholdPercentage: 98

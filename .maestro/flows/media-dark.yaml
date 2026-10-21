@@ -1,0 +1,25 @@
+# Dark pass: runs only with the emulator in night mode (see config.yaml). The app follows the phone.
+appId: com.infobae.scaffold
+tags:
+  - dark
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- runFlow: ../shared/assert-tabs.yaml
+- tapOn: 'Media'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: media-dark
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/media-dark.png
+          thresholdPercentage: 98

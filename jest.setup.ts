@@ -8,5 +8,7 @@ jest.mock('expo-splash-screen', () => ({
   hideAsync: jest.fn(() => Promise.resolve()),
 }));
 
+jest.mock('expo-navigation-bar', () => ({ NavigationBar: jest.fn(() => null) }));
+
 // Tests never call the live Infobae APIs. They get the bundled fixture content.
 process.env.EXPO_PUBLIC_CONTENT_SOURCE = 'fixture';
