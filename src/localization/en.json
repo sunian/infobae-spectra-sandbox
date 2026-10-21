@@ -11,7 +11,8 @@
     "changeTitle": "Change edition"
   },
   "menu": {
-    "edition": "Edition"
+    "edition": "Edition",
+    "theme": "Theme"
   },
   "editions": {
     "argentina": "Argentina",
@@ -44,5 +45,13 @@
     "minutes": "{{count}} min",
     "hours": "{{count}} h",
     "days": "{{count}} d"
+  },
+  "themeSelect": {
+    "title": "Theme"
+  },
+  "theme": {
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
   }
 }

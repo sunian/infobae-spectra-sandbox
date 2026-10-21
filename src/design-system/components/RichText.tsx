@@ -1,6 +1,7 @@
 import { Text as RNText } from 'react-native';
 
-import { colors, typography } from '../tokens';
+import { useColors } from '../theme';
+import { typography } from '../tokens';
 
 export type RichTextSegment = {
   text: string;
@@ -16,6 +17,7 @@ type RichTextProps = {
 
 /** A paragraph of styled runs. A run with an `href` is a link. */
 export function RichText({ segments, onLinkPress }: RichTextProps) {
+  const colors = useColors();
   return (
     <RNText style={[typography.body, { color: colors.textPrimary }]}>
       {segments.map((segment, index) => {

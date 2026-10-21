@@ -2,10 +2,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { act, fireEvent, renderRouter, screen, waitFor } from 'expo-router/testing-library';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
 import path from 'path';
+import { StyleSheet } from 'react-native';
 
+import { darkColors, lightColors } from '@/design-system';
 import { fixtureContentSource } from '@/domain/content/fixtureContentSource';
 import * as editionScreens from '@/screens/EditionScreen';
+
+const mockUseColorScheme = jest.fn(() => 'light');
+jest.mock('react-native/Libraries/Utilities/useColorScheme', () => ({
+  __esModule: true,
+  default: () => mockUseColorScheme(),
+}));
+
+jest.mock('expo-status-bar', () => ({ StatusBar: jest.fn(() => null) }));
 
 const APP_DIR = path.join(__dirname, '..', '..', 'app');
 const LIST_TITLE = 'Choose your edition';
@@ -140,6 +151,46 @@ describe('splash screen', () => {
   });
 });
 
+describe('splash screen and the theme read', () => {
+  const hide = SplashScreen.hideAsync as jest.Mock;
+  const getItem = AsyncStorage.getItem as jest.Mock;
+  const realGetItem = getItem.getMockImplementation();
+
+  afterEach(() => {
+    // restoreAllMocks does not undo an override on a mock that already existed.
+    getItem.mockImplementation(realGetItem);
+    jest.restoreAllMocks();
+  });
+
+  it('stays up while the saved theme is read, and is released once when both reads finish', async () => {
+    await AsyncStorage.setItem('preferences.edition', 'colombia');
+    let finishThemeRead: (value: string | null) => void = () => {};
+    getItem.mockImplementation((key: string, ...rest: unknown[]) =>
+      key === 'preferences.theme'
+        ? new Promise<string | null>((resolve) => (finishThemeRead = resolve))
+        : realGetItem?.(key, ...rest),
+    );
+    const hidesBefore = hide.mock.calls.length;
+    await launch();
+    await act(async () => {});
+    expect(hide.mock.calls.length).toBe(hidesBefore);
+    expect(screen.queryByText('My Infobae')).toBeNull();
+    await act(async () => finishThemeRead(null));
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    expect(hide.mock.calls.length).toBe(hidesBefore + 1);
+  });
+
+  it('shows the saved dark choice on the first screen when the phone is light', async () => {
+    await AsyncStorage.setItem('preferences.theme', 'dark');
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    const style = StyleSheet.flatten(screen.getByText(LIST_TITLE).props.style);
+    expect(style.color).toBe(darkColors.textPrimary);
+    const calls = (StatusBar as unknown as jest.Mock).mock.calls;
+    expect(calls[calls.length - 1][0]).toMatchObject({ style: 'light' });
+  });
+});
+
 describe('changing the edition from the Menu', () => {
   async function openMenuEdition() {
     await AsyncStorage.setItem('preferences.edition', 'colombia');
@@ -206,5 +257,36 @@ describe('opening an article from Home', () => {
     await waitFor(() => expect(app.getPathname()).toBe('/'));
     expect(screen.getByText(/^El Gobierno anunció/)).toBeTruthy();
     expect(feedRequest).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe.each([
+  ['dark', 'light', darkColors],
+  ['light', 'dark', lightColors],
+] as const)('with the phone set to %s', (phone, statusBarStyle, palette) => {
+  beforeEach(() => mockUseColorScheme.mockReturnValue(phone));
+  afterEach(() => mockUseColorScheme.mockReturnValue('light'));
+
+  it(`shows the edition list in the ${phone} colors`, async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    const style = StyleSheet.flatten(screen.getByText(LIST_TITLE).props.style);
+    expect(style.color).toBe(palette.textPrimary);
+  });
+
+  it(`sets the status bar style to ${statusBarStyle}`, async () => {
+    await launch();
+    await waitFor(() => expect(screen.getByText(LIST_TITLE)).toBeTruthy());
+    const calls = (StatusBar as unknown as jest.Mock).mock.calls;
+    expect(calls[calls.length - 1][0]).toMatchObject({ style: statusBarStyle });
+  });
+
+  it(`shows the tabs in the ${phone} colors`, async () => {
+    await AsyncStorage.setItem('preferences.edition', 'colombia');
+    await launch();
+    await waitFor(() => expect(screen.getByText('My Infobae')).toBeTruthy());
+    const style = StyleSheet.flatten(screen.getByText('Menu').props.style);
+    expect(style.color).toBe(palette.tabInactive);
+    expect(StyleSheet.flatten(screen.getByText('Home').props.style).color).toBe(palette.tabActive);
   });
 });

@@ -1,4 +1,7 @@
-export { colors, fonts, radius, sizes, spacing, typography } from './tokens';
+export { darkColors, fonts, lightColors, radius, sizes, spacing, typography } from './tokens';
+export type { ColorPalette } from './tokens';
+export { ThemeProvider, useColors, useColorSchemeName, useThemedStyles } from './theme';
+export type { ColorScheme } from './theme';
 export { ArticleBody } from './components/ArticleBody';
 export { ArticleHeader } from './components/ArticleHeader';
 export { ArticleImage } from './components/ArticleImage';

@@ -1,7 +1,14 @@
 import { render } from '@testing-library/react-native';
-import { Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import { Screen } from './Screen';
+import { ThemeProvider } from '../theme';
+import { darkColors, lightColors } from '../tokens';
+
+const SCHEMES = [
+  ['light', lightColors],
+  ['dark', darkColors],
+] as const;
 
 const mockSafeAreaView = jest.fn();
 
@@ -34,5 +41,20 @@ describe('Screen', () => {
       </Screen>,
     );
     expect(mockSafeAreaView.mock.calls[0][0].edges).toEqual(['left', 'right', 'bottom']);
+  });
+});
+
+describe.each(SCHEMES)('Screen in the %s scheme', (scheme, palette) => {
+  it('uses the background color', async () => {
+    mockSafeAreaView.mockClear();
+    await render(
+      <ThemeProvider scheme={scheme}>
+        <Screen>
+          <Text>x</Text>
+        </Screen>
+      </ThemeProvider>,
+    );
+    const style = StyleSheet.flatten(mockSafeAreaView.mock.calls[0][0].style);
+    expect(style.backgroundColor).toBe(palette.background);
   });
 });

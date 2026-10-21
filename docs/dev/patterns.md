@@ -17,6 +17,7 @@ nav_order: 2
 | Tested logic | Every module in `src/domain/` has unit tests. | Review and `npm test` |
 | Screenshot tests | Every screen has a Maestro flow and baseline. | `npm run test:e2e` |
 | Strict TypeScript | No `any` without a comment that says why. | Lint and `tsc` |
+| Themed colors | A component reads colors with `useColors()` or `useThemedStyles()`. No file outside `tokens.ts` holds a color value. | Review and a code search |
 | Public APIs only | Use only the public Infobae APIs. Send no credentials. | Review |
 
 ## Where does new code go?
@@ -26,9 +27,10 @@ nav_order: 2
 | A screen | [`src/screens/`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/src/screens), plus a thin route file in [`app/`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/app). |
 | A tab | A route in `app/(tabs)/`, an entry in [`tabs.ts`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/src/navigation/tabs.ts), and a label in `en.json`. |
 | A reusable component | [`src/design-system/components/`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/src/design-system/components). Export it from `index.ts`. Add a test next to it. |
+| A color | Add the key to both `lightColors` and `darkColors` in [`tokens.ts`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/src/design-system/tokens.ts). Check the contrast test. |
 | A string | [`src/localization/en.json`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/src/localization/en.json), nested by area. |
 | Business logic | A module in [`src/domain/`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/src/domain) with a test next to it. |
-| A screenshot test | [`.maestro/flows/`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/.maestro) with its baseline. |
+| A screenshot test | [`.maestro/flows/`](https://github.com/sunian/infobae-spectra-sandbox/tree/main/.maestro) with its baseline. A screen also needs a dark flow tagged `dark` (run with `npm run test:e2e:dark`). |
 
 ## Tests without the network
 
@@ -41,7 +43,7 @@ lets a screenshot flow reach each state without a hidden control.
 | When | Command |
 |---|---|
 | Before a push | `npm run verify` (lint, type check, unit tests) |
-| Before a PR merge | `npm run test:e2e` (Maestro screenshots) |
+| Before a PR merge | `npm run test:e2e` (Maestro screenshots) and, with the emulator in night mode, `npm run test:e2e:dark` |
 | After you change these docs | `npm run verify:docs` |
 
 More detail is in the [project guide]({{ site.baseurl }}{% link PROJECT_GUIDE.md %}).

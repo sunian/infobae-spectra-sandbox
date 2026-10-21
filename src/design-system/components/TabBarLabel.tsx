@@ -1,7 +1,8 @@
 import { type ColorValue, StyleSheet, Text as RNText, View } from 'react-native';
 
 import { t } from '../../localization';
-import { colors, typography } from '../tokens';
+import { useColors } from '../theme';
+import { typography } from '../tokens';
 
 type TabBarLabelProps = {
   labelKey: string;
@@ -9,6 +10,7 @@ type TabBarLabelProps = {
 };
 
 export function TabBarLabel({ labelKey, focused }: TabBarLabelProps) {
+  const colors = useColors();
   const color = focused ? colors.tabActive : colors.tabInactive;
   return <RNText style={[typography.label, { color }]}>{t(labelKey)}</RNText>;
 }

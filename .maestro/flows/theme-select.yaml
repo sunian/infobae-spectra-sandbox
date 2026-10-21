@@ -1,0 +1,27 @@
+# The Theme list opened from the Menu. Day mode, choice System is marked.
+appId: com.infobae.scaffold
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: 'My Infobae'
+- waitForAnimationToEnd
+- tapOn: '^Menu$'
+- waitForAnimationToEnd
+- tapOn: '^Theme$'
+- waitForAnimationToEnd
+- assertVisible: '^System$'
+- assertVisible: '^Light$'
+- assertVisible: '^Dark$'
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: theme-select
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/theme-select.png
+          thresholdPercentage: 98

@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { colors, sizes, spacing } from '../tokens';
+import { useThemedStyles } from '../theme';
+import { sizes, spacing, type ColorPalette } from '../tokens';
 import { Text } from './Text';
 import { Thumbnail } from './Thumbnail';
 
@@ -24,6 +25,7 @@ export function FeedItemCard({
   accessibilityLabel,
   onPress,
 }: FeedItemCardProps) {
+  const styles = useThemedStyles(createStyles);
   return (
     <Pressable
       accessibilityRole="button"
@@ -53,24 +55,25 @@ export function FeedItemCard({
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    gap: spacing.md,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.border,
-    backgroundColor: colors.background,
-  },
-  pressed: {
-    backgroundColor: colors.surface,
-  },
-  texts: {
-    flex: 1,
-    gap: spacing.xs,
-  },
-  thumbnail: {
-    width: sizes.thumbnailWidth,
-  },
-});
+const createStyles = (colors: ColorPalette) =>
+  StyleSheet.create({
+    card: {
+      flexDirection: 'row',
+      gap: spacing.md,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.md,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: colors.border,
+      backgroundColor: colors.background,
+    },
+    pressed: {
+      backgroundColor: colors.surface,
+    },
+    texts: {
+      flex: 1,
+      gap: spacing.xs,
+    },
+    thumbnail: {
+      width: sizes.thumbnailWidth,
+    },
+  });

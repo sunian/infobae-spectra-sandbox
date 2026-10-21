@@ -20,7 +20,7 @@ articles for that edition, and opens an article to read it.
 | [Edition selection]({{ site.baseurl }}{% link product/features/002-edition-selection.md %}) | Available | The reader picks an edition on first launch. The app remembers it. The Menu changes it. |
 | [Home feed and Article Detail]({{ site.baseurl }}{% link product/features/003-home-feed-article-detail.md %}) | Available | A scrolling feed of the newest articles for the edition, and a screen to read each article. |
 | [Documentation portals]({{ site.baseurl }}{% link product/features/004-github-pages-docs.md %}) | Planned | Two documentation sites, for developers and for the whole team, that update after each specify and implement run. Built; goes live when Pages is turned on. |
-| [Dark mode]({{ site.baseurl }}{% link product/features/005-dark-mode.md %}) | Planned | A light and a dark look. The app matches the phone by default. The reader can choose System, Light, or Dark in the Menu. |
+| [Dark mode]({{ site.baseurl }}{% link product/features/005-dark-mode.md %}) | Available | A light and a dark look. The app matches the phone by default. The reader can choose System, Light, or Dark in the Menu. |
 
 Status "Planned" means the feature is specified but not built. Status "Available" means it is built.
 

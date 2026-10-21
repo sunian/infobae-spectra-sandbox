@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { colors, spacing } from '../tokens';
+import { useThemedStyles } from '../theme';
+import { spacing, type ColorPalette } from '../tokens';
 import { Text } from './Text';
 
 type ListRowProps = {
@@ -13,6 +14,7 @@ type ListRowProps = {
 const SELECTED_MARK = '✓';
 
 export function ListRow({ label, value, selected = false, onPress }: ListRowProps) {
+  const styles = useThemedStyles(createStyles);
   return (
     <Pressable
       accessibilityRole="button"
@@ -29,22 +31,23 @@ export function ListRow({ label, value, selected = false, onPress }: ListRowProp
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.border,
-    backgroundColor: colors.background,
-  },
-  pressed: {
-    backgroundColor: colors.surface,
-  },
-  labels: {
-    flex: 1,
-    gap: spacing.xs,
-  },
-});
+const createStyles = (colors: ColorPalette) =>
+  StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.md,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: colors.border,
+      backgroundColor: colors.background,
+    },
+    pressed: {
+      backgroundColor: colors.surface,
+    },
+    labels: {
+      flex: 1,
+      gap: spacing.xs,
+    },
+  });

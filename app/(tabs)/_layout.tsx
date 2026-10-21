@@ -1,9 +1,10 @@
 import { Tabs } from 'expo-router';
 
-import { TabBarLabel, colors, tabBarIcon } from '@/design-system';
+import { TabBarLabel, tabBarIcon, useColors } from '@/design-system';
 import { tabs } from '@/navigation/tabs';
 
 export default function TabsLayout() {
+  const colors = useColors();
   return (
     <Tabs
       screenOptions={{

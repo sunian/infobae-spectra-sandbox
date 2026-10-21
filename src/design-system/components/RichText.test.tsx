@@ -1,8 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
 
-import { colors } from '../tokens';
 import { RichText } from './RichText';
+import { ThemeProvider } from '../theme';
+import { darkColors, lightColors } from '../tokens';
+
+const SCHEMES = [
+  ['light', lightColors],
+  ['dark', darkColors],
+] as const;
 
 const styleOf = (text: string) => StyleSheet.flatten(screen.getByText(text).props.style);
 
@@ -56,7 +62,7 @@ describe('RichText', () => {
         onLinkPress={() => {}}
       />,
     );
-    expect(styleOf('aquí').color).toBe(colors.link);
+    expect(styleOf('aquí').color).toBe(lightColors.link);
   });
 
   it('does not make a segment without an href pressable', async () => {
@@ -75,5 +81,26 @@ describe('RichText', () => {
   it('renders nothing for no segments', async () => {
     await render(<RichText segments={[]} onLinkPress={() => {}} />);
     expect(screen.queryByText(/./)).toBeNull();
+  });
+});
+
+describe.each(SCHEMES)('RichText in the %s scheme', (scheme, palette) => {
+  it('uses the primary color for text and the link color for links', async () => {
+    await render(
+      <ThemeProvider scheme={scheme}>
+        <RichText
+          segments={[
+            { text: 'uno ', bold: false, italic: false },
+            { text: 'aquí', bold: false, italic: false, href: 'https://a.b/c' },
+          ]}
+          onLinkPress={() => {}}
+        />
+      </ThemeProvider>,
+    );
+    expect(styleOf('aquí').color).toBe(palette.link);
+    const paragraph = StyleSheet.flatten(
+      screen.getByText('uno', { exact: false }).parent?.props.style,
+    );
+    expect(paragraph.color).toBe(palette.textPrimary);
   });
 });

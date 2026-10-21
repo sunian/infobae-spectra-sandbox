@@ -1,6 +1,6 @@
 # Quickstart: Dark Mode
 
-> **TL;DR:** Check the feature with automated tests, a night-mode screenshot pass, and a short manual run on a device. **Check this:** Step 3 (manual run) proves the phone-follow behavior that tests cannot.
+> **TL;DR:** Check the feature with automated tests, a night-mode screenshot pass, and a short manual run on a device. An agent ran all three on the emulator on 2026-10-21 (see "Manual check"). **Check this:** The dark splash (step 1) and the phone change while Dark is chosen (step 4) still need a person on a real device.
 
 How to check that the feature works. Contracts: [contracts/theme-contracts.md](./contracts/theme-contracts.md).
 Data rules: [data-model.md](./data-model.md).
@@ -51,3 +51,23 @@ baseline.
 - A saved value `"sepia"` opens as System with no crash.
 - A storage read error opens as System. A storage write error still changes the theme for the
   session.
+
+## Manual check
+
+Run on 2026-10-21 on the Android emulator from `.maestro/config.yaml` (release build, fixture content source). An agent ran it. Steps marked "human" still need a person.
+
+| Step | Result | How it was checked |
+|---|---|---|
+| 1. Phone dark, clean install: dark splash, dark edition list and screens | Partly checked. Screens: pass. Splash: **human** | `edition-select-dark`, `home-dark`, `article-dark` and the other dark flows pass in night mode. The splash is too short to capture, so its dark color needs a person on a real device. |
+| 2. Phone changes while the app is open | Pass | Screenshots 1.5 seconds apart: the Home screen turned from light to dark after `cmd uimode night yes`, with no restart. |
+| 3. Menu Theme row shows System, list marks System, choosing Dark turns the app dark | Pass | `theme-select`, `theme-override-menu`, `theme-override-home` |
+| 4. Phone changes while Dark is chosen: no change | Not run on a device | Covered by the `ThemeContext` unit test "ignores phone changes after a manual choice". **human** to confirm on a device. |
+| 5. Force close, reopen: dark from the first screen, Theme row shows Dark | Pass | `theme-persist` (relaunch without clearing state) |
+| 6. Choose System: the app follows the phone again | Pass | `theme-persist` (ends on System with the phone light) and the unit test for System |
+| 7. Edition and theme do not change each other | Pass | Unit test "stay independent of each other" and the `ThemeContext` tests |
+
+Known gaps found while checking:
+
+- With the phone light and the choice Dark, the Android system navigation bar at the bottom stays light, because the system draws it from the phone setting. FR-012 only asks for the status bar. A fix needs a native navigation bar setting and is not in this plan.
+- The native splash screen follows the phone, not the in-app choice (plan R6).
+- `home-edition-switch` failed once in a full light pass (it asserts a short loading state, and that run was slow). It passed in 3 of 3 reruns.

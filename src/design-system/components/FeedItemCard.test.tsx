@@ -1,6 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import { FeedItemCard } from './FeedItemCard';
+import { ThemeProvider } from '../theme';
+import { darkColors, lightColors } from '../tokens';
+import { StyleSheet } from 'react-native';
+
+const SCHEMES = [
+  ['light', lightColors],
+  ['dark', darkColors],
+] as const;
 
 const base = {
   headline: 'El Gobierno anunció nuevas medidas',
@@ -59,5 +67,19 @@ describe('FeedItemCard', () => {
   it('is a button with the accessibility label', async () => {
     await render(<FeedItemCard {...base} />);
     expect(screen.getByRole('button', { name: base.accessibilityLabel })).toBeTruthy();
+  });
+});
+
+describe.each(SCHEMES)('FeedItemCard in the %s scheme', (scheme, palette) => {
+  it('uses the background and border colors', async () => {
+    await render(
+      <ThemeProvider scheme={scheme}>
+        <FeedItemCard {...base} />
+      </ThemeProvider>,
+    );
+    expect(StyleSheet.flatten(screen.getByRole('button').props.style)).toMatchObject({
+      backgroundColor: palette.background,
+      borderBottomColor: palette.border,
+    });
   });
 });

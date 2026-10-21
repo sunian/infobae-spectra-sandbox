@@ -1,18 +1,23 @@
-import { Stack } from 'expo-router';
+import { Stack, ThemeProvider as NavigationThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
-import { colors } from '@/design-system';
+import { useColors } from '@/design-system';
 import { t } from '@/localization';
+import { navigationTheme } from '@/navigation/navigationTheme';
 import { EditionProvider, useEdition } from '@/state/EditionContext';
+import { ThemeProvider, useThemePreference } from '@/state/ThemeContext';
 
-// Keep the native splash screen up until the saved edition is read, so no other screen flashes.
+// Keep the native splash screen up until the saved edition and theme are read, so no other screen
+// or color flashes.
 SplashScreen.preventAutoHideAsync();
 
 function RootNavigator() {
   const { status, edition } = useEdition();
-  const ready = status === 'ready';
+  const { scheme, status: themeStatus } = useThemePreference();
+  const colors = useColors();
+  const ready = status === 'ready' && themeStatus === 'ready';
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync();
@@ -21,40 +26,53 @@ function RootNavigator() {
   if (!ready) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={edition === null}>
-        <Stack.Screen name="select-edition" />
-      </Stack.Protected>
-      <Stack.Protected guard={edition !== null}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="change-edition"
-          options={{
-            headerShown: true,
-            title: t('editionSelect.changeTitle'),
-            headerStyle: { backgroundColor: colors.background },
-            headerTintColor: colors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="article"
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: colors.background },
-            headerTintColor: colors.textPrimary,
-          }}
-        />
-      </Stack.Protected>
-    </Stack>
+    <NavigationThemeProvider value={navigationTheme(scheme, colors)}>
+      <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Protected guard={edition === null}>
+          <Stack.Screen name="select-edition" />
+        </Stack.Protected>
+        <Stack.Protected guard={edition !== null}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="change-edition"
+            options={{
+              headerShown: true,
+              title: t('editionSelect.changeTitle'),
+              headerStyle: { backgroundColor: colors.background },
+              headerTintColor: colors.textPrimary,
+            }}
+          />
+          <Stack.Screen
+            name="change-theme"
+            options={{
+              headerShown: true,
+              title: t('themeSelect.title'),
+              headerStyle: { backgroundColor: colors.background },
+              headerTintColor: colors.textPrimary,
+            }}
+          />
+          <Stack.Screen
+            name="article"
+            options={{
+              headerShown: true,
+              title: '',
+              headerStyle: { backgroundColor: colors.background },
+              headerTintColor: colors.textPrimary,
+            }}
+          />
+        </Stack.Protected>
+      </Stack>
+    </NavigationThemeProvider>
   );
 }
 
 export default function RootLayout() {
   return (
-    <EditionProvider>
-      <StatusBar style="dark" />
-      <RootNavigator />
-    </EditionProvider>
+    <ThemeProvider>
+      <EditionProvider>
+        <RootNavigator />
+      </EditionProvider>
+    </ThemeProvider>
   );
 }

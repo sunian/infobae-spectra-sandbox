@@ -4,6 +4,13 @@ import { FlatList } from 'react-native';
 
 import { FeedList, type FeedListHandle } from './FeedList';
 import { Text } from './Text';
+import { ThemeProvider } from '../theme';
+import { darkColors, lightColors } from '../tokens';
+
+const SCHEMES = [
+  ['light', lightColors],
+  ['dark', darkColors],
+] as const;
 
 type Row = { id: string; label: string };
 const rows: Row[] = [
@@ -83,5 +90,23 @@ describe('FeedList', () => {
     ref.current?.scrollToTop();
     expect(scroll).toHaveBeenCalledWith({ offset: 0, animated: false });
     scroll.mockRestore();
+  });
+});
+
+describe.each(SCHEMES)('FeedList in the %s scheme', (scheme, palette) => {
+  it('colors the refresh control with the active tab color', async () => {
+    await render(
+      <ThemeProvider scheme={scheme}>
+        <FeedList
+          data={rows}
+          keyExtractor={(row) => row.id}
+          renderItem={(row) => <Text>{row.label}</Text>}
+          onRefresh={() => {}}
+        />
+      </ThemeProvider>,
+    );
+    const control = screen.getByTestId('feed-list').props.refreshControl;
+    expect(control.props.tintColor).toBe(palette.tabActive);
+    expect(control.props.colors).toEqual([palette.tabActive]);
   });
 });

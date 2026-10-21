@@ -1,0 +1,38 @@
+# Dark pass: runs only with the emulator in night mode (see config.yaml). The app follows the phone.
+# Open the first article from Home (fixture "Nota con titulares"). The top of the article has a
+# screenshot baseline. The body is checked by text, because a swipe does not stop at the same pixel
+# on every run. Back returns to Home with the same item on screen.
+appId: com.infobae.scaffold
+tags:
+  - dark
+---
+- launchApp:
+    clearState: true
+- runFlow: ../shared/pick-edition.yaml
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'
+- tapOn: '.*El Gobierno anunció nuevas medidas.*'
+- assertVisible: '.*Nota con titulares.*'
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      true: ${typeof RECORD !== 'undefined' && RECORD == 'true'}
+    commands:
+      - takeScreenshot: article-dark
+- runFlow:
+    when:
+      true: ${typeof RECORD === 'undefined' || RECORD != 'true'}
+    commands:
+      - assertScreenshot:
+          path: ../baselines/article-dark.png
+          thresholdPercentage: 98
+- scrollUntilVisible:
+    element: '.*Una imagen dentro del cuerpo.*'
+    direction: DOWN
+    timeout: 30000
+- assertVisible: '.*Un subtítulo de nivel dos.*'
+- scrollUntilVisible:
+    element: '.*Último párrafo.*'
+    direction: DOWN
+    timeout: 30000
+- back
+- assertVisible: '.*El Gobierno anunció nuevas medidas.*'

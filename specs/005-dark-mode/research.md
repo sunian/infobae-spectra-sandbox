@@ -69,8 +69,8 @@ Facts about the code come from reading `src/design-system/tokens.ts`, `app/_layo
 ## R6. Splash screen and first frame
 
 - **Decision**: Keep the splash up until both the edition and the theme are read. Set a dark
-  background for the splash in `app.json` with the plugin's `dark` option. **Verify** the exact
-  option name for SDK 58.
+  background for the splash in `app.json` with the plugin's `dark` option. **Checked (T001)**: the
+  plugin takes `backgroundColor` and `dark: { backgroundColor }` (`expo-splash-screen` plugin types).
 - **Rationale**: This prevents a wrong-theme frame from the app itself (FR-008) and covers phone Dark
   with choice System (US1 AC5).
 - **Known gap**: The native splash follows the phone only. With phone Light and choice Dark, the
@@ -85,8 +85,8 @@ Facts about the code come from reading `src/design-system/tokens.ts`, `app/_layo
 - **Decision**: `StatusBar style` is `light` when the active scheme is dark and `dark` otherwise.
   Do not use `auto`, because it follows the phone, not the override. Build a navigation theme from
   the palette in `src/navigation/navigationTheme.ts` and give it to the router's `ThemeProvider`.
-  **Verify** that `expo-router` 58 exports `ThemeProvider`. If not, set `contentStyle` and header
-  options per screen from `useColors()`.
+  **Checked (T001)**: `expo-router` 58 exports `ThemeProvider`, `DefaultTheme`, and the `Theme`
+  type, so no extra package is needed. The fallback (per-screen `contentStyle`) is not needed.
 - **Rationale**: Navigation containers paint their own background. Without a theme, a dark app shows
   a white flash during a push or a pop. The header and tab bar colors come from the same palette
   (FR-012).
@@ -99,8 +99,8 @@ Facts about the code come from reading `src/design-system/tokens.ts`, `app/_layo
   without clearing state, check that Dark stays. Pass 2 runs flows tagged `dark` with the emulator in
   night mode (`adb shell cmd uimode night yes`) and choice System. It covers edition select, Home,
   Article, My Infobae, Media, Chat, Menu, and the Theme list, each against a `-dark.png` baseline.
-  `record-baselines.sh` runs both passes and restores day mode. **Verify** Maestro 2.11 tag filters
-  (`--include-tags`, `--exclude-tags`).
+  `record-baselines.sh` runs both passes and restores day mode. **Checked (T001)**: Maestro 2.11.0 has
+  `--include-tags` and `--exclude-tags` on `maestro test`. The fallback folder is not needed.
 - **Rationale**: Constitution IV and SC-006 need both themes per screen. The first-launch edition
   list has no Menu, so only the phone setting can make it dark. Night mode also proves "follow the
   phone" end to end.

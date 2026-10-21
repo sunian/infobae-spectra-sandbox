@@ -2,6 +2,13 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
 
 import { Thumbnail } from './Thumbnail';
+import { ThemeProvider } from '../theme';
+import { darkColors, lightColors } from '../tokens';
+
+const SCHEMES = [
+  ['light', lightColors],
+  ['dark', darkColors],
+] as const;
 
 const aspectOf = () => StyleSheet.flatten(screen.getByTestId('thumbnail').props.style).aspectRatio;
 
@@ -44,5 +51,18 @@ describe('Thumbnail', () => {
     await fireEvent(screen.getByTestId('thumbnail-image'), 'error');
     await view.rerender(<Thumbnail uri="https://x/b.jpg" />);
     expect(screen.getByTestId('thumbnail-image').props.source).toEqual({ uri: 'https://x/b.jpg' });
+  });
+});
+
+describe.each(SCHEMES)('Thumbnail in the %s scheme', (scheme, palette) => {
+  it('uses the placeholder color for its box', async () => {
+    await render(
+      <ThemeProvider scheme={scheme}>
+        <Thumbnail />
+      </ThemeProvider>,
+    );
+    expect(StyleSheet.flatten(screen.getByTestId('thumbnail').props.style).backgroundColor).toBe(
+      palette.placeholder,
+    );
   });
 });

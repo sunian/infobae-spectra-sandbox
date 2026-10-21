@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { colors, spacing } from '../tokens';
+import { useThemedStyles } from '../theme';
+import { spacing, type ColorPalette } from '../tokens';
 import { Text } from './Text';
 
 type BannerProps = {
@@ -10,6 +11,7 @@ type BannerProps = {
 };
 
 export function Banner({ message, onDismiss }: BannerProps) {
+  const styles = useThemedStyles(createStyles);
   const text = <Text variant="label">{message}</Text>;
   return (
     <View accessible={!onDismiss} accessibilityRole="alert" style={styles.banner}>
@@ -24,12 +26,13 @@ export function Banner({ message, onDismiss }: BannerProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  banner: {
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
-    backgroundColor: colors.surface,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.border,
-  },
-});
+const createStyles = (colors: ColorPalette) =>
+  StyleSheet.create({
+    banner: {
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+      backgroundColor: colors.surface,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: colors.border,
+    },
+  });

@@ -1,17 +1,14 @@
 import { Text as RNText } from 'react-native';
 
-import { colors, typography } from '../tokens';
+import { useColors } from '../theme';
+import { typography } from '../tokens';
 
-const TONES = {
-  primary: colors.textPrimary,
-  secondary: colors.textSecondary,
-  link: colors.link,
-} as const;
+type Tone = 'primary' | 'secondary' | 'link';
 
 type TextProps = {
   children: string;
   variant?: keyof typeof typography;
-  tone?: keyof typeof TONES;
+  tone?: Tone;
   bold?: boolean;
   italic?: boolean;
   numberOfLines?: number;
@@ -27,13 +24,19 @@ export function Text({
   numberOfLines,
   accessibilityRole,
 }: TextProps) {
+  const colors = useColors();
+  const tones: Record<Tone, string> = {
+    primary: colors.textPrimary,
+    secondary: colors.textSecondary,
+    link: colors.link,
+  };
   return (
     <RNText
       numberOfLines={numberOfLines}
       accessibilityRole={accessibilityRole}
       style={[
         typography[variant],
-        { color: TONES[tone] },
+        { color: tones[tone] },
         bold && { fontWeight: '700' },
         italic && { fontStyle: 'italic' },
       ]}
